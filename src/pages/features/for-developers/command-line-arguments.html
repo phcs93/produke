@@ -6,7 +6,11 @@
         3 = Team Dukematch (TDM)<br>
         4 = Catch The Flag (CTF)<br>
         5 = 1-Flag CTF (1FCTF)<br>
-        6 = ATK/DEF CTF (ADCTF)
+        6 = ATK/DEF CTF (ADCTF)<br>
+        7 = Survival<br>
+        8 = Last Man Standing (LMS)<br>
+        9 = Team Last Man Standing (TLMS)<br>
+        10 = Terminator<br>
     </span>
     <span lang="pt">
         define o modo de jogo, onde # é o modo de jogo<br>
@@ -15,7 +19,11 @@
         3 = Team Dukematch (TDM)<br>
         4 = Catch The Flag (CTF)<br>
         5 = 1-Flag CTF (1FCTF)<br>
-        6 = ATK/DEF CTF (ADCTF)
+        6 = ATK/DEF CTF (ADCTF)<br>
+        7 = Survival<br>
+        8 = Last Man Standing (LMS)<br>
+        9 = Team Last Man Standing (TLMS)<br>
+        10 = Terminator<br>
     </span>
 </div>
 <div class="arg" data-arg="/y##">
@@ -25,6 +33,10 @@
 <div class="arg" data-arg="/k###">
     <span lang="en">sets the time limit, where ### is a number in minutes, max of 240 (4 hours)</span>
     <span lang="pt">define o limite de tempo, onde ### é um numero em minutos, maximo de 240 (4 horas)</span>
+</div>
+<div class="arg" data-arg="/e#">
+    <span lang="en">sets the extra lives, where # is the extra lives ammount [0-9]</span>
+    <span lang="pt">define a quantidade de vidas extras, onde # é o número de vidas extras [0-9]</span>
 </div>
 <div class="arg" data-arg="/netflagsA#">
     <span>
@@ -50,8 +62,8 @@
         65536 = <span lang="en">[PVP] Respawn Farthest</span><span lang="pt">[PVP] Renascer Mais Distante</span><br>
         131072 = <span lang="en">[TEAM] Teamless Spawn Points</span><span lang="pt">[TEAM] Pontos De Renascimento Sem Time</span><br>
         262144 = <span lang="en">[COOP/TEAM] Autoaim On Allies</span><span lang="pt">[COOP/TEAM] Mira Automática Nos Aliados</span><br>
-        524288 = <span lang="en">[COOP/TEAM/TERM] Overhead Info</span><span lang="pt">[COOP/TEAM/TERM] Visor de Informações</span><br>
-        1048576 = <span lang="en">[COOP/TEAM/TERM] Outlines</span><span lang="pt">[COOP/TEAM/TERM] Contornos</span><br>
+        524288 = <span lang="en">[COOP/TEAM/TRM] Overhead Info</span><span lang="pt">[COOP/TEAM/TRM] Visor de Informações</span><br>
+        1048576 = <span lang="en">[COOP/TEAM/TRM] Outlines</span><span lang="pt">[COOP/TEAM/TRM] Contornos</span><br>
         2097152 = <span lang="en">[CTF] Outline On Flags</span><span lang="pt">[CTF] Contorno Nas Bandeiras</span><br>
         4194304 = <span lang="en">[CTF] Flag Return Instantly</span><span lang="pt">[CTF] Bandeira Retorna Instantaneamente</span><br>
         8388608 = <span lang="en">[CTF] Flag Auto Detonate</span><span lang="pt">[CTF] Bandeira se Autodestrói</span><br>
@@ -134,10 +146,6 @@
         <span lang="pt">por exemplo: se você quiser iniciar com Steroids e com 150 de vida, use o argumento -invflags516 (4 + 512)</span>
     </span>
 </div>
-<div class="arg" data-arg="/disableautoaim">
-    <span lang="en">Disables the autoaim, all players need to vote yes for the game to start.</span>
-    <span lang="pt">Desabilita o autoaim, todos os jogadores precisam votar sim para o jogo iniciar.</span>
-</div>
 <div class="arg" data-arg="/lockoptions">
     <span lang="en">Lock players from changing the netplay options. Only one player can have this argument set.</span>
     <span lang="pt">Trava os jogadores de trocaram as netplay options. Apenas um jogador pode utilizar esse argumento.</span>
@@ -145,6 +153,10 @@
 <div class="arg" data-arg="/lockplayers">
     <span lang="en">Lock players from changing their name, color and team. Only one player can have this argument set.</span>
     <span lang="pt">Trava os jogadores de trocarem seus nomes, cor e time. Apenas um jogador pode utilizar esse argumento.</span>
+</div>
+<div class="arg" data-arg="/disableautoaim">
+    <span lang="en">Disables the autoaim, all players need to vote yes for the game to start.</span>
+    <span lang="pt">Desabilita o autoaim, todos os jogadores precisam votar sim para o jogo iniciar.</span>
 </div>
 <div class="arg" data-arg="/exploitmode">
     <span lang="en">Enables the exploit mode, all players need to vote yes for the game to start.</span>
@@ -155,8 +167,8 @@
     <span lang="pt">Habilita o modo de modificações, todos os jogadores precisam votar sim para o jogo iniciar.</span>
 </div>
 <div class="arg" data-arg="-color #">
-    <span lang="en">Sets your color, where # is a color index [1-10]</span>
-    <span lang="pt">Define sua cor, onde # é o indice de uma cor [1-10]</span>
+    <span lang="en">Sets your color, where # is a color index [1-16]</span>
+    <span lang="pt">Define sua cor, onde # é o indice de uma cor [1-16]</span>
 </div>
 <div class="arg" data-arg="-team #">
     <span lang="en">Sets your team, where # is team index [1-4]</span>
