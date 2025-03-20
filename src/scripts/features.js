@@ -695,18 +695,6 @@ window["load-features"] = async () => {
         const li = document.querySelector(`a[href="#${topMostId}"]`).closest("li");
         li.classList.add("highlight");
 
-        // li.scrollIntoView({
-        //     behavior: "smooth",
-        //     block: "nearest"            
-        // });
-
-        // li.scrollIntoView({
-        //     behavior: "smooth",
-        //     block: "center"            
-        // });
-
-        //li.scrollIntoViewIfNeeded(true);
-
         const menu = document.getElementById("menu");
 
         const menuHeight = menu.clientHeight;
