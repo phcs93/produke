@@ -17,6 +17,8 @@
         <link rel="stylesheet" href="index.css">
         <script src="index.js"></script>
 
+        <script src="src/scripts/inflames.js"></script>
+        
         <script src="src/scripts/home.js"></script>
         <script src="src/scripts/features.js"></script>
         <script src="src/scripts/netflags-calculator.js"></script>
@@ -26,23 +28,25 @@
 
     <body>
 
-        <br><br><br>
+        <div class="flex-rows">
 
-        <div class="flex-rows flex-gap-16">
+            <canvas id="inflames"></canvas>
 
-            <div class="flex-justify-content-center">
-                <img id="icon" src="res/icon.gif" alt="produke icon">                
+            <div class="flex-rows flex-gap-16 padding-16" style="position: absolute; top: 32px; left: calc(50% - 144px);">
+
+                <div class="flex-justify-content-center">
+                    <img id="icon" src="res/icon.gif" alt="produke icon">                
+                </div>
+    
+                <div class="flex-justify-content-center">
+                    <img id="logo" src="res/logo.png" alt="produke logo">
+                </div>      
+                
+                <div class="flex-justify-content-center">
+                    <img id="author" src="res/byhellfire.png" alt="produke author">
+                </div>
+
             </div>
-
-            <div class="flex-justify-content-center">
-                <img id="logo" src="res/logo.png" alt="produke logo">
-            </div>      
-            
-            <div class="flex-justify-content-center">
-                <img id="author" src="res/byhellfire.png" alt="produke author">
-            </div>
-
-            <br>
 
             <div class="flex-rows flex-gap-32">
 
