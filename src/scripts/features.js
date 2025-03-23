@@ -587,12 +587,27 @@ window["load-features"] = async () => {
     };
 
     // download all html parts and save in memory
-    for (const structureId of Object.keys(structures)) {
-        for (const sectionId of Object.keys(structures[structureId].sections)) {
-            const html = await (await fetch(`src/pages/features/${structureId}/${sectionId}.html`)).text();
-            structures[structureId].sections[sectionId].html = html;
-        }
-    }
+    // for (const structureId of Object.keys(structures)) {
+    //     for (const sectionId of Object.keys(structures[structureId].sections)) {
+    //         const html = await (await fetch(`src/pages/features/${structureId}/${sectionId}.html`)).text();
+    //         structures[structureId].sections[sectionId].html = html;
+    //     }
+    // }
+
+    const structureEntries = Object.entries(structures);
+
+    await Promise.all(
+        structureEntries.map(async ([structureId, structure]) => {
+            const sectionEntries = Object.entries(structure.sections);
+            await Promise.all(
+                sectionEntries.map(async ([sectionId, section]) => {
+                    const res = await fetch(`src/pages/features/${structureId}/${sectionId}.html`);
+                    const html = await res.text();
+                    section.html = html;
+                })
+            );
+        })
+    );
 
     // generate menu
     document.querySelector("div#menu > ul").innerHTML = Object.keys(structures).map(structureId => `
