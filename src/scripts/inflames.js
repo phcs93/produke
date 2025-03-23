@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function resize() {
         width = window.innerWidth;
         //height = window.innerHeight;
-        height = 316;
+        height = 316 + 64;
         canvas.width = width;
         canvas.height = height;
         gl.viewport(0, 0, width, height);

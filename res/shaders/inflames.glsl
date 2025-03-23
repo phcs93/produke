@@ -178,7 +178,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 	float f = ypartClippedFalloff * pow(1.0 - flames * flames * flames, 8.0);
 	float fff = f * f * f;
 	//vec3 fire = 1.5*vec3(f, fff, fff*fff);
-	vec3 fire = 0.7 * f * vec3(0.733, 0.635, 0.278);
+	vec3 fire = 1.25 * f * vec3(0.733, 0.635, 0.278);
 	//
 	// smoke
 	float smokeNoise = 0.5 + snoise(0.4 * position + timing * vec3(1.0, 1.0, 0.2)) / 2.0;
