@@ -42,6 +42,7 @@ div#navbar {
 
     &[data-page="home"] > a[href="?p=home"] { text-decoration: underline; }
     &[data-page="features"] > a[href="?p=features"] { text-decoration: underline; }
+    &[data-page="netflags-calculator"] > a[href="?p=netflags-calculator"] { text-decoration: underline; }
     &[data-page="changelog"] > a[href="?p=changelog"] { text-decoration: underline; }
 
     & > span.separator {
