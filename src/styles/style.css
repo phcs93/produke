@@ -1,4 +1,4 @@
-input[type="text"] {
+select:not(#lang), input[type="text"] {
     background-color: black;
     color: lightgray;
     font-size: 16px;
@@ -11,8 +11,12 @@ input[type="text"] {
 input[type="checkbox"] {
     width: 16px;
     height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
     cursor: pointer;
-    margin-right: 16px;
+    margin-right: 8px;
     &:checked {
         accent-color: var(--progold);
     }
@@ -21,6 +25,15 @@ input[type="checkbox"] {
         line-height: 22px;
         text-align: center;
     }
+}
+
+input[type="checkbox"] + label,
+input[type="checkbox"] + label > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
 }
 
 button {
@@ -174,4 +187,12 @@ div.arg {
         justify-content: end;        
     }
 
+}
+
+button#copy {
+    &:not(:focus) > span.copied { display: none; }
+    &:focus {
+        background-color: lightgrey;
+        & > span.copy { display: none; }
+    }
 }

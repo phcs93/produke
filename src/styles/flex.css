@@ -67,6 +67,16 @@ div.flex-align-self-center {
     align-self: center;
 }
 
+div.flex-auto > * {
+    /* 
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0; 
+    */
+    flex: 1;
+    min-width: 0;
+}
+
 div.flex-gap-8 {
     gap: 8px;
 }
