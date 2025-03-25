@@ -2,10 +2,139 @@
 
     <div class="box flex-rows flex-gap-32" style="width: 1328px;">
 
-        <div class="flex-columns flex-gap-16 flex-auto">
-
+        <div class="flex-columns flex-gap-16">
+            <div class="flex-rows flex-gap-16 flex-grow">
+                <h4>ARGUMENTS</h4>
+                <input type="text" id="arguments">
+            </div>
             <div class="flex-rows flex-gap-16">
-                <h3>PRESETS</h3>
+                <h4>&nbsp;</h4>
+                <button id="copy" style="height: 36px; width: 256px;">
+                    <span lang="en" class="copy">COPY ALL ARGUMENTS</span>
+                    <span lang="pt" class="copy">COPIAR ARGUMENTOS</span>
+                    <span lang="en" class="copied">✓ COPIED TO CLIPBOARD!</span>
+                    <span lang="pt" class="copied">✓ COPIADO!</span>
+                </button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="flex-columns flex-gap-16 flex-auto">
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>GAME MODE</h4>
+                    <h5>(<span class="arg" data-arg="c">/c#</span>)</h5>
+                </div>
+                <select class="arg" name="c" id="c">                    
+                    <option value="0">---</option>
+                    <option value="1">Dukematch (DM)</option>
+                    <option value="2">COOP</option>
+                    <option value="3">Team Dukematch (TDM)</option>
+                    <option value="4">Catch The Flag (CTF)</option>
+                    <option value="5">1-Flag CTF (1FCTF)</option>
+                    <option value="6">ATK/DEF CTF (ADCTF)</option>
+                    <option value="7">Survival</option>
+                    <option value="8">Last Man Standing (LMS)</option>
+                    <option value="9">Team Last Man Standing (TLMS)</option>
+                    <option value="10">Terminator</option>
+                </select>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>FRAG LIMIT</h4>
+                    <h5>(<span class="arg" data-arg="y">/y#</span>)</h5>
+                </div>
+                <input class="arg" type="number" id="y" step="1" min="0" max="99" value="20" />
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>TIME LIMIT</h4>
+                    <h5>(<span class="arg" data-arg="k">/k#</span>)</h5>
+                </div>
+                <input class="arg" type="number" id="k" step="1" min="0" max="240" value="0" />
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>EXTRA LIVES</h4>
+                    <h5>(<span class="arg" data-arg="e">/e#</span>)</h5>
+                </div>
+                <input class="arg" type="number" id="e" step="1" min="0" max="9" value="0" />
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>BOTS</h4>
+                    <h5>(<span class="arg" data-arg="q">/q#</span>)</h5>
+                </div>
+                <input class="arg" type="number" id="q" step="1" min="0" max="7" value="0" />
+            </div>
+        </div>
+
+        <div class="flex-columns flex-gap-16 flex-auto">
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>RECORD DEMO</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>TEAM PICKER</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>LOCK OPTIONS</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>LOCK PLAYERS</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>ENABLE BOT AI</h4>
+                    <h5></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-columns flex-gap-16 flex-auto">
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>EXPLOIT MODE</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>ALLOW MODS</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <div class="flex-columns flex-gap-16">
+                    <h4>DISABLE AUTOAIM</h4>
+                    <h5></h5>
+                </div>
+            </div>
+            <div class="flex-rows flex-gap-16">
+
+            </div>
+            <div class="flex-rows flex-gap-16">
+
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="flex-columns flex-gap-16 flex-auto">
+            <div class="flex-rows flex-gap-16">
+                <h4>NETFLAGS PRESETS</h4>
                 <select name="presets" id="presets">                    
                     <option value="---">---</option>
                     <option value="classic">Classic</option>
@@ -16,48 +145,24 @@
                     <option value="custom">Custom</option>
                 </select>
             </div>
-
             <div class="flex-rows flex-gap-16"></div>
             <div class="flex-rows flex-gap-16"></div>
             <div class="flex-rows flex-gap-16"></div>
-            <div class="flex-rows flex-gap-16">
-                <h3>&nbsp;</h3>
-                <button id="copy" style="width: 100%">
-                    <span lang="en" class="copy">COPY ALL ARGUMENTS</span>
-                    <span lang="pt" class="copy">COPIAR ARGUMENTOS</span>
-                    <span lang="en" class="copied">✓ COPIED TO CLIPBOARD!</span>
-                    <span lang="pt" class="copied">✓ COPIADO!</span>
-                </button>
-            </div>
-
+            <div class="flex-rows flex-gap-16"></div>
         </div>
-
-        <!-- <div class="flex-columns flex-gap-16 flex-auto">
-
-            <div class="flex-rows flex-gap-16">
-                <h3>GAME MODE</h3>
-                <select name="game-mode" id="game-mode">                    
-
-                </select>
-            </div>
-
-            <div class="flex-rows flex-gap-16"></div>
-            <div class="flex-rows flex-gap-16"></div>
-            <div class="flex-rows flex-gap-16"></div>
-            <div class="flex-rows flex-gap-16"></div>
-
-        </div> -->
 
         <div class="flex-columns flex-gap-16 flex-auto">
 
             <!-- netflags a -->
-            <div class="flex-rows flex-gap-32">
+            <div class="flex-rows flex-gap-16">
 
-                <div class="flex-rows flex-gap-16">
-                    <h3>NETFLAGS A</h3>                
-                    <input type="text" name="netflagsA" id="netflagsA" value="/netflagsA0">
+                <div class="flex-columns flex-gap-16">
+                    <h4>NETFLAGS A</h4>
+                    <h5>(<span class="arg" data-arg="netflagsA">67108863</span>)</h5>
                 </div>
-        
+                
+                <input type="hidden" name="netflagsA" id="netflagsA" value="/netflagsA0">
+
                 <div> 
                     <div class="flex-columns">
                         <input type="checkbox" name="netflagA-1" id="netflagA-1" title="1">
@@ -246,11 +351,11 @@
             </div>
 
             <!-- netflags b -->
-            <div class="flex-rows flex-gap-32">
+            <div class="flex-rows flex-gap-16">
 
                 <div class="flex-rows flex-gap-16">
                     <h3>NETFLAGS B</h3>                
-                    <input type="text" name="netflagsB" id="netflagsB" value="/netflagsB0">
+                    <input class="arg label" type="text" name="netflagsB" id="netflagsB" value="/netflagsB0">
                 </div>
         
                 <div>
@@ -287,11 +392,11 @@
             </div>
 
             <!-- netflags c -->
-            <div class="flex-rows flex-gap-32">
+            <div class="flex-rows flex-gap-16">
 
                 <div class="flex-rows flex-gap-16">
                     <h3>NETFLAGS C</h3>                
-                    <input type="text" name="netflagsC" id="netflagsC" value="/netflagsC0">
+                    <input class="arg label" type="text" name="netflagsC" id="netflagsC" value="/netflagsC0">
                 </div>
         
                 <div>
@@ -342,7 +447,7 @@
             </div>
 
             <!-- weapflags -->
-            <div class="flex-rows flex-gap-32">
+            <div class="flex-rows flex-gap-16">
 
                 <div class="flex-rows flex-gap-16">
                     <h3>WEAP FLAGS</h3>                
@@ -399,7 +504,7 @@
             </div>
 
             <!-- invflags -->
-            <div class="flex-rows flex-gap-32">
+            <div class="flex-rows flex-gap-16">
 
                 <div class="flex-rows flex-gap-16">
                     <h3>INV FLAGS</h3>                

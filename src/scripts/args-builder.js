@@ -1,8 +1,8 @@
-window["load-netflags-calculator"] = async () => {
+window["load-args-builder"] = async () => {
     
     const page = new URLSearchParams(document.location.search).get("p");
 
-    const presets = {
+    const netflagsPresets = {
         "---": {
             "netflagsA": 0,
             "netflagsB": 0,
@@ -53,29 +53,34 @@ window["load-netflags-calculator"] = async () => {
     const weapflagscount = 11;
     const invflagscount = 11;
 
-    const maxnetflagsA = Array(netflagsAcount).fill(0).reduce((max,_,i)=>max+=1<<i,0);
-    const maxnetflagsB = Array(netflagsBcount).fill(0).reduce((max,_,i)=>max+=1<<i,0);
-    const maxnetflagsC = Array(netflagsCcount).fill(0).reduce((max,_,i)=>max+=1<<i,0);
-    const maxweapflags = Array(weapflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0);
-    const maxinvflags = Array(invflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0);
+    const metadata = {
+        "game-mode": 10,
+        netflagsA:{
+            max: Array(netflagsAcount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        },
+        netflagsB:{
+            max: Array(netflagsBcount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        },
+        netflagsC:{
+            max: Array(netflagsCcount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        },
+        weapflags:{
+            max: Array(weapflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        },
+        invflags:{
+            max: Array(invflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        }
+    };
 
     function getArgsFromUrlParams() {
 
         const params = new URLSearchParams(document.location.search);
 
-        let netflagsA = parseInt(params.get("netflagsA") || "0");
-        let netflagsB = parseInt(params.get("netflagsB") || "0");
-        let netflagsC = parseInt(params.get("netflagsC") || "0");
-        let weapflags = parseInt(params.get("weapflags") || "0");
-        let invflags = parseInt(params.get("invflags") || "0");
-    
-        return {
-            netflagsA: netflagsA > maxnetflagsA ? 0 : netflagsA,
-            netflagsB: netflagsB > maxnetflagsB ? 0 : netflagsB,
-            netflagsC: netflagsC > maxnetflagsC ? 0 : netflagsC,
-            weapflags: weapflags > maxweapflags ? 0 : weapflags,
-            invflags: invflags > maxinvflags ? 0 : invflags
-        }
+        return Object.keys(metadata).reduce((obj, arg) => {            
+            const val = parseInt(params.get(arg) || "0");
+            obj[arg] = val > metadata[arg].max ? 0 : val;
+            return obj;
+        }, {});
 
     }
 
@@ -243,7 +248,7 @@ window["load-netflags-calculator"] = async () => {
     // preset input
     document.getElementById("presets").onchange = e => {
         if (e.target.value === "custom") return;
-        const args = presets[e.target.value];
+        const args = netflagsPresets[e.target.value];
         setArgsInUrlParams(args);
         setArgsInCheckboxes(args);
         setArgsInTextboxes(args);
@@ -251,14 +256,8 @@ window["load-netflags-calculator"] = async () => {
 
     // copy all arguments
     document.getElementById("copy").onclick = e => {
-        const args = getArgsFromUrlParams(); // any "getArgsFrom" would work here
-        const text = [
-            args.netflagsA > 0 ? `/netflagsA${args.netflagsA}` : null,
-            args.netflagsB > 0 ? `/netflagsB${args.netflagsB}` : null,
-            args.netflagsC > 0 ? `/netflagsC${args.netflagsC}` : null,
-            args.weapflags > 0 ? `/weapflags${args.weapflags}` : null,
-            args.invflags > 0 ? `/invflags${args.invflags}` : null
-        ];
+        const args = getArgsFromUrlParams();
+        const text = Object.keys(args).map(a => args[a] > 0 ? `/${a}${args[a]}` : null);
         navigator.clipboard.writeText(text.filter(v => v).join(" "));
     };
 
