@@ -70,7 +70,7 @@ div#menu {
 h1, h2, h3, h4, h5 {
     margin: 0px;
     position: relative;
-    & > span[id] {
+    & > span[id]:not(.arg) {
         position: absolute; 
         top: -83px;
     }
