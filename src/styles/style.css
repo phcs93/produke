@@ -1,4 +1,4 @@
-select:not(#lang), input[type="text"] {
+select:not(#lang), input:not([type="checkbox"]) {
     background-color: black;
     color: lightgray;
     font-size: 16px;
@@ -107,7 +107,7 @@ table {
 }
 
 /* small hack to fix <pre> overlaping */
-:not(a):not(label):not(h1):not(h2):not(h3):not(div.arg):not(div.arg > span) > span {
+:not(a):not(label):not(h1):not(h2):not(h3):not(h4):not(div.arg):not(div.arg > span) > span {
     line-height: 22px;
 }
 
@@ -187,6 +187,10 @@ div.arg {
         justify-content: end;        
     }
 
+}
+
+span[data-arg] {
+    color: var(--progold);
 }
 
 button#copy {

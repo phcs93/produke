@@ -228,10 +228,10 @@ window["load-features"] = async () => {
                 "pt": "Várias melhorias na HUD do jogo para deixa-la menos obstrutiva e mais intuitiva."
             },
             "sections": {
-                "death-notifications": {
+                "obituaries": {
                     "title": {
-                        "en": "Death Notifications",
-                        "pt": "Notificações de Mortes"
+                        "en": "Obituaries",
+                        "pt": "Obituários"
                     }
                 },
                 "colored-chat": {
