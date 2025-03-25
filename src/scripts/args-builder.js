@@ -2,73 +2,75 @@ window["load-args-builder"] = async () => {
     
     const page = new URLSearchParams(document.location.search).get("p");
 
-    const netflagsPresets = {
-        "---": {
-            "netflagsA": 0,
-            "netflagsB": 0,
-            "netflagsC": 0,
-            "weapflags": 0,
-            "invflags": 0
-        },
-        "classic": {
-            "netflagsA": 398332,
-            "netflagsB": 1,
-            "netflagsC": 0,
-            "weapflags": 0,
-            "invflags": 0
-        },
-        "teamplay": {
-            "netflagsA": 54004732,
-            "netflagsB": 0,
-            "netflagsC": 0,
-            "weapflags": 0,
-            "invflags": 0
-        },
-        "rebalanced": {
-            "netflagsA": 50933756,
-            "netflagsB": 6,
-            "netflagsC": 1,
-            "weapflags": 0,
-            "invflags": 0
-        },
-        "hardcore": {
-            "netflagsA": 63370220,
-            "netflagsB": 15,
-            "netflagsC": 42,
-            "weapflags": 0,
-            "invflags": 0
-        },
-        "overpowered": {
-            "netflagsA": 3747708,
-            "netflagsB": 0,
-            "netflagsC": 20,
-            "weapflags": 2047,
-            "invflags": 2047
-        }
-    };
-
     const netflagsAcount = 26;
     const netflagsBcount = 4;
     const netflagsCcount = 6;
     const weapflagscount = 11;
     const invflagscount = 11;
 
-    const metadata = {
-        "game-mode": 10,
-        netflagsA:{
-            max: Array(netflagsAcount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+    const args = {
+        c: { max: 10, val: 1 },
+        y: { max: 99, val: 20 },
+        k: { max: 240, val: 0 },
+        e: { max: 9, val: 0 },
+        q: { max: 7, val: 0 },
+        r: { max: 1, val: 1 },
+        teampicker: { max: 1, val: 0 },
+        lockoptions: { max: 1, val: 0 },
+        lockplayers: { max: 1, val: 0 },
+        a: { max: 1, val: 0 },
+        exploitmode: { max: 1, val: 0 },
+        allowmods: { max: 1, val: 0 },
+        disableautoaim: { max: 1, val: 0 },
+        netflagsA:{ max: Array(netflagsAcount).fill(0).reduce((max,_,i)=>max+=1<<i,0), val: 0 },
+        netflagsB:{ max: Array(netflagsBcount).fill(0).reduce((max,_,i)=>max+=1<<i,0), val: 0 },
+        netflagsC:{ max: Array(netflagsCcount).fill(0).reduce((max,_,i)=>max+=1<<i,0), val: 0 },
+        weapflags:{ max: Array(weapflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0), val: 0 },
+        invflags:{ max: Array(invflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0), val: 0 }
+    };
+
+    const netflagsPresets = {
+        "---": {
+            netflagsA: 0,
+            netflagsB: 0,
+            netflagsC: 0,
+            weapflags: 1,
+            invflags: 1
         },
-        netflagsB:{
-            max: Array(netflagsBcount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        classic: {
+            netflagsA: 398332,
+            netflagsB: 1,
+            netflagsC: 0,
+            weapflags: 1,
+            invflags: 1
         },
-        netflagsC:{
-            max: Array(netflagsCcount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        teamplay: {
+            netflagsA: 54004732,
+            netflagsB: 0,
+            netflagsC: 0,
+            weapflags: 1,
+            invflags: 1
         },
-        weapflags:{
-            max: Array(weapflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        rebalanced: {
+            netflagsA: 50933756,
+            netflagsB: 6,
+            netflagsC: 1,
+            weapflags: 1,
+            invflags: 1
         },
-        invflags:{
-            max: Array(invflagscount).fill(0).reduce((max,_,i)=>max+=1<<i,0)
+        hardcore: {
+            netflagsA: 63370220,
+            netflagsB: 15,
+            netflagsC: 42,
+            weapflags: 1,
+            invflags: 1
+        },
+        overpowered: {
+            netflagsA: 3747708,
+            netflagsB: 0,
+            netflagsC: 20,
+            weapflags: 2047,
+            invflags: 2047
         }
     };
 
@@ -76,20 +78,71 @@ window["load-args-builder"] = async () => {
 
         const params = new URLSearchParams(document.location.search);
 
-        return Object.keys(metadata).reduce((obj, arg) => {            
-            const val = parseInt(params.get(arg) || "0");
-            obj[arg] = val > metadata[arg].max ? 0 : val;
-            return obj;
-        }, {});
+        for (const arg of Object.keys(args)) {
+            const val = parseInt(params.get(arg) || args[arg].val);
+            args[arg].val = val <= 0 ? 0 : (val > args[arg].max ? args[arg].max : val);
+        }
 
     }
 
-    function setArgsInUrlParams(args) {
-        const urlParams = Object.keys(args).map(arg => `${arg}=${args[arg]}`).join("&");
+    function getArgsFromText() {
+
+    }
+
+    function getArgsFromInputs() {
+
+        for (const arg of Object.keys(args)) {
+
+            const input = document.getElementById(arg);
+
+            const getInputValue = () => {    
+                switch (true) {
+                    case input.tagName.toLowerCase() === "select": return input.value;                    
+                    case input.tagName.toLowerCase() === "input" && input.attributes.type.value === "number": return input.value;
+                    case input.tagName.toLowerCase() === "input" && input.attributes.type.value === "checkbox": return input.checked ? "1" : "0";
+                    case input.tagName.toLowerCase() === "input" && input.attributes.type.value === "hidden": return input.value;
+                }
+            }
+
+            const val = parseInt(getInputValue());
+
+            args[arg].val = val <= 0 ? 0 : (val > args[arg].max ? args[arg].max : val);
+
+        }
+
+    }
+
+    function setArgsInUrlParams() {
+        const urlParams = Object.keys(args).map(arg => `${arg}=${args[arg].val}`).join("&");
         window.history.pushState({}, null, `?p=${page}&${urlParams}`);
     }
 
-    function getArgsFromCheckboxes () {
+    function setArgsOnText() {
+        const commands = [];
+        for (const arg of Object.keys(args)) {
+            if (args[arg].val > 0) {
+                commands.push(`/${arg}${args[arg].max > 1 ? args[arg].val : ""}`);
+            }
+        }
+        document.getElementById("arguments").value = commands.join(" ");
+    }
+
+    function setArgsOnInputs() {
+        for (const arg of Object.keys(args)) {
+            const input = document.getElementById(arg);  
+            const setInputValue = (value) => {                    
+                switch (true) {
+                    case input.tagName.toLowerCase() === "select": input.value = value; break;
+                    case input.tagName.toLowerCase() === "input" && input.attributes.type.value === "number": input.value = value; break;
+                    case input.tagName.toLowerCase() === "input" && input.attributes.type.value === "checkbox": input.checked = value === 1; break;
+                    case input.tagName.toLowerCase() === "input" && input.attributes.type.value === "hidden": input.value = value; break;
+                }
+            }
+            setInputValue(args[arg].val)
+        }
+    }
+
+    function getFlagsFromCheckboxes () {
         let netflagsA = 0;
         let netflagsB = 0;
         let netflagsC = 0;
@@ -124,141 +177,142 @@ window["load-args-builder"] = async () => {
         return {netflagsA, netflagsB, netflagsC, weapflags, invflags};
     }
 
-    function setArgsInCheckboxes (args) {
+    function setFlagsInCheckboxes (flags) {
 
-        document.querySelectorAll(`input[type="checkbox"]`).forEach(e => {
+        document.querySelectorAll(`input[type="checkbox"].flag`).forEach(e => {
             e.checked = false;
         });
 
         for (let i = 0; i < netflagsAcount; i++) {
             const flag = (1 << i);
-            if ((flag & args.netflagsA) === flag) {
+            if ((flag & flags.netflagsA) === flag) {
                 document.getElementById(`netflagA-${flag}`).checked = true;
             }
         }
         for (let i = 0; i < netflagsBcount; i++) {
             const flag = (1 << i);
-            if ((flag & args.netflagsB) === flag) {
+            if ((flag & flags.netflagsB) === flag) {
                 document.getElementById(`netflagB-${flag}`).checked = true;
             }
         }
         for (let i = 0; i < netflagsCcount; i++) {
             const flag = (1 << i);
-            if ((flag & args.netflagsC) === flag) {
+            if ((flag & flags.netflagsC) === flag) {
                 document.getElementById(`netflagC-${flag}`).checked = true;
             }
         }
 
         for (let i = 0; i < weapflagscount; i++) {
             const flag = (1 << i);
-            if ((flag & args.weapflags) === flag) {
+            if ((flag & flags.weapflags) === flag) {
                 document.getElementById(`weapflag-${flag}`).checked = true;
             }
         }
 
         for (let i = 0; i < invflagscount; i++) {
             const flag = (1 << i);
-            if ((flag & args.invflags) === flag) {
+            if ((flag & flags.invflags) === flag) {
                 document.getElementById(`invflag-${flag}`).checked = true;
             }
         }
 
     }
 
-    function getArgsFromTextboxes () {
-        const netflagsAtext = document.getElementById("netflagsA").value;
-        const netflagsBtext = document.getElementById("netflagsB").value;
-        const netflagsCtext = document.getElementById("netflagsC").value;
-        const weapflagstext = document.getElementById("weapflags").value;
-        const invflagstext = document.getElementById("invflags").value;
-        const netflagsARegex = /(?<=\/netflagsA)\d*/g;
-        const netflagsBRegex = /(?<=\/netflagsB)\d*/g;
-        const netflagsCRegex = /(?<=\/netflagsC)\d*/g;
-        const weapflagsRegex = /(?<=\/weapflags)\d*/g;
-        const invflagsRegex = /(?<=\/invflags)\d*/g;
-        let netflagsA = parseInt(netflagsAtext.match(netflagsARegex)[0]);
-        let netflagsB = parseInt(netflagsBtext.match(netflagsBRegex)[0]);
-        let netflagsC = parseInt(netflagsCtext.match(netflagsCRegex)[0]);
-        let weapflags = parseInt(weapflagstext.match(weapflagsRegex)[0]);
-        let invflags = parseInt(invflagstext.match(invflagsRegex)[0]);
-        netflagsA = !netflagsA || netflagsA > maxnetflagsA ? 0 : netflagsA;
-        netflagsB = !netflagsB || netflagsB > maxnetflagsB ? 0 : netflagsB;
-        netflagsC = !netflagsC || netflagsC > maxnetflagsC ? 0 : netflagsC;
-        weapflags = !weapflags || weapflags > maxweapflags ? 0 : weapflags;
-        invflags = !invflags || invflags > maxinvflags ? 0 : invflags;
-        return {netflagsA,netflagsB,netflagsC,weapflags,invflags};
-    }
-
-    function setArgsInTextboxes (args) {    
-        document.getElementById("netflagsA").value = `/netflagsA${args.netflagsA}`;
-        document.getElementById("netflagsB").value = `/netflagsB${args.netflagsB}`;
-        document.getElementById("netflagsC").value = `/netflagsC${args.netflagsC}`;
-        document.getElementById("weapflags").value = `/weapflags${args.weapflags}`;
-        document.getElementById("invflags").value = `/invflags${args.invflags}`;
-    }
-
-    function getPresetMatch(args) {
-        for (const preset of Object.keys(presets)) {
-            if (Object.keys(presets[preset]).every(key => presets[preset][key] === args[key])) {
-                return preset;
-            }
-        }
-        return null;
-    }
-
-    // first loading (url input)
-    let argsFromUrlParams = getArgsFromUrlParams();
-
-    // if all args are zero => load classic preset
-    if (Object.values(argsFromUrlParams).every(v => !v)) {
-        argsFromUrlParams = presets["classic"];
-        document.getElementById("presets").value = "classic";
-    } else {
-        // if args match any preset => set that preset
-        const match = getPresetMatch(argsFromUrlParams);
-        if (match) {
-            document.getElementById("presets").value = match;
+    // on input => getfrominput (sets to global) -> set all else
+    document.querySelectorAll(".arg").forEach(e => {
+        if (e.tagName === "input" && e.attributes.type.value === "hidden") {
+            e.addEventListener("change", () => {
+                getArgsFromInputs();
+                setArgsInUrlParams();
+                setArgsOnText();
+            });
         } else {
-            document.getElementById("presets").value = "custom";
-        }
-    }
-
-    setArgsInUrlParams(argsFromUrlParams);
-    setArgsInCheckboxes(argsFromUrlParams);
-    setArgsInTextboxes(argsFromUrlParams);
-
-    // checkbox input
-    document.querySelectorAll(`input[type="checkbox"]`).forEach(e => {
-        e.onchange = () => {
-            const args = getArgsFromCheckboxes();
-            setArgsInTextboxes(args);
-            setArgsInUrlParams(args);    
-        }
-    });
-
-    // textbox input
-    document.querySelectorAll(`input[type="text"]`).forEach(e => {
-        e.oninput = () => {
-            const args = getArgsFromTextboxes();
-            setArgsInCheckboxes(args);
-            setArgsInUrlParams(args);   
+            e.addEventListener("input", () => {
+                getArgsFromInputs();
+                setArgsInUrlParams();
+                setArgsOnText();
+            });
         }
     });
 
     // preset input
     document.getElementById("presets").onchange = e => {
         if (e.target.value === "custom") return;
-        const args = netflagsPresets[e.target.value];
-        setArgsInUrlParams(args);
-        setArgsInCheckboxes(args);
-        setArgsInTextboxes(args);
+        const flags = netflagsPresets[e.target.value];
+        setFlagsInCheckboxes(flags);        
+        for (const id of Object.keys(flags)) {
+            document.getElementById(id).value = flags[id];
+        }
+        getArgsFromInputs();
+        setArgsInUrlParams();
+        setArgsOnText();
     };
+
+    // netflags inputs (bind to input hidden to simplify everything)
+    document.querySelectorAll(`input[type="checkbox"].flag`).forEach(e => {
+        e.oninput = () => {
+            // resolve flags
+            const flags = getFlagsFromCheckboxes();
+            const id = e.dataset.flag;
+            document.getElementById(id).value = flags[id];
+            // main update
+            getArgsFromInputs();
+            setArgsInUrlParams();
+            setArgsOnText();
+        }
+    });
 
     // copy all arguments
     document.getElementById("copy").onclick = e => {
-        const args = getArgsFromUrlParams();
-        const text = Object.keys(args).map(a => args[a] > 0 ? `/${a}${args[a]}` : null);
-        navigator.clipboard.writeText(text.filter(v => v).join(" "));
+        navigator.clipboard.writeText(document.getElementById("arguments").value);
     };
+
+    // set teampicker if choosing any team types
+    document.getElementById("c").addEventListener("input", e => {
+        if ([3,4,5,6,8,9].includes(parseInt(e.target.value))) {
+            document.getElementById("teampicker").checked = true;            
+        } else {
+            document.getElementById("teampicker").checked = false;
+        }
+        setArgsInUrlParams();
+        setArgsOnText();
+    });
+
+    // on url => getfromurl (sets to global) -> set all else
+    getArgsFromUrlParams();
+
+    // if all flags are zero => load classic preset
+    if ([
+        args.netflagsA.val,
+        args.netflagsB.val,
+        args.netflagsC.val,
+        args.weapflags.val,
+        args.invflags.val
+    ].every(v => !v)) {
+        const flags = netflagsPresets["classic"];
+        args.netflagsA.val = flags.netflagsA;
+        args.netflagsB.val = flags.netflagsB;
+        args.netflagsC.val = flags.netflagsC;
+        args.weapflags.val = flags.weapflags;
+        args.invflags.val = flags.invflags;
+        document.getElementById("presets").value = "classic";
+    }
+
+    setArgsInUrlParams();
+    setArgsOnText();
+    setArgsOnInputs();
+    setFlagsInCheckboxes({
+        netflagsA: args.netflagsA.val,
+        netflagsB: args.netflagsB.val,
+        netflagsC: args.netflagsC.val,
+        weapflags: args.weapflags.val,
+        invflags: args.invflags.val
+    });
+
+    // on text => getfromtext (sets to global) -> set all else
+    // ...
+
+    // debug
+    window.args = args;
 
 };

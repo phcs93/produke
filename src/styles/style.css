@@ -189,7 +189,7 @@ div.arg {
 
 }
 
-span.arg {
+span[data-arg] {
     color: var(--progold);
 }
 
