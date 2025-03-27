@@ -81,6 +81,9 @@ pre {
     border-radius: 5px;
     padding: 4px 8px;
     background-color: #1E1E1E;
+    @media (pointer:none), (pointer:coarse) {
+        text-wrap: auto;
+    }
 }
 
 table {
