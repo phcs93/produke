@@ -143,6 +143,12 @@ window["load-features"] = async () => {
                         "en": "Team Friendly Fire",
                         "pt": "Fogo Amigo de Time"
                     }
+                },
+                "team-picker": {
+                    "title": {
+                        "en": "Team Picker",
+                        "pt": "Seletor de Times"
+                    }
                 }
             }
         },
