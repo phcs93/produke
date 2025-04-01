@@ -4,12 +4,28 @@
 
         <div class="flex-columns flex-gap-16">
             <div class="flex-rows flex-gap-16 flex-grow">
-                <h4>ARGUMENTS</h4>
+                <h4>ARGUMENTS FOR EVERYONE</h4>
                 <input type="text" id="arguments" value="" disabled>
             </div>
             <div class="flex-rows flex-gap-16">
                 <h4>&nbsp;</h4>
-                <button id="copy" style="height: 36px; width: 256px;">
+                <button id="copy" class="copy" style="height: 36px; width: 256px;">
+                    <span lang="en" class="copy">COPY ALL ARGUMENTS</span>
+                    <span lang="pt" class="copy">COPIAR ARGUMENTOS</span>
+                    <span lang="en" class="copied">✓ COPIED TO CLIPBOARD!</span>
+                    <span lang="pt" class="copied">✓ COPIADO!</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-columns flex-gap-16">
+            <div class="flex-rows flex-gap-16 flex-grow">
+                <h4>ARGUMENTS FOR HOST ONLY</h4>
+                <input type="text" id="arguments-host" value="" disabled>
+            </div>
+            <div class="flex-rows flex-gap-16">
+                <h4>&nbsp;</h4>
+                <button id="copy-host" class="copy" style="height: 36px; width: 256px;">
                     <span lang="en" class="copy">COPY ALL ARGUMENTS</span>
                     <span lang="pt" class="copy">COPIAR ARGUMENTOS</span>
                     <span lang="en" class="copied">✓ COPIED TO CLIPBOARD!</span>

@@ -16,8 +16,8 @@ window["load-args-builder"] = async () => {
         q: { max: 7, val: 0 },
         r: { max: 1, val: 1 },
         teampicker: { max: 1, val: 0 },
-        lockoptions: { max: 1, val: 0 },
-        lockplayers: { max: 1, val: 0 },
+        lockoptions: { max: 1, val: 0, host: true },
+        lockplayers: { max: 1, val: 0, host: true },
         a: { max: 1, val: 0 },
         exploitmode: { max: 1, val: 0 },
         allowmods: { max: 1, val: 0 },
@@ -119,12 +119,18 @@ window["load-args-builder"] = async () => {
 
     function setArgsOnText() {
         const commands = [];
+        const hostonly = [];
         for (const arg of Object.keys(args)) {
             if (args[arg].val > 0) {
-                commands.push(`/${arg}${args[arg].max > 1 ? args[arg].val : ""}`);
+                if (args[arg].host) {
+                    hostonly.push(`/${arg}${args[arg].max > 1 ? args[arg].val : ""}`);
+                } else {
+                    commands.push(`/${arg}${args[arg].max > 1 ? args[arg].val : ""}`);
+                }
             }
         }
         document.getElementById("arguments").value = commands.join(" ");
+        document.getElementById("arguments-host").value = hostonly.join(" ");
     }
 
     function setArgsOnInputs() {
@@ -267,9 +273,13 @@ window["load-args-builder"] = async () => {
         navigator.clipboard.writeText(document.getElementById("arguments").value);
     };
 
+    document.getElementById("copy-host").onclick = e => {
+        navigator.clipboard.writeText(document.getElementById("arguments-host").value);
+    };
+
     // set teampicker if choosing any team types
     document.getElementById("c").addEventListener("input", e => {
-        if ([3,4,5,6,8,9].includes(parseInt(e.target.value))) {
+        if ([3,4,5,6,9].includes(parseInt(e.target.value))) {
             document.getElementById("teampicker").checked = true;            
         } else {
             document.getElementById("teampicker").checked = false;

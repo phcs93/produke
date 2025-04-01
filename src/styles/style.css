@@ -196,7 +196,7 @@ span[data-arg] {
     color: var(--progold);
 }
 
-button#copy {
+button.copy {
     &:not(:focus) > span.copied { display: none; }
     &:focus {
         background-color: lightgrey;
