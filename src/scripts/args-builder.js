@@ -3,8 +3,8 @@ window["load-args-builder"] = async () => {
     const page = new URLSearchParams(document.location.search).get("p");
 
     const netflagsAcount = 26;
-    const netflagsBcount = 4;
-    const netflagsCcount = 6;
+    const netflagsBcount = 6;
+    const netflagsCcount = 7;
     const weapflagscount = 11;
     const invflagscount = 11;
 
@@ -60,14 +60,14 @@ window["load-args-builder"] = async () => {
         },
         hardcore: {
             netflagsA: 63370220,
-            netflagsB: 15,
-            netflagsC: 42,
+            netflagsB: 31,
+            netflagsC: 106,
             weapflags: 1,
             invflags: 1
         },
         overpowered: {
             netflagsA: 3747708,
-            netflagsB: 0,
+            netflagsB: 32,
             netflagsC: 20,
             weapflags: 2047,
             invflags: 2047
