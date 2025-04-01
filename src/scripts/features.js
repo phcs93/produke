@@ -174,12 +174,6 @@ window["load-features"] = async () => {
                         "pt": "Nomes dos Alvos"
                     }
                 },
-                "weapon-switch-priority": {
-                    "title": {
-                        "en": "Weapon Switch Priority",
-                        "pt": "Prioridade de Troca de Armas"
-                    }
-                },
                 "revealed-automap": {
                     "title": {
                         "en": "Revealed Automap",
@@ -252,6 +246,12 @@ window["load-features"] = async () => {
                         "pt": "Nova Mini HUD"
                     }
                 },
+                "lattency-indicators": {
+                    "title": {
+                        "en": "Lattency Indicators",
+                        "pt": "Indicadores de Latencia"
+                    }
+                },
                 "player-name-on-hud": {
                     "title": {
                         "en": "Player Name on HUD",
@@ -306,10 +306,22 @@ window["load-features"] = async () => {
                         "pt": "Configuração do Jogador"
                     }
                 },
+                "weapon-switch-priority": {
+                    "title": {
+                        "en": "Weapon Switch Priority",
+                        "pt": "Prioridade de Troca de Armas"
+                    }
+                },
                 "user-map-selector": {
                     "title": {
                         "en": "User Map Selector",
                         "pt": "Seletor de User Maps"
+                    }
+                },
+                "bot-menu": {
+                    "title": {
+                        "en": "BOTs Menu",
+                        "pt": "Menu de BOTs"
                     }
                 },
                 "demo-selector": {
