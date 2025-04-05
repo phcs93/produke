@@ -1,5 +1,5 @@
-<span lang="en">In this mode, a team will score a point when capturing the enemy flag and bringing it back to its base. Your "base" is where your flag spawns. If your flag is not in its initial position, you will not be able to "deliver" the enemy flag and score a point. Killing other players does not add or subtract points from the team.</span>
-<span lang="pt">Neste modo, o time ganha um ponto quando capturar a bandeira do inimigo e a traz de volta para a própria base. A sua "base" é o local onde sua bandeira nasce. Se a sua bandeira não estiver na posição inicial, você não poderá "entregar" a bandeira do inimigo e marcar um ponto. Matar outros jogadores não soma nem subtrai pontos do time.</span>
+<span lang="en">In this mode, a team will score a point by bringing a captured enemy flag to your base (where your team's flag spawns). If your flag is not in its initial position (it was captured), you will not be able to "deliver" the enemy flag and score a point until the flag is returned. Killing other players does not add or subtract points from the team.</span>
+<span lang="pt">Neste modo, o time ganha um ponto ao trazer a bandeira capturada do inimigo pra a própria base (local onde sua bandeira nasce). Se a sua bandeira não estiver na posição inicial (foi capturada), você não poderá "entregar" a bandeira do inimigo e marcar um ponto até que ela seja retornada. Matar outros jogadores não soma nem subtrai pontos do time.</span>
 
 <span lang="en">Each team has it's own flag:</span>
 <span lang="pt">Cada time tem sua própria bandeira:</span>
@@ -40,8 +40,8 @@
 
 <img class="screenshot" src="res/screenshots/flag-arrows.png" alt="flag arrows">
 
-<span lang="en">If the flag is being carried by another player, a hand icon with that player's color will be displayed on top of the flag icon.</span>
-<span lang="pt">Se a bandeira estiver sendo carregada por outro jogador, um ícone de mão com a cor desse jogador será exibido em cima do ícone da bandeira.</span>   
+<span lang="en">If the flag is being carried by someone that isn't yourself, a hand icon with that player's color will be displayed on top of the flag icon.</span>
+<span lang="pt">Se a bandeira estiver sendo carregada por alguém que não seja você, um ícone de mão com a cor desse jogador será exibido em cima do ícone da bandeira.</span>
 
 <div class="flex-columns flex-gap-32 flex-justify-content-center">
     <div class="flex-rows flex-gap-16 flex-align-items-center">
@@ -88,15 +88,18 @@
 </div>
 
 <span lang="en">The flag is dropped on the floor when the player carrying it dies. The flag returns to its original position when an allied player touches it or when it stays on the ground for 30 seconds. If the flag is dropped on a damaging floor (lava/acid/rail/purple lava), the period is reduced to a mere 5 seconds. That timer will be displayed on top of the flag icon.</span>
-<span lang="pt">A bandeira é derrubada no chão quando o jogador que estava a carregando morrer. A bandeira retorna para a posição inicial quando um jogador aliado encostar nela ou quando ficar no chão por 30 segundos. Se a bandeira for derrubada em um chão que causa dano (lava/ácido/trilhos/lava roxa), esse tempo é reduzido para meros 5 segundos. Esse tempo será exibido em cima do ícone da bandeira.</span>
+<span lang="pt">A bandeira é derrubada no chão quando o jogador que a estava a carregando morrer. A bandeira retorna para a posição inicial quando um jogador aliado encostar nela ou quando ficar no chão por 30 segundos. Se a bandeira for derrubada em um chão que causa dano (lava/ácido/trilhos/lava roxa), esse tempo é reduzido para meros 5 segundos. Esse tempo será exibido em cima do ícone da bandeira.</span>
 
 <img class="screenshot" src="res/screenshots/flag-counter.png" alt="flag counter">
 
-<span lang="en">You can make the flag return instantly after being dropped by enabling the netflag <pre>Netplay Options > NetFlags > [CTF] Flag Returns Instantly</pre>.</span>
-<span lang="pt">Você pode fazer com que a bandeira retorne instantaneamente habilitando a netflag <pre>Netplay Options > NetFlags > [CTF] Flag Returns Instantly</pre>.</span>
+<span lang="en">Optionally, by enabling the netflag <pre>Netplay Options > NetFlags > [CTF] Flag Returns Instantly</pre> the flag will return instantly after being dropped.</span>
+<span lang="pt">Opcionalmente, habilitando a netflag <pre>Netplay Options > NetFlags > [CTF] Flag Returns Instantly</pre> a bandeira pode ser cofnigurada para retornar instantaneamente ao ser derrubada.</span>
 
-<span lang="en">You can also make the flag auto detonate after 30 seconds of being carried and kill the carrying player, just like in Shadow Warrior. To do that, enable the netflag <pre>Netplay Options > NetFlags > [CTF] Flag Detonation Timer</pre>.</span>
-<span lang="pt">Você pode fazer com que a bandeira se auto destrua em 30 segundos enquanto estiver sendo carregada, matando o jogador que está carregando-a, assim como no Shadow Warrior. Para fazer isso, basta habilitar a netflag <pre>Netplay Options > NetFlags > [CTF] Flag Detonation Timer</pre>.</span>
+<span lang="en">It's also possible to set the flag to auto detonate after 30 seconds of being carried (which will kill the carrying player, forcint the flag to be dropped), just like in Shadow Warrior. To do that, enable the netflag <pre>Netplay Options > NetFlags > [CTF] Flag Detonation Timer</pre>.</span>
+<span lang="pt">Também é possível setar a bandeira para se auto destruir após estar sendo crregada por 30 segundos (matando o jogador que está carregando-a, forçando a flag a ser derrubada), assim como no Shadow Warrior. Para fazer isso, basta habilitar a netflag <pre>Netplay Options > NetFlags > [CTF] Flag Detonation Timer</pre>.</span>
+
+<span lang="en">Deppending on the map balance, it may also be interesting to restrict the usage of steroids and/or jetpack by the player carrying the flag. You can set these options by enabling the netflags <pre>Netplay Options > NetFlags > [CTF] No Steroids if with Flag</pre> and <pre>Netplay Options > NetFlags > [CTF] No Jetpack if with Flag</pre>, respectively.</span>
+<span lang="pt">A depender do balanceamento do mapa, também pode ser interessante restringir o uso de steroids e/ou jetpack pelo player carregando a bandeira. Você pode setar essas opções habilitando as netflags <pre>Netplay Options > NetFlags > [CTF] No Steroids if with Flag</pre> e <pre>Netplay Options > NetFlags > [CTF] No Jetpack if with Flag</pre>, respectivamente.</span>
 
 <!-- 
 <span lang="en">When a player picks/drops/returns or delivers a flag, a sound is played and a message is displayed for everyone.</span>
