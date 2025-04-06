@@ -1,5 +1,74 @@
 module.exports = function({deepClone, utils}, gamedefs) {
 
+    // custom injected css style
+    const style = `
+
+        <style>
+
+            select#game-param-multiplayerMode,
+            select#game-param-monstersSkill,
+            select#game-param-mapType,
+            select#game-param-episodeAndLevel,
+            select#game-param-presets
+            {
+                float: right;
+                width: 480px;
+            }
+
+            input#game-param-map,
+            input#game-param-playDmo
+            {
+                width: calc(480px - 72px);
+            }
+
+            div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] div[style*="width: 100%"]:nth-child(2) > span[style*="display: flex"][style*="flex-direction: row"] { 
+                float: right;
+            }
+
+            div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] span[style*="width: 100%"] > span[style*="display: flex"][style*="flex-direction: row"] { 
+                float: right;
+            }
+
+            input#game-param-scoreLimit,
+            input#game-param-timeLimit,
+            input#game-param-extraLives,
+            input#game-param-botsNum
+            {
+                width: calc(480px - 72px - 4px) !important;
+            }
+
+            div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] div[style*="width: 100%"]:nth-child(2) > div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] input[type="number"] { 
+                width: 72px;
+            }
+
+            div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] div[style*="width: 100%"]:nth-child(2) > div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] { 
+                float: right;
+            }
+
+            input#game-param-allowMods {
+                margin-bottom: 16px;
+            }
+
+            div#netflags {
+                margin: 16px 0px;
+            }    
+
+            div.flags {
+                border: 1px solid #495057;
+                border-radius: 5px;
+                padding: 16px;
+            }
+
+            div.flags > span {
+                display: inline-block;
+                margin-bottom: 16px;
+                font-weight: bolder;
+            }
+
+        </style>
+
+    `;
+
     // used to change order of inputs on view
     const reorderFields = (object, order) => {
         return Object.fromEntries([
@@ -8,53 +77,6 @@ module.exports = function({deepClone, utils}, gamedefs) {
             // put remaining fields in the end
             ...Object.keys(object).filter(key => !order.includes(key)).map(key => [key, object[key]])
         ]);
-    };
-
-    // used to calculate the estimated size of a given string as a monospace font
-    const charWidths = {
-        "0": 8.625, "1": 8.625, "2": 8.625, "3": 8.625, "4": 8.625,
-        "5": 8.625, "6": 8.625, "7": 8.625, "8": 8.625, "9": 8.625,
-        " ": 4.3828125, "!": 4.546875, "\"": 6.2734375, "#": 9.453125,
-        "$": 8.625, "%": 13.09375, "&": 12.8046875, "'": 3.6796875,
-        "(": 4.828125, ")": 4.828125, "*": 6.671875, "+": 10.9453125,
-        ",": 3.46875, "-": 6.3984375, ".": 3.46875, "/": 6.234375,
-        ":": 3.46875, ";": 3.46875, "<": 10.9453125, "=": 10.9453125,
-        ">": 10.9453125, "?": 7.171875, "@": 15.28125, "A": 10.3203125,
-        "B": 9.171875, "C": 9.90625, "D": 11.21875, "E": 8.09375,
-        "F": 7.8125, "G": 10.9765625, "H": 11.359375, "I": 4.2578125,
-        "J": 5.7109375, "K": 9.28125, "L": 7.53125, "M": 14.3671875,
-        "N": 11.96875, "O": 12.0625, "P": 8.9609375, "Q": 12.0625,
-        "R": 9.5703125, "S": 8.5, "T": 8.3828125, "U": 10.9921875,
-        "V": 9.9375, "W": 14.9453125, "X": 9.4375, "Y": 8.84375,
-        "Z": 9.125, "[": 4.828125, "\\": 6.0625, "]": 4.828125,
-        "^": 10.9453125, "_": 6.640625, "`": 4.2890625, "a": 8.140625,
-        "b": 9.40625, "c": 7.390625, "d": 9.421875, "e": 8.3671875,
-        "f": 5.0078125, "g": 9.421875, "h": 9.0546875, "i": 3.875,
-        "j": 3.875, "k": 7.953125, "l": 3.875, "m": 13.78125,
-        "n": 9.0546875, "o": 9.375, "p": 9.40625, "q": 9.421875,
-        "r": 5.5625, "s": 6.7890625, "t": 5.421875, "u": 9.0546875,
-        "v": 7.6640625, "w": 11.5625, "x": 7.34375, "y": 7.7421875,
-        "z": 7.234375, "{": 4.828125, "|": 3.828125, "}": 4.828125,
-        "~": 10.9453125, " ": 4.3828125
-    };
-
-    // used to calculate the estimated size of a given string as a monospace font
-    const estimateVisualWidth = str => {
-        return Array.from(str).reduce((total, ch) => {
-            return total + (charWidths[ch] || charWidths[" "]);
-        }, 0);
-    };
-
-    // used to add spaces after each field's name to align them
-    const pad = str => {
-        const targetWidthPx = 96;
-        let result = str;
-        let currentWidth = estimateVisualWidth(result);
-        while (currentWidth < targetWidthPx) {
-            result += " ";
-            currentWidth = estimateVisualWidth(result);
-        }
-        return result;
     };
 
     // parse netflag name
@@ -85,7 +107,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     delete gamedefs.games.duke3d.executables.produke.parameters.grp;
 
     // game mode
-    gamedefs.games.duke3d.executables.produke.parameters.multiplayerMode.label = pad("Game Mode");
+    gamedefs.games.duke3d.executables.produke.parameters.multiplayerMode.label = "Game Mode";
     gamedefs.games.duke3d.executables.produke.parameters.multiplayerMode.optional = false;
     gamedefs.games.duke3d.executables.produke.parameters.multiplayerMode.choices = [
         {label: "Dukematch (DM)", value: 1},
@@ -111,7 +133,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     };
 
     // skill
-    gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.label = pad("Skill");
+    gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.label = "Skill";
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.type = "choice";    
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.dependsOn = null;
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.value = c => c.value > 0 ? "/s" + c.value : null;
@@ -128,7 +150,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.mapType = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "choice",
-        label: pad("Map Type"),
+        label: "Map Type",
         optional: false,
         syncOnly: true,
         choices: [
@@ -138,7 +160,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     };
 
     // original map
-    gamedefs.games.duke3d.executables.produke.parameters.episodeAndLevel.label = pad("Map");
+    gamedefs.games.duke3d.executables.produke.parameters.episodeAndLevel.label = "Map";
     gamedefs.games.duke3d.executables.produke.parameters.episodeAndLevel.optional = false;
     gamedefs.games.duke3d.executables.produke.parameters.episodeAndLevel.dependsOn = {
         params: "mapType", 
@@ -146,7 +168,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     };
 
     // user map
-    gamedefs.games.duke3d.executables.produke.parameters.map.label = pad("Map");
+    gamedefs.games.duke3d.executables.produke.parameters.map.label = "Map";
     gamedefs.games.duke3d.executables.produke.parameters.map.optional = false;
     gamedefs.games.duke3d.executables.produke.parameters.map.dependsOn = {
         params: "mapType", 
@@ -157,7 +179,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.scoreLimit = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "numrange",
-        label: pad("Score Limit"),
+        label: "Score Limit",
         min: 0,
         max: 99,
         delta: 1,
@@ -169,7 +191,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.timeLimit = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "numrange",
-        label: pad("Time Limit"),
+        label: "Time Limit",
         min: 0,
         max: 240,
         delta: 1,
@@ -181,7 +203,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.extraLives = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "numrange",
-        label: pad("Extra Lives"),
+        label: "Extra Lives",
         min: 0,
         max: 9,
         delta: 1,
@@ -194,7 +216,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     };
 
     // bots
-    gamedefs.games.duke3d.executables.produke.parameters.botsNum.label = pad("BOTs");
+    gamedefs.games.duke3d.executables.produke.parameters.botsNum.label = "BOTs";
     gamedefs.games.duke3d.executables.produke.parameters.botsNum.optional = false;
     gamedefs.games.duke3d.executables.produke.parameters.botsNum.min = 0;
     gamedefs.games.duke3d.executables.produke.parameters.botsNum.max = 16;
@@ -208,7 +230,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.recordDmo.label = "Record DEMO";
 
     // play demo
-    gamedefs.games.duke3d.executables.produke.parameters.playDmo.label = pad("Play DEMO");
+    gamedefs.games.duke3d.executables.produke.parameters.playDmo.label = "Play DEMO";
 
     // lock options
     gamedefs.games.duke3d.executables.produke.parameters.lockOptions = {
@@ -388,7 +410,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.presets = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "choice",
-        label: pad("NetFlags Presets"),
+        label: "NetFlags Presets",
         optional: false,
         syncOnly: true,
         choices: [
@@ -606,14 +628,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
             "timeLimit",
             "extraLives",
             "botsNum",
-            "botsAi",
-            "recordDmo",
-            "playDmo",
+            "botsAi",            
             "lockOptions",
             "lockPlayers",
             "disableAutoaim",
             "exploitMode",
             "allowMods",
+            "recordDmo",
+            "playDmo",
             "presets"
         ]
     );
@@ -630,80 +652,92 @@ module.exports = function({deepClone, utils}, gamedefs) {
             params: "html",
             show: () => {
 
-                const referenceA = document.getElementById("game-param-netFlagAWeaponsPickableOnce");
-                if (referenceA) {
-                    referenceA.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
-                        <div class="netflags-a-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
-                            <span>NetFlags A</span>
-                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
-                        </div>
-                    `);
-                    // remove duplicates and maintain only last
-                    const elements = [...document.querySelectorAll("div.netflags-a-separator")];
-                    for (let i = 0; i < elements.length-1; i++) {
-                        elements[i].remove();
+                // get reference element
+                const reference = document.getElementById("game-param-presets");
+
+                // if reference element doesn't exists => ignore
+                if (!reference) return;
+
+                // get custom netflags element
+                const netflags = document.getElementById("netflags");
+
+                // if custom netflags element already exists => just check if it is in the correct spot
+                if (netflags) {
+
+                    const innerDiv = reference.closest("div");
+                    const outerDiv = innerDiv?.parentElement;
+
+                    if (!outerDiv) return;
+                    if (outerDiv.nextElementSibling !== netflags) {
+                        outerDiv.parentElement.insertBefore(netflags, outerDiv.nextElementSibling);                    
                     }
+
+                    // move checkboxes to corresponding boxes
+                    document.querySelectorAll(`[id^="game-param-netFlagA"]`).forEach(e => {
+                        document.getElementById("netflagsA").appendChild(e.parentNode.parentNode.parentNode);
+                    });
+                    document.querySelectorAll(`[id^="game-param-netFlagB"]`).forEach(e => {
+                        document.getElementById("netflagsB").appendChild(e.parentNode.parentNode.parentNode);
+                    });
+                    document.querySelectorAll(`[id^="game-param-netFlagC"]`).forEach(e => {
+                        document.getElementById("netflagsC").appendChild(e.parentNode.parentNode.parentNode);
+                    });
+                    document.querySelectorAll(`[id^="game-param-weapFlag"]`).forEach(e => {
+                        document.getElementById("weapFlags").appendChild(e.parentNode.parentNode.parentNode);
+                    });
+                    document.querySelectorAll(`[id^="game-param-invFlag"]`).forEach(e => {
+                        document.getElementById("invFlags").appendChild(e.parentNode.parentNode.parentNode);
+                    });
+
+                    return;
                 }
 
-                const referenceB = document.getElementById("game-param-netFlagBTEAMNoColoredTripbombs");
-                if (referenceB) {
-                    referenceB.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
-                        <div class="netflags-b-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
-                            <span>NetFlags B</span>
-                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
+                // add main flex boxes
+                reference.parentNode.parentNode.insertAdjacentHTML("afterend", `
+                    ${style}
+                    <div id="netflags" style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="display: flex; flex-direction: row; gap: 16px;">
+                            <div style="flex: 1; min-width: 0;">
+                                <div id="netflagsA" class="flags">
+                                    <span>NetFlags A</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 16px;">
+                                <div id="netflagsB" class="flags">
+                                    <span>NetFlags B</span>
+                                </div>
+                                <div id="netflagsC" class="flags"">
+                                    <span>NetFlags C</span>
+                                </div>
+                            </div>
                         </div>
-                    `);
-                    // remove duplicates and maintain only last
-                    const elements = [...document.querySelectorAll("div.netflags-b-separator")];
-                    for (let i = 0; i < elements.length-1; i++) {
-                        elements[i].remove();
-                    }
-                }
+                        <div style="display: flex; flex-direction: row; gap: 16px;">
+                            <div id="weapFlags" style="flex: 1; min-width: 0;" class="flags">
+                                <span>Starting Weapon</span>
+                            </div>
+                            <div id="invFlags" style="flex: 1; min-width: 0;" class="flags">
+                                <span>Starting Inventory</span>
+                            </div>
+                        </div>
+                    </div>
+                `);
 
-                const referenceC = document.getElementById("game-param-netFlagCArsenalRebalance");
-                if (referenceC) {
-                    referenceC.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
-                        <div class="netflags-c-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
-                            <span>NetFlags C</span>
-                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
-                        </div>
-                    `);
-                    // remove duplicates and maintain only last
-                    const elements = [...document.querySelectorAll("div.netflags-c-separator")];
-                    for (let i = 0; i < elements.length-1; i++) {
-                        elements[i].remove();
-                    }
-                }
-
-                const referenceW = document.getElementById("game-param-weapFlagPistol");
-                if (referenceW) {
-                    referenceW.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
-                        <div class="weapflags-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
-                            <span>Starting Weapons</span>
-                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
-                        </div>
-                    `);
-                    // remove duplicates and maintain only last
-                    const elements = [...document.querySelectorAll("div.weapflags-separator")];
-                    for (let i = 0; i < elements.length-1; i++) {
-                        elements[i].remove();
-                    }
-                }
-
-                const referenceI = document.getElementById("game-param-invFlagKeyCards");
-                if (referenceI) {
-                    referenceI.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
-                        <div class="invflags-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
-                            <span>Starting Inventory</span>
-                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
-                        </div>
-                    `);
-                    // remove duplicates and maintain only last
-                    const elements = [...document.querySelectorAll("div.invflags-separator")];
-                    for (let i = 0; i < elements.length-1; i++) {
-                        elements[i].remove();
-                    }
-                }
+                // move checkboxes to corresponding boxes
+                document.querySelectorAll(`[id^="game-param-netFlagA"]`).forEach(e => {
+                    document.getElementById("netflagsA").appendChild(e.parentNode.parentNode.parentNode);
+                });
+                document.querySelectorAll(`[id^="game-param-netFlagB"]`).forEach(e => {
+                    document.getElementById("netflagsB").appendChild(e.parentNode.parentNode.parentNode);
+                });
+                document.querySelectorAll(`[id^="game-param-netFlagC"]`).forEach(e => {
+                    document.getElementById("netflagsC").appendChild(e.parentNode.parentNode.parentNode);
+                });
+                document.querySelectorAll(`[id^="game-param-weapFlag"]`).forEach(e => {
+                    document.getElementById("weapFlags").appendChild(e.parentNode.parentNode.parentNode);
+                });
+                document.querySelectorAll(`[id^="game-param-invFlag"]`).forEach(e => {
+                    document.getElementById("invFlags").appendChild(e.parentNode.parentNode.parentNode);
+                });
 
                 return false;
             }
