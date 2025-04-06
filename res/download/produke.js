@@ -57,6 +57,18 @@ module.exports = function({deepClone, utils}, gamedefs) {
         return result;
     };
 
+    // parse netflag name
+    const parseNetFlagName = s => {
+        return s
+            .replace("[", "")
+            .replace("]", "")
+            .replace(/\//g, "")
+            .replace(/\'/g, "")
+            .split(" ")
+            .join("")
+        ;
+    };
+
     // clone xduke definitions as base
     gamedefs.games.duke3d.executables.produke = deepClone(gamedefs.games.duke3d.executables.xduke);
 
@@ -102,7 +114,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.label = pad("Skill");
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.type = "choice";    
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.dependsOn = null;
-    gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.value = c => c.value > 0 ? "/s" + c.value : "/m";
+    gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.value = c => c.value > 0 ? "/s" + c.value : null;
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.optional = false;
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.choices = [
         {label: "No Monsters", value: 0},
@@ -245,53 +257,6 @@ module.exports = function({deepClone, utils}, gamedefs) {
         value: "/allowmods"
     };
 
-    // netflags presets
-    gamedefs.games.duke3d.executables.produke.parameters.presets = {
-        modeSupport: ["multiplayer", "singleplayer"],
-        type: "choice",
-        label: pad("NetFlags Presets"),
-        optional: false,
-        syncOnly: true,
-        choices: [
-            {label: "Classic", value: "classic"},
-            {label: "Teamplay", value: "teamplay"},
-            {label: "Rebalanced", value: "rebalanced"},
-            {label: "Hardcore", value: "hardcore"},
-            {label: "Overpowered", value: "overpowered"},
-            {label: "---", value: "---"}
-        ],
-        dependsOn: {
-            params: "presets", 
-            show: async c => {
-                switch (c?.ParamEl?.presets) {
-                    case "classic": {
-                        break;
-                    }
-                    case "teamplay": {
-                        break;
-                    }
-                    case "rebalanced": {
-                        break;
-                    }
-                    case "hardcore": {
-                        break;
-                    }
-                    case "overpowered": {
-                        break;
-                    }
-                    case "---": {
-                        break;
-                    }
-                    default: {
-                        // ingore
-                        break;
-                    }
-                }
-                return true;
-            }
-        }
-    };
-
     // netflags A definition
     const netFlagsADefs = {
         "Weapons Pickable Once": 1,
@@ -373,9 +338,122 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "Atomic Health 2": 1024
     };
 
+    // netflags presets
+    const netflagsPresets = {
+        "---": {
+            netflagsA: 0,
+            netflagsB: 0,
+            netflagsC: 0,
+            weapflags: 1,
+            invflags: 1
+        },
+        classic: {
+            netflagsA: 398332,
+            netflagsB: 1,
+            netflagsC: 0,
+            weapflags: 1,
+            invflags: 1
+        },
+        teamplay: {
+            netflagsA: 54004732,
+            netflagsB: 0,
+            netflagsC: 0,
+            weapflags: 1,
+            invflags: 1
+        },
+        rebalanced: {
+            netflagsA: 50933756,
+            netflagsB: 6,
+            netflagsC: 1,
+            weapflags: 1,
+            invflags: 1
+        },
+        hardcore: {
+            netflagsA: 63370220,
+            netflagsB: 31,
+            netflagsC: 106,
+            weapflags: 1,
+            invflags: 1
+        },
+        overpowered: {
+            netflagsA: 3747708,
+            netflagsB: 32,
+            netflagsC: 20,
+            weapflags: 2047,
+            invflags: 2047
+        }
+    };
+
+    // netflags presets input
+    gamedefs.games.duke3d.executables.produke.parameters.presets = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "choice",
+        label: pad("NetFlags Presets"),
+        optional: false,
+        syncOnly: true,
+        choices: [
+            {label: "Classic", value: "classic"},
+            {label: "Teamplay", value: "teamplay"},
+            {label: "Rebalanced", value: "rebalanced"},
+            {label: "Hardcore", value: "hardcore"},
+            {label: "Overpowered", value: "overpowered"},
+            {label: "---", value: "---"}
+        ],
+        dependsOn: {
+            params: "presets", 
+            show: async c => {
+                if (c?.ParamEl?.presets) {
+                    const element = document.getElementById("game-param-presets");
+                    if (!element.dataset.listening) {
+                        element.dataset.listening = true;
+                        element.addEventListener("input", e => {
+                            const preset = netflagsPresets[e.target.value.replace(/\"/g, "")];
+                            for (const nf of Object.keys(netFlagsADefs)) {
+                                if ((preset.netflagsA & netFlagsADefs[nf]) !== 0) {                            
+                                    document.getElementById(`game-param-netFlagA${parseNetFlagName(nf)}`).checked = true;
+                                } else {
+                                    document.getElementById(`game-param-netFlagA${parseNetFlagName(nf)}`).checked = false;
+                                }
+                            }
+                            for (const nf of Object.keys(netFlagsBDefs)) {
+                                if ((preset.netflagsB & netFlagsBDefs[nf]) !== 0) {
+                                    document.getElementById(`game-param-netFlagB${parseNetFlagName(nf)}`).checked = true;
+                                } else {
+                                    document.getElementById(`game-param-netFlagB${parseNetFlagName(nf)}`).checked = false;
+                                }
+                            }
+                            for (const nf of Object.keys(netFlagsCDefs)) {
+                                if ((preset.netflagsC & netFlagsCDefs[nf]) !== 0) {
+                                    document.getElementById(`game-param-netFlagC${parseNetFlagName(nf)}`).checked = true;
+                                } else {
+                                    document.getElementById(`game-param-netFlagC${parseNetFlagName(nf)}`).checked = false;
+                                }
+                            }
+                            for (const nf of Object.keys(weapFlagsDefs)) {
+                                if ((preset.weapflags & weapFlagsDefs[nf]) !== 0) {
+                                    document.getElementById(`game-param-weapFlag${parseNetFlagName(nf)}`).checked = true;
+                                } else {
+                                    document.getElementById(`game-param-weapFlag${parseNetFlagName(nf)}`).checked = false;
+                                }
+                            }
+                            for (const nf of Object.keys(invFlagsDefs)) {
+                                if ((preset.invflags & invFlagsDefs[nf]) !== 0) {
+                                    document.getElementById(`game-param-invFlag${parseNetFlagName(nf)}`).checked = true;
+                                } else {
+                                    document.getElementById(`game-param-invFlag${parseNetFlagName(nf)}`).checked = false;
+                                }
+                            }
+                        });
+                    }                    
+                }
+                return true;
+            }
+        }
+    };
+
     // netflags A inputs
     for (const nfa of Object.keys(netFlagsADefs)) {
-        const prop = nfa.replace("[", "").replace("]", "").replace(/\//g, "").replace(/\'/g, "").split(" ").join("");
+        const prop = parseNetFlagName(nfa);
         gamedefs.games.duke3d.executables.produke.parameters[`netFlagA${prop}`] = {
             "modeSupport": ["multiplayer", "singleplayer"],
             "type": "boolean",
@@ -387,7 +465,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflags B inputs
     for (const nfb of Object.keys(netFlagsBDefs)) {
-        const prop = nfb.replace("[", "").replace("]", "").replace(/\//g, "").replace(/\'/g, "").split(" ").join("");
+        const prop = parseNetFlagName(nfb);
         gamedefs.games.duke3d.executables.produke.parameters[`netFlagB${prop}`] = {
             "modeSupport": ["multiplayer", "singleplayer"],
             "type": "boolean",
@@ -399,7 +477,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflags C inputs
     for (const nfc of Object.keys(netFlagsCDefs)) {
-        const prop = nfc.replace("[", "").replace("]", "").replace(/\//g, "").replace(/\'/g, "").split(" ").join("");
+        const prop = parseNetFlagName(nfc);
         gamedefs.games.duke3d.executables.produke.parameters[`netFlagC${prop}`] = {
             "modeSupport": ["multiplayer", "singleplayer"],
             "type": "boolean",
@@ -411,7 +489,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // weapflags inputs
     for (const wf of Object.keys(weapFlagsDefs)) {
-        const prop = wf.replace("[", "").replace("]", "").replace(/\//g, "").replace(/\'/g, "").split(" ").join("");
+        const prop = parseNetFlagName(wf);
         gamedefs.games.duke3d.executables.produke.parameters[`weapFlag${prop}`] = {
             "modeSupport": ["multiplayer", "singleplayer"],
             "type": "boolean",
@@ -423,7 +501,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // invflags inputs
     for (const invf of Object.keys(invFlagsDefs)) {
-        const prop = invf.replace("[", "").replace("]", "").replace(/\//g, "").replace(/\'/g, "").split(" ").join("");
+        const prop = parseNetFlagName(invf);
         gamedefs.games.duke3d.executables.produke.parameters[`invFlag${prop}`] = {
             "modeSupport": ["multiplayer", "singleplayer"],
             "type": "boolean",
@@ -446,7 +524,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
                 }
             }
             // failsafe => force "DontSpawnMonsters" if skill is set to "No Monsters"
-            if (c.GameRoom.Params.monstersSkill[0] === "/m") netFlagsA |= 32;
+            if (c.GameRoom.Params.monstersSkill.length === 0) netFlagsA |= 32;
             return netFlagsA > 0 ? [`/netflagsA${netFlagsA}`] : null;
         }
     };
@@ -491,7 +569,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         value: c => {
             let weapFlags = 0;
             for (let p in c.GameRoom.Params) {
-                if (p.startsWith("weapFlags")) {
+                if (p.startsWith("weapFlag")) {
                     weapFlags |= parseInt(c.GameRoom.ParamDefs[p]?.value || 0);
                 }
             }
@@ -507,7 +585,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         value: c => {
             let invFlags = 0;
             for (let p in c.GameRoom.Params) {
-                if (p.startsWith("invFlags")) {
+                if (p.startsWith("invFlag")) {
                     invFlags |= parseInt(c.GameRoom.ParamDefs[p]?.value || 0);
                 }
             }
@@ -539,5 +617,97 @@ module.exports = function({deepClone, utils}, gamedefs) {
             "presets"
         ]
     );
+
+    // small hack to manipulate the html
+    gamedefs.games.duke3d.executables.produke.parameters.html = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "choice",
+        label: "",
+        optional: false,
+        syncOnly: true,
+        choices: [ {label: "", value: ""} ],
+        dependsOn: {
+            params: "html",
+            show: () => {
+
+                const referenceA = document.getElementById("game-param-netFlagAWeaponsPickableOnce");
+                if (referenceA) {
+                    referenceA.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
+                        <div class="netflags-a-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
+                            <span>NetFlags A</span>
+                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
+                        </div>
+                    `);
+                    // remove duplicates and maintain only last
+                    const elements = [...document.querySelectorAll("div.netflags-a-separator")];
+                    for (let i = 0; i < elements.length-1; i++) {
+                        elements[i].remove();
+                    }
+                }
+
+                const referenceB = document.getElementById("game-param-netFlagBTEAMNoColoredTripbombs");
+                if (referenceB) {
+                    referenceB.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
+                        <div class="netflags-b-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
+                            <span>NetFlags B</span>
+                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
+                        </div>
+                    `);
+                    // remove duplicates and maintain only last
+                    const elements = [...document.querySelectorAll("div.netflags-b-separator")];
+                    for (let i = 0; i < elements.length-1; i++) {
+                        elements[i].remove();
+                    }
+                }
+
+                const referenceC = document.getElementById("game-param-netFlagCArsenalRebalance");
+                if (referenceC) {
+                    referenceC.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
+                        <div class="netflags-c-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
+                            <span>NetFlags C</span>
+                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
+                        </div>
+                    `);
+                    // remove duplicates and maintain only last
+                    const elements = [...document.querySelectorAll("div.netflags-c-separator")];
+                    for (let i = 0; i < elements.length-1; i++) {
+                        elements[i].remove();
+                    }
+                }
+
+                const referenceW = document.getElementById("game-param-weapFlagPistol");
+                if (referenceW) {
+                    referenceW.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
+                        <div class="weapflags-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
+                            <span>Starting Weapons</span>
+                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
+                        </div>
+                    `);
+                    // remove duplicates and maintain only last
+                    const elements = [...document.querySelectorAll("div.weapflags-separator")];
+                    for (let i = 0; i < elements.length-1; i++) {
+                        elements[i].remove();
+                    }
+                }
+
+                const referenceI = document.getElementById("game-param-invFlagKeyCards");
+                if (referenceI) {
+                    referenceI.parentNode.parentNode.parentNode.insertAdjacentHTML("beforebegin", `
+                        <div class="invflags-separator" style="display: flex; flex-direction: row; align-items: center; margin: 8px 0px;">
+                            <span>Starting Inventory</span>
+                            <hr style="flex-grow: 1; margin-left: 10px; border: none; border-top: 1px solid #ccc;">
+                        </div>
+                    `);
+                    // remove duplicates and maintain only last
+                    const elements = [...document.querySelectorAll("div.invflags-separator")];
+                    for (let i = 0; i < elements.length-1; i++) {
+                        elements[i].remove();
+                    }
+                }
+
+                return false;
+            }
+        }
+    };
 
 }
