@@ -1,3 +1,5 @@
+// custom NukemNet support for proDuke written by LARD (phcs93)
+
 module.exports = function({deepClone, utils}, gamedefs) {
 
     // custom injected css style
