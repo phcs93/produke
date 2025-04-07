@@ -42,6 +42,7 @@ div#navbar {
 
     &[data-page="home"] > a[href="?p=home"] { text-decoration: underline; }
     &[data-page="features"] > a[href="?p=features"] { text-decoration: underline; }
+    &[data-page="nukemnet-support"] > a[href="?p=nukemnet-support"] { text-decoration: underline; }
     &[data-page="args-builder"] > a[href="?p=args-builder"] { text-decoration: underline; }
     &[data-page="changelog"] > a[href="?p=changelog"] { text-decoration: underline; }
 
