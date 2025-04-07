@@ -1,6 +1,4 @@
 window["load-args-builder"] = async () => {
-    
-    const page = new URLSearchParams(document.location.search).get("p");
 
     const netflagsAcount = 26;
     const netflagsBcount = 6;
@@ -113,8 +111,13 @@ window["load-args-builder"] = async () => {
     }
 
     function setArgsInUrlParams() {
-        const urlParams = Object.keys(args).map(arg => `${arg}=${args[arg].val}`).join("&");
-        window.history.pushState({}, null, `?p=${page}&${urlParams}`);
+        const url = new URL(window.location.href);
+        for (const arg of Object.keys(args)) {
+            url.searchParams.set(arg, args[arg].val);
+        }
+        window.history.replaceState({}, null, url);
+        // const urlParams = Object.keys(args).map(arg => `${arg}=${args[arg].val}`).join("&");
+        // window.history.pushState({}, null, `?p=${page}&${urlParams}`);
     }
 
     function setArgsOnText() {
