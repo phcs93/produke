@@ -1,0 +1,9 @@
+{
+    "scripts": {
+      "prerender": "node prerender.js"
+    },
+    "devDependencies": {
+      "puppeteer": "^21.3.8",
+      "serve": "^14.2.0"
+    }
+  }
