@@ -7,6 +7,7 @@ const pages = ["home", "features", "nukemnet-support", "args-builder", "changelo
 (async () => {
 
   const browser = await puppeteer.launch({
+    headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   const page = await browser.newPage();
@@ -14,6 +15,7 @@ const pages = ["home", "features", "nukemnet-support", "args-builder", "changelo
   for (const route of pages) {
 
     const url = `http://localhost:8080/?p=${route}`;
+    console.log(`${url}`);
     await page.goto(url, { waitUntil: "networkidle0" });
     const html = await page.content();
 

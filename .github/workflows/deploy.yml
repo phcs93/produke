@@ -23,8 +23,8 @@ jobs:
 
     - name: Start local server
       run: |
-        npx serve .github/public &
-        sleep 5
+        npx serve .github/public -l 8080 &
+        sleep 10
 
     - name: Run Puppeteer pre-render
       run: npm run prerender
