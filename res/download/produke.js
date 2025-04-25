@@ -129,7 +129,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         modeSupport: ["singleplayer", "multiplayer"],
         type: "static",
         addIf: c => {
-            return [3,4,5,6,8].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
+            return [3,4,5,6,9].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
         },
         value: "/teampicker"
     };
