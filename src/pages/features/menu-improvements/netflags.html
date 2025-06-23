@@ -4,7 +4,6 @@
 <span lang="pt">O número exibido acima do menu é um <strong style="color: var(--progold);">bitfield</strong> que representa todas as flags habilitadas, vá para <a href="#command-line-arguments">argumentos de linha de comando</a> para entender mais. Você pode utilizar o <a href="?p=args-builder">construtor de argumentos</a> para gerar o argumento.</span>
 <img src="res/screenshots/netflags.gif" alt="netflags" class="screenshot">
 
-<!--
 <table>
     <thead>
         <tr>
@@ -19,6 +18,9 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td colspan="2"><b>NETFLAGS A</b></td>
+        </tr>
         <tr>
             <td>
                 <span lang="en">Weapons Pickable Once</span>
@@ -225,8 +227,8 @@
                 <span lang="pt">[COOP/TEAM/TRM] Contornos</span>
             </td>
             <td>
-                <span lang="en">Allied players (or the Terminator itself or its targets, in case of the Terminator mode) will have an outline that can be seen through walls.<br/>Will also be seen through walls: the overhead weapon, the overhead info (if <b>[COOP/TEAM/TRM] Outlines</b> is also enabled) and the allied tripbombs (as long <b>[TEAM] No Colored Tripbombs</b> is not disabled).</span>
-                <span lang="pt">Jogadores aliados (ou o Exterminador ou seus alvos, se no modo Terminator) terão um contorno que será visível através das paredes.<br/>Também serão vísíveis através das paredes: a arma do player, o visor de informações (se <b>[COOP/TEAM/TRM] Outlines</b> estiver habilitada) e as tripbombs aliadas (contanto que <b>[TEAM] Sem Tripbombs Coloridas</b> não esteja desabilitada).</span>
+                <span lang="en">Allied players (or the Terminator itself or its targets, in case of the Terminator mode) will have an outline that can be seen through walls.<br/>Will also be seen through walls: the overhead weapon and the overhead info (if <b>[COOP/TEAM/TRM] Outlines</b> is also enabled), the allied tripbombs (as long <b>[TEAM] No Colored Tripbombs</b> is not disabled).</span>
+                <span lang="pt">Jogadores aliados (ou o Exterminador ou seus alvos, se no modo Terminator) terão um contorno que será visível através das paredes.<br/>Também serão vísíveis através das paredes: a arma do player e o visor de informações (se <b>[COOP/TEAM/TRM] Outlines</b> estiver habilitada), as tripbombs aliadas (contanto que <b>[TEAM] Sem Tripbombs Coloridas</b> não esteja desabilitada).</span>
             </td>
         </tr>
         <tr>
@@ -235,18 +237,18 @@
                 <span lang="pt">[CTF] Contorno Nas Bandeiras</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">All CTF flags will have an outline (that can be seen through walls).</span>
+                <span lang="pt">Todas as bandeiras de CTF terão um contorno (que será visível através das paredes).</span>
             </td>
         </tr>
         <tr>
             <td>
-                <span lang="en">[CTF] Flag Return Instantly</span>
+                <span lang="en">[CTF] Flag Returns Instantly</span>
                 <span lang="pt">[CTF] Bandeira Retorna Instantaneamente</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">The CTF flag will automatically return instantly upon being dropped, instead of requiring an allied player to touch it for it to be returned (or having to wait for the return countdown to be depleted).</span>
+                <span lang="pt">A bandeira de CTF irá retornar instantaneamente ao ser derrubada, ao invés de precisar que um jogador aliado encoste nela para retorná-la (ou ter de esperar que a contagem de retorno se esgote).</span>
             </td>
         </tr>
         <tr>
@@ -255,8 +257,8 @@
                 <span lang="pt">[CTF] Bandeira se Autodestrói</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Upon being captured, the CTF flag will have a countdown of 30 in game seconds for it to be delivered. If  not delivered in time it will auto detonate, forcing it to be dropped by killing the carrying player.<br/>This setting simulates the CTF mode from Shadow Warrior.</span>
+                <span lang="pt">Ao ser capturada, a flag de CTF terá uma contagem de 30 segundos de jogo para que ela seja entregue. Se não for entregue a tempo ela se auto destruirá, forçando seu próprio derrubamento ao matar o player que está carregando-a.<br/>Esta opção simila o modo CTF do Shadow Warrior.</span>
             </td>
         </tr>
         <tr>
@@ -265,8 +267,8 @@
                 <span lang="pt">[T/LMS] Spycam Restrita</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">During gameover (i.e. without extra lives to respawn), it will not be allowed to peek (with the spycam/coop view) on allied players.</span>
+                <span lang="pt">Durante o gameover (i.e. sem vidas extras para renasdcer), não será possível espiar (com o spycam/coop view) os jogadores aliados.</span>
             </td>
         </tr>
         <tr>
@@ -275,20 +277,21 @@
                 <span lang="pt">[T/LMS] Chat Restrito</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">During gameover (i.e. without extra lives to respawn), it will only be possible to chat with other players on game over.</span>
+                <span lang="pt">Durante o gameover (i.e. sem vidas extras para renasdcer), só será possível conversar com jogadores que também estão em game over.</span>
             </td>
         </tr>
-
-
+        <tr> 
+            <td colspan="2"><b>NETFLAGS B</b></td>
+        </tr>
         <tr>
             <td>
                 <span lang="en">[TEAM] No Colored Tripbombs</span>
                 <span lang="pt">[TEAM] Sem Tripbombs Coloridas</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the team colored trip bombs, so every trip bomb will have red lasers again.</span>
+                <span lang="pt">Desabilita as tripbombs coloridas de time, fazendo com que toda trip bomb tenha um laser vermelho novamente.</span>
             </td>
         </tr>
         <tr>
@@ -297,8 +300,8 @@
                 <span lang="pt">[CTF] Sem Steroids Ao Carregar Bandeira</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the use of Steroids by the player carrying the flag. In case it's being used on the moment a flag is picked, the Steroids will be depleted instantly.<br/>Serves as a balance measure for certain maps.</span>
+                <span lang="pt">Desabilita o uso de Steroids pelo player que estiver carregando a bandeira. Caso ele esteja sendo usado no momento em que a bandeira for pega, o Steroids será esgotado instantaneamente.<br/>Serve de medida de balanceamento para certos mapas.</span>
             </td>
         </tr>
         <tr>
@@ -307,8 +310,8 @@
                 <span lang="pt">[CTF] Sem Jetpack Ao Carregar Bandeira</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the use of Jetpack by the player carrying the flag. In case it's being used on the moment a flag is picked, the Jetpack will be deactivated instantly.<br/>Serves as a balance measure for certain maps.</span>
+                <span lang="pt">Desabilita o uso de Jetpack pelo player que estiver carregando a bandeira. Caso ele esteja sendo usado no momento em que a bandeira for pega, o Jetpack será desativado instantaneamente.<br/>Serve de medida de balanceamento para certos mapas.</span>
             </td>
         </tr>
         <tr>
@@ -317,8 +320,8 @@
                 <span lang="pt">[TRM] Sem Jetpack Infinito</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the natural Terminator ability of having infinite Jetpack.</span>
+                <span lang="pt">Desabilita a habilidade natural do Exterminador de ter Jetpack infinito.</span>
             </td>
         </tr>
         <tr>
@@ -327,8 +330,8 @@
                 <span lang="pt">[TRM] Sem Imunidade à Shrinker</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the natural Terminator ability of having Shrinker Immunity.</span>
+                <span lang="pt">Desabilita a habilidade natural do Exterminador de ter imunidade à Shrinker.</span>
             </td>
         </tr>
         <tr>
@@ -337,20 +340,21 @@
                 <span lang="pt">[TRM] Sem Fraqueza à Freezer</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the natural Terminator weakness of receiving 4x Freezer damage.</span>
+                <span lang="pt">Desabilita a fraqueza natural do Exterminador de receber 4x o dano da Freezer.</span>
             </td>
         </tr>
-
-
+        <tr>
+            <td colspan="2"><b>NETFLAGS C</b></td>
+        </tr>
         <tr>
             <td>
                 <span lang="en">Arsenal Rebalance</span>
                 <span lang="pt">Rebalanceamento Do Arsenal</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Rebalance of certain weapons/items so they are more useful. For the complete list of changes, see <a href="#nightvision-full-visibility">this</a>.</span>
+                <span lang="pt">Rebalanceamento de certas armas/items para que eles sejam mais úteis. Para a completa lista de mudanças, veja <a href="#nightvision-full-visibility">isto.</span>
             </td>
         </tr>
         <tr>
@@ -359,8 +363,8 @@
                 <span lang="pt">Laser Invisivel Sem Nightvision</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Tripbomb lasers will only be visible if Nightvision is on.<br/>Same effect as line 90 from USER.CON.<br/></span>
+                <span lang="pt">Lasers das tripbombs só serão visíveis ao ligar o Nightvision.<br/>Mesmo efeito da linha 90 do USER.CON.</span>
             </td>
         </tr>
         <tr>
@@ -369,8 +373,8 @@
                 <span lang="pt">Freezer Não Danifica O Dono</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Players will be invulnerable from freezer projectiles shot by themselves.<br/>Same effect as line 55 from USER.CON.<br/></span>
+                <span lang="pt">Jogadores serão invulneráveis a projéteis de gelo atirados por eles mesmos.<br/>Mesmo efeito da linha 55 do USER.CON.</span>
             </td>
         </tr>
         <tr>
@@ -379,8 +383,8 @@
                 <span lang="pt">Cameras Destrutíveis</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Cameras are now destructable.<br/>Same effect as line 54 from USER.CON.<br/></span>
+                <span lang="pt">Cameras sao destrutíveis.<br/>Mesmo efeito da linha 54 do USER.CON.</span>
             </td>
         </tr>
         <tr>
@@ -389,8 +393,8 @@
                 <span lang="pt">[1.3D] Chute Duplo</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Allows to kick with both legs at the same time, like on version 1.3d.</span>
+                <span lang="pt">Permite chutar com as duas pernas ao mesmo tempo, como na versão 1.3d.</span>
             </td>
         </tr>
         <tr>
@@ -399,8 +403,8 @@
                 <span lang="pt">[1.3D] Sem Expander</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Disables the Expander, like on version 1.3d.</span>
+                <span lang="pt">Desabilita a Expander, como na versão 1.3d.</span>
             </td>
         </tr>
         <tr>
@@ -409,10 +413,9 @@
                 <span lang="pt">Corrigir Tripbombs Em Rampas</span>
             </td>
             <td>
-                <span lang="en"></span>
-                <span lang="pt"></span>
+                <span lang="en">Fix the infamous bug of invisible tripbombs on inverted slopes.</span>
+                <span lang="pt">Arruma o infame bug de tripbombs invisíveis em rampas invertidas.</span>
             </td>
         </tr>
     </tbody>
 </table>
--->
