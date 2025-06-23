@@ -3,3 +3,416 @@
 <span lang="en">The number shown above the menu is a <strong style="color: var(--progold);">bitfield</strong> representing all enabled flags, go to <a href="#command-line-arguments">command line arguments</a> to learn more. You can use the <a href="?p=args-builder">args builder</a> to generate the argument.</span>
 <span lang="pt">O número exibido acima do menu é um <strong style="color: var(--progold);">bitfield</strong> que representa todas as flags habilitadas, vá para <a href="#command-line-arguments">argumentos de linha de comando</a> para entender mais. Você pode utilizar o <a href="?p=args-builder">construtor de argumentos</a> para gerar o argumento.</span>
 <img src="res/screenshots/netflags.gif" alt="netflags" class="screenshot">
+
+<!--
+<table>
+    <thead>
+        <tr>
+            <th>
+                <span lang="en">IN GAME NAME</span>
+                <span lang="pt">NOME NO JOGO</span>
+            </th>
+            <th>
+                <span lang="en">DESCRIPTION</span>
+                <span lang="pt">DESCRIÇÃO</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <span lang="en">Weapons Pickable Once</span>
+                <span lang="pt">Armas Pegáveis Apenas Uma Vez</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Respawn Monsters</span>
+                <span lang="pt">Monstros Renascem</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Respawn Items</span>
+                <span lang="pt">Items Reaparecem</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Respawn Inventory</span>
+                <span lang="pt">Inventario Reaparece</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Markers</span>
+                <span lang="pt">Marcadores</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Don't Spawn Monsters</span>
+                <span lang="pt">Sem Monstros no Mapa</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Don't Spawn Keycards</span>
+                <span lang="pt">Sem Cartões no Mapa</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[COOP/TEAM] Friendly Fire</span>
+                <span lang="pt">[COOP/TEAM] Fogo Amigo</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Spawn MP Only Switches</span>
+                <span lang="pt">Habilitar Switches Exclusivos De MP</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Spawn MP Only Items</span>
+                <span lang="pt">Habilitar Items Exclusivos De MP</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Weapon Always Drops On Kill</span>
+                <span lang="pt">Sempre Derrubar Arma Ao Morrer</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Revealed Automap</span>
+                <span lang="pt">Mapa Revelado</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">No Target Names</span>
+                <span lang="pt">Sem Nomes De Alvos</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">No Map Exit</span>
+                <span lang="pt">Sem Saída Do Mapa</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[SURV/TLMS] Lives Are Shared</span>
+                <span lang="pt">[SURV/TLMS] Vidas Compartilhadas</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Force Respawn</span>
+                <span lang="pt">Forçar Renascimento</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[PVP] Respawn Farthest</span>
+                <span lang="pt">[PVP] Renascer Mais Distante</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[TEAM] Teamless Spawn Points</span>
+                <span lang="pt">[TEAM] Pontos De Renascimento Sem Time</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[COOP/TEAM] Autoaim On Allies</span>
+                <span lang="pt">[COOP/TEAM] Mira Automática Nos Aliados</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[COOP/TEAM/TRM] Overhead Info</span>
+                <span lang="pt">[COOP/TEAM/TRM] Visor de Informações</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[COOP/TEAM/TRM] Outlines</span>
+                <span lang="pt">[COOP/TEAM/TRM] Contornos</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[CTF] Outline On Flags</span>
+                <span lang="pt">[CTF] Contorno Nas Bandeiras</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[CTF] Flag Return Instantly</span>
+                <span lang="pt">[CTF] Bandeira Retorna Instantaneamente</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[CTF] Flag Auto Detonate</span>
+                <span lang="pt">[CTF] Bandeira se Autodestrói</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[T/LMS] Restricted Spycam</span>
+                <span lang="pt">[T/LMS] Spycam Restrita</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[T/LMS] Restricted Chat</span>
+                <span lang="pt">[T/LMS] Chat Restrito</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <span lang="en">[TEAM] No Colored Tripbombs</span>
+                <span lang="pt">[TEAM] Sem Tripbombs Coloridas</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[CTF] No Steroids If With Flag</span>
+                <span lang="pt">[CTF] Sem Steroids Ao Carregar Bandeira</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[CTF] No Jetpack If With Flag</span>
+                <span lang="pt">[CTF] Sem Jetpack Ao Carregar Bandeira</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[TRM] No Infinite Jetpack</span>
+                <span lang="pt">[TRM] Sem Jetpack Infinito</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[TRM] No Shrinker Immunity</span>
+                <span lang="pt">[TRM] Sem Imunidade à Shrinker</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[TRM] No Freezer Weakness</span>
+                <span lang="pt">[TRM] Sem Fraqueza à Freezer</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <span lang="en">Arsenal Rebalance</span>
+                <span lang="pt">Rebalanceamento Do Arsenal</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Laser Invisible W/O Nightvision</span>
+                <span lang="pt">Laser Invisivel Sem Nightvision</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Freezer Can't Hurt Owner</span>
+                <span lang="pt">Freezer Não Danifica O Dono</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Destructable Cameras</span>
+                <span lang="pt">Cameras Destrutíveis</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[1.3D] Double Kick</span>
+                <span lang="pt">[1.3D] Chute Duplo</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[1.3D] No Expander</span>
+                <span lang="pt">[1.3D] Sem Expander</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">Fix Tripbombs On Slopes</span>
+                <span lang="pt">Corrigir Tripbombs Em Rampas</span>
+            </td>
+            <td>
+                <span lang="en"></span>
+                <span lang="pt"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+-->
