@@ -90,20 +90,20 @@ table {
 
     text-align: center;
     border-collapse: collapse; 
+    font-family: "Candara";
+    font-size: 14px;
+    font-weight: bold;
 
     & thead {
-        font-family: "Candara";
-        font-size: 14px;
-        font-weight: bold;
+        background-color: #1C1C1C;
     }
 
-    & tr {        
-        border: none;
-        border-bottom: 1px solid #2C2C2C;
+    & tr {
         height: 32px;
     }
 
-    & td {
+    & td, th {
+        border: 1px solid #2C2C2C;
         padding: 8px;
     }
 
@@ -220,4 +220,17 @@ a.link-button {
     &:hover {
         background-color: lightgrey;
     }
+}
+
+ul li {
+
+    &:not(:last-child) {
+        padding-bottom: 16px;
+    }
+
+    &::marker {
+        color: var(--progold);
+        font-size: 1.2em;
+    }
+
 }

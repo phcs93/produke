@@ -284,10 +284,10 @@ window["load-features"] = async () => {
                 }
             }
         },
-        "menu-improvements": {
+        "qol-improvements": {
             "title": {
-                "en": "MENU IMPROVEMENTS",
-                "pt": "MELHORIAS DOS MENUS"
+                "en": "QUALITY OF LIFE IMPROVEMENTS",
+                "pt": "MELHORIAS DE QUALIDADE DE VIDA"
             },
             "description": {
                 "en": "Various improvements at the game menu to make the game less dependant on a launcher.",
@@ -335,6 +335,30 @@ window["load-features"] = async () => {
                         "en": "Macro Editor",
                         "pt": "Editor de Macros"
                     }
+                },
+                "auto-screenshots": {
+                    "title": {
+                        "en": "Auto Screenshots",
+                        "pt": "Screenshots Automáticas"
+                    }
+                },
+                "demo-autorecord": {
+                    "title": {
+                        "en": "Demo Autorecord",
+                        "pt": "Sempre Gravar Demos"
+                    }
+                },
+                "chat-on-demos": {
+                    "title": {
+                        "en": "Chat Saved on Demos",
+                        "pt": "Chat Salvo nas Demos"
+                    }
+                },
+                "demo-outlines": {
+                    "title": {
+                        "en": "Demo Outlines",
+                        "pt": "Contornos em Demos"
+                    }
                 }
             }
         },
@@ -358,6 +382,12 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Win7 Color Fix",
                         "pt": "Correção de Cores no Win7"
+                    }
+                },
+                "8bit-png-screenshots": {
+                    "title": {
+                        "en": "8bit PNG Screenshots",
+                        "pt": "Screenshot em PNG de 8bits"
                     }
                 }
             }
@@ -485,6 +515,12 @@ window["load-features"] = async () => {
                         "en": "[1.3D] No Expander",
                         "pt": "[1.3D] Sem Expander"
                     }
+                },
+                "demo-cams": {
+                    "title": {
+                        "en": "Demo Cams",
+                        "pt": "Cameras de Demo"
+                    }
                 }
             }
         },
@@ -550,6 +586,18 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Insuficient Spawn Points Fix",
                         "pt": "Correção dos Pontos de Renascimento Insuficientes"
+                    }
+                },                
+                "global-palette-fix": {
+                    "title": {
+                        "en": "Global Palette Reset Fix",
+                        "pt": "Correção do Reset de Paletas Globais"
+                    }
+                },
+                "game-crashes": {
+                    "title": {
+                        "en": "Game Crashes",
+                        "pt": "Crashes"
                     }
                 }
             }
