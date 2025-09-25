@@ -389,6 +389,12 @@ window["load-features"] = async () => {
                         "en": "8bit PNG Screenshots",
                         "pt": "Screenshot em PNG de 8bits"
                     }
+                },
+                "ipv6-support": {
+                    "title": {
+                        "en": "IPv6 Support",
+                        "pt": "Suporte IPv6"
+                    }
                 }
             }
         },
