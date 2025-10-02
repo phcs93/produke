@@ -10,5 +10,3 @@
             - en/features/index.html
             - pt/features/index.html
             - etc...
-
-- fix the flames background shadder (it is causing lag)

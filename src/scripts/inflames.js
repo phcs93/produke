@@ -1,7 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
     const canvas = document.getElementById("inflames");
-    const gl = canvas.getContext("webgl");
+    const gl = canvas.getContext("webgl", {
+        alpha: false,
+        depth: false,
+        stencil: false,
+        antialias: false,
+        premultipliedAlpha: false,
+        preserveDrawingBuffer: false,
+        desynchronized: true,
+        powerPreference: "low-power"
+    });
 
     let width, height;
     function resize() {
@@ -64,18 +73,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const iTimeLoc = gl.getUniformLocation(program, "iTime");
     const iResolutionLoc = gl.getUniformLocation(program, "iResolution");
-    const iMouseLoc = gl.getUniformLocation(program, "iMouse");
-
-    let mouseX = 0, mouseY = 0;
-    // window.addEventListener("mousemove", e => {
-    //   mouseX = e.clientX;
-    //   mouseY = height - e.clientY;
-    // });
 
     function render(time) {
         gl.uniform1f(iTimeLoc, time * 0.001);
         gl.uniform2f(iResolutionLoc, width, height);
-        gl.uniform2f(iMouseLoc, mouseX, mouseY);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         requestAnimationFrame(render);

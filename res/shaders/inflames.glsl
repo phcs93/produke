@@ -145,9 +145,7 @@ vec2 noiseStackUV(vec3 pos, int octaves, float falloff, float diff) {
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 	float time = iTime;
 	vec2 resolution = iResolution.xy;
-	vec2 drag = iMouse.xy;
-	vec2 offset = iMouse.xy;
-		//
+	//
 	float xpart = fragCoord.x / resolution.x;
 	float ypart = fragCoord.y / resolution.y;
 	//
@@ -162,7 +160,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 	float timeSpeed = 0.5;
 	float realTime = timeSpeed * time;
 	//
-	vec2 coordScaled = 0.01 * fragCoord - 0.02 * vec2(offset.x, 0.0);
+	vec2 coordScaled = 0.01 * fragCoord - 0.02 * vec2(0.0, 0.0);
 	vec3 position = vec3(coordScaled, 0.0) + vec3(1223.0, 6434.0, 8425.0);
 	vec3 flow = vec3(4.1 * (0.5 - xpart) * pow(ypartClippedn, 4.0), -2.0 * xfuel * pow(ypartClippedn, 64.0), 0.0);
 	vec3 timing = realTime * vec3(0.0, -1.7, 1.1) + flow;
@@ -188,7 +186,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     //
 	// sparks
 	float sparkGridSize = 30.0;
-	vec2 sparkCoord = fragCoord - vec2(2.0 * offset.x, 190.0 * realTime);
+	vec2 sparkCoord = fragCoord - vec2(2.0, 190.0 * realTime);
 	sparkCoord -= 30.0 * noiseStackUV(0.01 * vec3(sparkCoord, 30.0 * time), 1, 0.4, 0.1);
 	sparkCoord += 100.0 * flow.xy;
 	if(mod(sparkCoord.y / sparkGridSize, 2.0) < 1.0)
