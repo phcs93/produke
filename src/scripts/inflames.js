@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         premultipliedAlpha: false,
         preserveDrawingBuffer: false,
         desynchronized: true,
-        powerPreference: "low-power"
+        powerPreference: "high-performance"
     });
 
     let width, height;
