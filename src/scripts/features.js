@@ -324,12 +324,6 @@ window["load-features"] = async () => {
                         "pt": "Menu de BOTs"
                     }
                 },
-                "demo-selector": {
-                    "title": {
-                        "en": "Demo Selector",
-                        "pt": "Seletor de Demo"
-                    }
-                },
                 "macro-editor": {
                     "title": {
                         "en": "Macro Editor",
@@ -358,6 +352,18 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Demo Outlines",
                         "pt": "Contornos em Demos"
+                    }
+                },
+                "damage-numbers": {
+                    "title": {
+                        "en": "Damage Numbers",
+                        "pt": "Números de Dano"
+                    }
+                },
+                "open-demos-with-produke": {
+                    "title": {
+                        "en": "Open Demos With proDuke",
+                        "pt": "Abrir Demos com proDuke"
                     }
                 }
             }
