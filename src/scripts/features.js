@@ -264,6 +264,12 @@ window["load-features"] = async () => {
                         "pt": "Seletor de Miras"
                     }
                 },
+                "custom-crosshair": {
+                    "title": {
+                        "en": "Custom Crosshair",
+                        "pt": "Mira Customizada"
+                    }
+                },
                 "in-game-clock": {
                     "title": {
                         "en": "In-Game Clock",
