@@ -287,6 +287,24 @@ window["load-features"] = async () => {
                         "en": "New Automap Modes",
                         "pt": "Novos Modos de Automap"
                     }
+                },
+                "game-paused-by": {
+                    "title": {
+                        "en": "Game Paused By",
+                        "pt": "Nome de Quem Pausou"
+                    }
+                },
+                "air-display": {
+                    "title": {
+                        "en": "Air Display",
+                        "pt": "Ar Restante"
+                    }
+                },
+                "scorebar-types": {
+                    "title": {
+                        "en": "Scorebar Types",
+                        "pt": "Tipos de Barra de Pontuação"
+                    }
                 }
             }
         },

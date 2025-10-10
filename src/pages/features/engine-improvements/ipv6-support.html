@@ -3,3 +3,26 @@
 
 <span lang="en">This eliminates connection problems with port forwarding as long as your ISP offers IPv6.</span>
 <span lang="pt">Isso elimina problemas com redirecionamento de portas desde que o seu provedor de internet ofereça IPv6.</span>
+
+<span lang="en">Usually the launcher program will take care of <pre>netlist.txt</pre> for you. It should fill up the file in the following format:</span>
+<span lang="pt">Normalmente o programa launcher vai cuidar do arquivo <pre>netlist.txt</pre> pra você. Ele deve preencher o arquivo da seguinte forma:</span>
+
+<span lang="en">For IPv6:</span>
+<span lang="pt">Para IPv6:</span>
+<pre>
+interface [::]:23513
+mode peer
+allow [fd3e:dc4c:085c:09e7:cbbe:0c82:8ea1:75b1]:23513
+allow [21dc:7b49:b898:2ec3::9616]:23513
+...
+</pre>
+
+<span lang="en">For IPv4 (original):</span>
+<span lang="pt">Para IPv4 (original):</span>
+<pre>
+interface 0.0.0.0:23513
+mode peer
+allow 123.456.789.123:23513
+allow 321.654.987.321:23513
+...
+</pre>
