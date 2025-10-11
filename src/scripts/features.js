@@ -168,6 +168,18 @@ window["load-features"] = async () => {
                         "pt": "Cores dos Jogadores"
                     }
                 },
+                "new-spycam-modes": {
+                    "title": {
+                        "en": "New Spycam Modes",
+                        "pt": "Novos Modos de Spycam"
+                    }
+                },
+                "new-automap-modes": {
+                    "title": {
+                        "en": "New Automap Modes",
+                        "pt": "Novos Modos de Automap"
+                    }
+                },
                 "target-names": {
                     "title": {
                         "en": "Target Names",
@@ -274,18 +286,6 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "In-Game Clock",
                         "pt": "Relógio da Partida"
-                    }
-                },
-                "new-spycam-modes": {
-                    "title": {
-                        "en": "New Spycam Modes",
-                        "pt": "Novos Modos de Spycam"
-                    }
-                },
-                "new-automap-modes": {
-                    "title": {
-                        "en": "New Automap Modes",
-                        "pt": "Novos Modos de Automap"
                     }
                 },
                 "game-paused-by": {
