@@ -360,10 +360,46 @@ window["load-features"] = async () => {
                         "pt": "Screenshots Automáticas"
                     }
                 },
+                "damage-numbers": {
+                    "title": {
+                        "en": "Damage Numbers",
+                        "pt": "Números de Dano"
+                    }
+                },
+                "offline-multiplayer": {
+                    "title": {
+                        "en": "Offline Multiplayer",
+                        "pt": "Multiplayer Offline"
+                    }
+                }
+            }
+        },
+        "demo-improvements": {
+            "title": {
+                "en": "DEMO IMPROVEMENTS",
+                "pt": "MELHORIAS EM DEMOS"
+            },
+            "description": {
+                "en": "Various improvements for demo recording and playback.",
+                "pt": "Várias melhorias na hora de gravar e assistir demos."
+            },
+            "sections": {
+                "demo-cams": {
+                    "title": {
+                        "en": "Demo Cams",
+                        "pt": "Cameras de Demo"
+                    }
+                },
                 "demo-autorecord": {
                     "title": {
                         "en": "Demo Autorecord",
                         "pt": "Sempre Gravar Demos"
+                    }
+                },
+                "open-demos-with-produke": {
+                    "title": {
+                        "en": "Open Demos With proDuke",
+                        "pt": "Abrir Demos com proDuke"
                     }
                 },
                 "chat-on-demos": {
@@ -378,22 +414,22 @@ window["load-features"] = async () => {
                         "pt": "Contornos em Demos"
                     }
                 },
-                "damage-numbers": {
+                "keep-recording": {
                     "title": {
-                        "en": "Damage Numbers",
-                        "pt": "Números de Dano"
+                        "en": "Keep Recording After Quit",
+                        "pt": "Continuar Gravando ao Sair"
                     }
                 },
-                "open-demos-with-produke": {
+                "record-after-map-change": {
                     "title": {
-                        "en": "Open Demos With proDuke",
-                        "pt": "Abrir Demos com proDuke"
+                        "en": "Record After Map Change",
+                        "pt": "Gravar ao Trocar de Mapa"
                     }
                 },
-                "offline-multiplayer": {
+                "coop-demos": {
                     "title": {
-                        "en": "Offline Multiplayer",
-                        "pt": "Multiplayer Offline"
+                        "en": "Coop Demos",
+                        "pt": "Demos de Coop"
                     }
                 }
             }
@@ -430,6 +466,12 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "IPv6 Support",
                         "pt": "Suporte IPv6"
+                    }
+                },
+                "game-crashes": {
+                    "title": {
+                        "en": "Game Crashes",
+                        "pt": "Crashes"
                     }
                 }
             }
@@ -557,12 +599,6 @@ window["load-features"] = async () => {
                         "en": "[1.3D] No Expander",
                         "pt": "[1.3D] Sem Expander"
                     }
-                },
-                "demo-cams": {
-                    "title": {
-                        "en": "Demo Cams",
-                        "pt": "Cameras de Demo"
-                    }
                 }
             }
         },
@@ -634,12 +670,6 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Global Palette Reset Fix",
                         "pt": "Correção do Reset de Paletas Globais"
-                    }
-                },
-                "game-crashes": {
-                    "title": {
-                        "en": "Game Crashes",
-                        "pt": "Crashes"
                     }
                 }
             }
