@@ -389,6 +389,12 @@ window["load-features"] = async () => {
                         "en": "Open Demos With proDuke",
                         "pt": "Abrir Demos com proDuke"
                     }
+                },
+                "offline-multiplayer": {
+                    "title": {
+                        "en": "Offline Multiplayer",
+                        "pt": "Multiplayer Offline"
+                    }
                 }
             }
         },
