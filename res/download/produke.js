@@ -93,6 +93,510 @@ module.exports = function({deepClone, utils}, gamedefs) {
         ;
     };
 
+    // netflags A definition
+    const netFlagsADefs = {
+        "Weapons Pickable Once": 1,
+        "Respawn Monsters": 2,
+        "Respawn Items": 4,
+        "Respawn Inventory": 8,
+        "Markers": 16,
+        "Don't Spawn Monsters": 32,
+        "Don't Spawn Keycards": 64,
+        "[COOP/TEAM] Friendly Fire": 128,
+        "Spawn MP Only Switches": 256,
+        "Spawn MP Only Items": 512,
+        "Weapon Always Drops On Kill": 1024,
+        "Revealed Automap": 2048,
+        "No Target Names": 4096,
+        "No Map Exit": 8192,
+        "Force Respawn": 16384,
+        "[PVP] Respawn Farthest": 32768,
+        "[TEAM] Teamless Spawn Points": 65536,
+        "[COOP/TEAM] Disable Spycam": 131072,
+        "[COOP/TEAM] Autoaim On Allies": 262144,
+        "Damage Numbers": 524288,
+        "[COOP/TEAM/TRM] Overhead Info": 1048576,
+        "[COOP/TEAM/TRM] Outlines": 2097152,
+        "[CTF] Outline On Flags": 4194304,
+        "[CTF] Flag Return Instantly": 8388608,
+        "[CTF] Flag Auto Detonate": 16777216,
+        "[T/LMS] Restricted Spycam": 33554432,
+        "[T/LMS] Restricted Chat": 67108864,
+        "[SURV/TLMS] Lives Are Shared": 134217728
+    };
+
+    // netflags B definition
+    const netFlagsBDefs = {
+        "[TEAM] Colored Tripbombs": 1,
+        "[CTF] No Steroids If With Flag": 2,
+        "[CTF] No Jetpack If With Flag": 4,
+        "[TRM] No Infinite Jetpack": 8,
+        "[TRM] No Shrinker Immunity": 16,
+        "[TRM] No Freezer Weakness": 32
+    };
+
+    // netflags C definition
+    const netFlagsCDefs = {
+        "Arsenal Rebalance": 1,
+        "Laser Invisible W/O Nightvision": 2,
+        "Freezer Can't Hurt Owner": 4,
+        "Destructable Cameras": 8,
+        "[1.3D] Double Kick": 16,
+        "[1.3D] No Expander": 32,
+        "Fix Tripbombs On Slopes": 64,
+        "[DOS] Coop Map Transition Bugs": 128,
+        "[DOS] No Suicide If FFire Is Off": 256,
+        "[DOS] Can Respawn Drowning": 512,
+        "[DOS] No Alt-Weapon Fast Switch": 1024,
+        "[DOS] Bad Expander Radius Owner": 2048
+    };
+
+    // weapflags definition
+    const weapFlagsDefs = {
+        "Pistol": 1,
+        "Shotgun": 2,
+        "Chaingun": 4,
+        "RPG": 8,
+        "Pipebomb": 16,
+        "Shrinker": 32,
+        "Devastator": 64,
+        "Tripbomb": 128,
+        "Freezer": 256,
+        "Full Ammo": 512,
+        "Expander": 1024
+    };
+
+    // invflags definition
+    const invFlagsDefs = {
+        "Key Cards": 1,
+        "Medkit": 2,
+        "Steroids": 4,
+        "Holoduke": 8,
+        "Jetpack": 16,
+        "Nightvision": 32,
+        "Scuba Gear": 64,
+        "Boots": 128,
+        "Armor": 256,
+        "Atomic Health 1": 512,
+        "Atomic Health 2": 1024
+    };
+
+    // netflagsA definition
+    const NetFlagsA = {
+        GETWEAPONCE:                 1 << 0,   // 1
+        RESPAWN_MONSTERS:            1 << 1,   // 2
+        RESPAWN_ITEMS:               1 << 2,   // 4
+        RESPAWN_INVENTORY:           1 << 3,   // 8
+        MARKERS:                     1 << 4,   // 16
+        NO_MONSTERS:                 1 << 5,   // 32
+        NO_ACCESS:                   1 << 6,   // 64
+        FRIENDLY_FIRE:               1 << 7,   // 128
+        DMSWITCHES:                  1 << 8,   // 256
+        MPITEMS:                     1 << 9,   // 512
+        WEAPON_ALWAYS_DROP:          1 << 10,  // 1024
+        REVEALED_AUTOMAP:            1 << 11,  // 2048
+        DISABLE_TARGET_NAMES:        1 << 12,  // 4096
+        DISABLE_MAP_EXIT:            1 << 13,  // 8192
+        FORCE_RESPAWN:               1 << 14,  // 16384
+        RESPAWN_FARTHEST:            1 << 15,  // 32768
+        TEAM_USE_NORMAL_SPAWNS:      1 << 16,  // 65536
+        TEAM_NO_SPYCAM_MAPVIEW:      1 << 17,  // 131072
+        TEAM_AUTOAIM_ON_ALLIES:      1 << 18,  // 262144
+        DAMAGENUMS:                  1 << 19,  // 524288
+        COOP_TEAM_TRM_OVERHEAD:      1 << 20,  // 1048576
+        COOP_TEAM_TRM_OUTLINES:      1 << 21,  // 2097152
+        CTF_FLAG_OUTLINE:            1 << 22,  // 4194304
+        CTF_FLAG_INSTANT_RETURN:     1 << 23,  // 8388608
+        CTF_FLAG_AUTODETONATE:       1 << 24,  // 16777216
+        T_LMS_RESTRICTED_SPYCAM:     1 << 25,  // 33554432
+        T_LMS_RESTRICTED_CHAT:       1 << 26,  // 67108864
+        SURV_TLMS_SHARED_LIVES:      1 << 27,  // 134217728
+    };
+
+    // netflagsB definition
+    const NetFlagsB = {
+        TEAM_LASER_COLORS:           1 << 0,   // 1
+        CTF_NOROIDS:                 1 << 1,   // 2
+        CTF_NOJPACK:                 1 << 2,   // 4
+        TRM_NO_INFINITE_JPACK:       1 << 3,   // 8
+        TRM_NO_SHRINKER_IMMUNITY:    1 << 4,   // 16
+        TRM_NO_FREEZER_WEAKNESS:     1 << 5,   // 32
+    };
+
+    // netflagsC definition
+    const NetFlagsC = {
+        ARSENAL_REBALANCE:                   1 << 0,  // 1
+        LASERMODE_HEAT:                      1 << 1,  // 2
+        FREEZER_CANT_HURT_OWNER:             1 << 2,  // 4
+        DESTRUCTABLE_CAMERAS:                1 << 3,  // 8
+        _13D_ENABLE_DOUBLE_KICK:             1 << 4,  // 16
+        _13D_DISABLE_EXPANDER:               1 << 5,  // 32
+        FIX_TRIPBOMB_ON_SLOPES:              1 << 6,  // 64
+        ORIGBHV_COOP_LEVEL_TRANSITION_BUGS:  1 << 7,  // 128
+        ORIGBHV_FFIRE_NO_SUICIDE:            1 << 8,  // 256
+        ORIGBHV_DROWNING_RESPAWN:            1 << 9,  // 512
+        ORIGBHV_NO_ALTWEAPON_FASTSWITCH:     1 << 10, // 1024
+        ORIGBHV_EXPANDER_RADIUS:             1 << 11, // 2048
+    };
+
+    // weapflags definitions
+    const StartingWeapon = {
+        PISTOL:       1 << 0,   // 1   
+        SHOTGUN:      1 << 1,   // 2   
+        CHAINGUN:     1 << 2,   // 4   
+        RPG:          1 << 3,   // 8   
+        HANDBOMB:     1 << 4,   // 16  
+        SHRINKER:     1 << 5,   // 32  
+        DEVISTATOR:   1 << 6,   // 64  
+        TRIPBOMB:     1 << 7,   // 128 
+        FREEZE:       1 << 8,   // 256 
+        FULL_AMMO:    1 << 9,   // 512 
+        GROW:         1 << 10,  // 1024
+    };
+
+    // invflags definitions
+    const StartingInventory = {
+        ACCESS:    1 << 0,  // 1     
+        FIRSTAID:  1 << 1,  // 2     
+        STEROIDS:  1 << 2,  // 4
+        HOLODUKE:  1 << 3,  // 8
+        JETPACK:   1 << 4,  // 16
+        HEAT:      1 << 5,  // 32    
+        AIRTANK:   1 << 6,  // 64    
+        BOOTS:     1 << 7,  // 128
+        ARMOR:     1 << 8,  // 256
+        ATOMIC1:   1 << 9,  // 512   
+        ATOMIC2:   1 << 10, // 1024  
+    };
+
+    // default netflags presets per game mode category
+    const DEFAULT_NETFLAGS_SP         = 0;
+    const DEFAULT_NETFLAGS_PVP_SPWN   = 0 | NetFlagsA.MARKERS | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_PVP_NOSPWN = NetFlagsA.GETWEAPONCE | 0 | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | 0 | 0 | NetFlagsA.FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_COOP       = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
+
+    // base netflags presets
+    const BASE_TDM_TLMS           = NetFlagsA.TEAM_USE_NORMAL_SPAWNS | NetFlagsA.T_LMS_RESTRICTED_SPYCAM | NetFlagsA.T_LMS_RESTRICTED_CHAT;
+    const BASE_LMS                = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST;
+    const BASE_MODERN             = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.DISABLE_MAP_EXIT | NetFlagsA.DAMAGENUMS;
+    const BASE_HARDCORE           = NetFlagsA.DISABLE_TARGET_NAMES;
+    const BASE_CLASSIC_TEAMPLAY   = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | 0 | 0;
+    const BASE_ALT_TEAMPLAY       = 0 | NetFlagsA.COOP_TEAM_TRM_OVERHEAD | 0 | 0 | 0;
+    const BASE_MODERN_TEAMPLAY    = 0 | NetFlagsA.COOP_TEAM_TRM_OVERHEAD | NetFlagsA.COOP_TEAM_TRM_OUTLINES | 0 | 0;
+    const BASE_HARDCORE_TEAMPLAY  = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | NetFlagsA.TEAM_NO_SPYCAM_MAPVIEW | NetFlagsA.TEAM_AUTOAIM_ON_ALLIES;
+
+    // netflagsA preset combinations
+    const PRESET_NETFLAGS_CLASSIC_COOP  = DEFAULT_NETFLAGS_COOP | BASE_CLASSIC_TEAMPLAY;
+    const PRESET_NETFLAGS_ALT_COOP      = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURV_TLMS_SHARED_LIVES | BASE_ALT_TEAMPLAY;
+    const PRESET_NETFLAGS_MODERN_COOP   = NetFlagsA.GETWEAPONCE | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | 0 | 0 | NetFlagsA.MPITEMS | 0 | BASE_MODERN_TEAMPLAY;
+    const PRESET_NETFLAGS_HARDCORE_COOP = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURV_TLMS_SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
+
+    const PRESET_NETFLAGS_CLASSIC_FFA   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0;
+    const PRESET_NETFLAGS_ALT_FFA       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
+    const PRESET_NETFLAGS_MODERN_FFA    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN;
+    const PRESET_NETFLAGS_HARDCORE_FFA  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE;
+
+    const PRESET_NETFLAGS_CLASSIC_TEAM  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_ALT_TEAM      = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_MODERN_TEAM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_HARDCORE_TEAM = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURV_TLMS_SHARED_LIVES;
+
+    const PRESET_NETFLAGS_CLASSIC_CTF   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_ALT_CTF       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF_FLAG_INSTANT_RETURN;
+    const PRESET_NETFLAGS_MODERN_CTF    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY | NetFlagsA.CTF_FLAG_OUTLINE;
+    const PRESET_NETFLAGS_HARDCORE_CTF  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.CTF_FLAG_INSTANT_RETURN | NetFlagsA.CTF_FLAG_AUTODETONATE;
+
+    const PRESET_NETFLAGS_CLASSIC_LMS   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | 0;
+    const PRESET_NETFLAGS_ALT_LMS       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
+    const PRESET_NETFLAGS_MODERN_LMS    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_MODERN;
+    const PRESET_NETFLAGS_HARDCORE_LMS  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_HARDCORE;
+
+    const PRESET_NETFLAGS_CLASSIC_TERM  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY;
+    const PRESET_NETFLAGS_ALT_TERM      = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY;
+    const PRESET_NETFLAGS_MODERN_TERM   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY;
+    const PRESET_NETFLAGS_HARDCORE_TERM = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY;
+
+    // netflagsB preset combinations
+    const PRESET_NETFLAGSB_CLASSIC        = 0;
+    const PRESET_NETFLAGSB_ALT            = NetFlagsB.TEAM_LASER_COLORS;
+    const PRESET_NETFLAGSB_MODERN         = NetFlagsB.TEAM_LASER_COLORS;
+    const PRESET_NETFLAGSB_HARDCORE       = 0;
+
+    const PRESET_NETFLAGSB_CLASSIC_TERM   = PRESET_NETFLAGSB_CLASSIC | 0 | 0;
+    const PRESET_NETFLAGSB_ALT_TERM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TRM_NO_SHRINKER_IMMUNITY;
+    const PRESET_NETFLAGSB_MODERN_TERM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TRM_NO_INFINITE_JPACK | 0;
+    const PRESET_NETFLAGSB_HARDCORE_TERM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TRM_NO_INFINITE_JPACK | NetFlagsB.TRM_NO_SHRINKER_IMMUNITY;
+
+    // weapflags presets
+    const DEFAULT_WEAPFLAGS              = StartingWeapon.PISTOL;
+    const PRESET_WEAPFLAGS_HARDCORE_TERM = StartingWeapon.PISTOL | StartingWeapon.FREEZE;
+
+    // invflags presets
+    const DEFAULT_INVFLAGS   = 0;
+    const DEFAULT_INVFLAGS_PVP = StartingInventory.ACCESS;
+
+    // gametype enum for easier handling
+    const GameType = {
+        DM:     1,  // Dukematch (DM)
+        COOP:   2,  // Cooperative
+        TDM:    3,  // Team Dukematch
+        CTF:    4,  // Capture The Flag
+        F1CTF:  5,  // 1-Flag CTF
+        ADCTF:  6,  // Attack/Defend CTF
+        SURV:   7,  // Survival
+        LMS:    8,  // Last Man Standing
+        TLMS:   9,  // Team Last Man Standing
+        TERM:   10, // Terminator
+    };
+
+    // get flags corresponding to selected gamemode and preset
+    const getFlags = (gametype, preset) => {
+
+        let netflagsA = 0;
+        let netflagsB = 0;
+        let netflagsC = 0;
+        let weapflags = 0;
+        let invflags  = 0;
+
+        switch (preset) {
+            case "classic": {
+                switch (gametype) {
+                    case GameType.COOP: case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_COOP;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.DM: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_FFA;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TDM: case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_TEAM;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.CTF: case GameType.F1CTF: case GameType.ADCTF: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_CTF;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.LMS: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_LMS;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TERM: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_TERM;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC_TERM;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                }
+                break;
+            }
+            case "alternative": {
+                switch (gametype) {
+                    case GameType.COOP: case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_ALT_COOP;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.DM: {
+                        netflagsA = PRESET_NETFLAGS_ALT_FFA;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TDM: case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_ALT_TEAM;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.CTF: case GameType.F1CTF: case GameType.ADCTF: {
+                        netflagsA = PRESET_NETFLAGS_ALT_CTF;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.LMS: {
+                        netflagsA = PRESET_NETFLAGS_ALT_LMS;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TERM: {
+                        netflagsA = PRESET_NETFLAGS_ALT_TERM;
+                        netflagsB = PRESET_NETFLAGSB_ALT_TERM;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                }
+                break;
+            }
+            case "modern": {
+                switch (gametype) {
+                    case GameType.COOP: case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_COOP;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.DM: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_FFA;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TDM: case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_TEAM;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.CTF: case GameType.F1CTF: case GameType.ADCTF: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_CTF;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.LMS: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_LMS;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TERM: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_TERM;
+                        netflagsB = PRESET_NETFLAGSB_MODERN_TERM;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                }
+                break;
+            }
+            case "hardcore": {
+                switch (gametype) {
+                    case GameType.COOP: case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_COOP;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.DM: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_FFA;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TDM: case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_TEAM;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.CTF: case GameType.F1CTF: case GameType.ADCTF: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_CTF;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.LMS: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_LMS;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TERM: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_TERM;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE_TERM;
+                        weapflags = PRESET_WEAPFLAGS_HARDCORE_TERM;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        return {
+            netflagsA,
+            netflagsB,
+            netflagsC,
+            weapflags,
+            invflags
+        }
+
+    };
+
+    const setFlags = preset => {
+        for (const nf of Object.keys(netFlagsADefs)) {
+            if ((preset.netflagsA & netFlagsADefs[nf]) !== 0) {                            
+                document.getElementById(`game-param-netFlagA${parseNetFlagName(nf)}`).checked = true;
+            } else {
+                document.getElementById(`game-param-netFlagA${parseNetFlagName(nf)}`).checked = false;
+            }
+        }
+        for (const nf of Object.keys(netFlagsBDefs)) {
+            if ((preset.netflagsB & netFlagsBDefs[nf]) !== 0) {
+                document.getElementById(`game-param-netFlagB${parseNetFlagName(nf)}`).checked = true;
+            } else {
+                document.getElementById(`game-param-netFlagB${parseNetFlagName(nf)}`).checked = false;
+            }
+        }
+        for (const nf of Object.keys(netFlagsCDefs)) {
+            if ((preset.netflagsC & netFlagsCDefs[nf]) !== 0) {
+                document.getElementById(`game-param-netFlagC${parseNetFlagName(nf)}`).checked = true;
+            } else {
+                document.getElementById(`game-param-netFlagC${parseNetFlagName(nf)}`).checked = false;
+            }
+        }
+        for (const nf of Object.keys(weapFlagsDefs)) {
+            if ((preset.weapflags & weapFlagsDefs[nf]) !== 0) {
+                document.getElementById(`game-param-weapFlag${parseNetFlagName(nf)}`).checked = true;
+            } else {
+                document.getElementById(`game-param-weapFlag${parseNetFlagName(nf)}`).checked = false;
+            }
+        }
+        for (const nf of Object.keys(invFlagsDefs)) {
+            if ((preset.invflags & invFlagsDefs[nf]) !== 0) {
+                document.getElementById(`game-param-invFlag${parseNetFlagName(nf)}`).checked = true;
+            } else {
+                document.getElementById(`game-param-invFlag${parseNetFlagName(nf)}`).checked = false;
+            }
+        }
+    };
+
     // clone xduke definitions as base
     gamedefs.games.duke3d.executables.produke = deepClone(gamedefs.games.duke3d.executables.xduke);
 
@@ -123,6 +627,24 @@ module.exports = function({deepClone, utils}, gamedefs) {
         {label: "Team Last Man Standing (TLMS)", value: 9},
         {label: "Terminator", value: 10}
     ];
+    gamedefs.games.duke3d.executables.produke.parameters.multiplayerMode.dependsOn = {
+        params: "multiplayerMode", 
+        show: async c => {            
+            if (c?.ParamEl?.multiplayerMode) {
+                const element = document.getElementById("game-param-multiplayerMode");
+                if (!element.dataset.listening) {
+                    element.dataset.listening = true;
+                    element.addEventListener("input", e => {
+                        const selectedGamemode = parseInt(e.target.value);
+                        const selectedPreset = document.getElementById("game-param-presets").value.replace(/\"/g, "");
+                        const preset = getFlags(selectedGamemode, selectedPreset);
+                        setFlags(preset);
+                    });
+                }                    
+            }
+            return true;
+        }
+    }
 
     // send /teampicker automatically if any team based mode is selected
     gamedefs.games.duke3d.executables.produke.parameters["teampicker"] = {
@@ -281,131 +803,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
         value: "/allowmods"
     };
 
-    // netflags A definition
-    const netFlagsADefs = {
-        "Weapons Pickable Once": 1,
-        "Respawn Monsters": 2,
-        "Respawn Items": 4,
-        "Respawn Inventory": 8,
-        "Markers": 16,
-        "Don't Spawn Monsters": 32,
-        "Don't Spawn Keycards": 64,
-        "[COOP/TEAM] Friendly Fire": 128,
-        "Spawn MP Only Switches": 256,
-        "Spawn MP Only Items": 512,
-        "Weapon Always Drops On Kill": 1024,
-        "Revealed Automap": 2048,
-        "No Target Names": 4096,
-        "No Map Exit": 8192,
-        "[SURV/TLMS] Lives Are Shared": 16384,
-        "Force Respawn": 32768,
-        "[PVP] Respawn Farthest": 65536,
-        "[TEAM] Teamless Spawn Points": 131072,
-        "[COOP/TEAM] Autoaim On Allies": 262144,
-        "[COOP/TEAM/TRM] Overhead Info": 524288,
-        "[COOP/TEAM/TRM] Outlines": 1048576,
-        "[CTF] Outline On Flags": 2097152,
-        "[CTF] Flag Return Instantly": 4194304,
-        "[CTF] Flag Auto Detonate": 8388608,
-        "[T/LMS] Restricted Spycam": 16777216,
-        "[T/LMS] Restricted Chat": 33554432
-    };
-
-    // netflags B definition
-    const netFlagsBDefs = {
-        "[TEAM] No Colored Tripbombs": 1,
-        "[CTF] No Steroids If With Flag": 2,
-        "[CTF] No Jetpack If With Flag": 4,
-        "[TRM] No Infinite Jetpack": 8,
-        "[TRM] No Shrinker Immunity": 16,
-        "[TRM] No Freezer Weakness": 32
-    };
-
-    // netflags C definition
-    const netFlagsCDefs = {
-        "Arsenal Rebalance": 1,
-        "Laser Invisible W/O Nightvision": 2,
-        "Freezer Can't Hurt Owner": 4,
-        "Destructable Cameras": 8,
-        "[1.3D] Double Kick": 16,
-        "[1.3D] No Expander": 32,
-        "Fix Tripbombs On Slopes": 64
-    };
-
-    // weapflags definition
-    const weapFlagsDefs = {
-        "Pistol": 1,
-        "Shotgun": 2,
-        "Chaingun": 4,
-        "RPG": 8,
-        "Pipebomb": 16,
-        "Shrinker": 32,
-        "Devastator": 64,
-        "Tripbomb": 128,
-        "Freezer": 256,
-        "Full Ammo": 512,
-        "Expander": 1024
-    };
-
-    // invflags definition
-    const invFlagsDefs = {
-        "Key Cards": 1,
-        "Medkit": 2,
-        "Steroids": 4,
-        "Holoduke": 8,
-        "Jetpack": 16,
-        "Nightvision": 32,
-        "Scuba Gear": 64,
-        "Boots": 128,
-        "Armor": 256,
-        "Atomic Health 1": 512,
-        "Atomic Health 2": 1024
-    };
-
-    // netflags presets
-    const netflagsPresets = {
-        "---": {
-            netflagsA: 0,
-            netflagsB: 0,
-            netflagsC: 0,
-            weapflags: 1,
-            invflags: 1
-        },
-        classic: {
-            netflagsA: 398332,
-            netflagsB: 1,
-            netflagsC: 0,
-            weapflags: 1,
-            invflags: 1
-        },
-        teamplay: {
-            netflagsA: 54004732,
-            netflagsB: 0,
-            netflagsC: 0,
-            weapflags: 1,
-            invflags: 1
-        },
-        rebalanced: {
-            netflagsA: 50933756,
-            netflagsB: 6,
-            netflagsC: 1,
-            weapflags: 1,
-            invflags: 1
-        },
-        hardcore: {
-            netflagsA: 63370220,
-            netflagsB: 31,
-            netflagsC: 106,
-            weapflags: 1,
-            invflags: 1
-        },
-        overpowered: {
-            netflagsA: 3747708,
-            netflagsB: 32,
-            netflagsC: 20,
-            weapflags: 2047,
-            invflags: 2047
-        }
+    // master/slave
+    gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
+        modeSupport: ["multiplayer"],
+        type: "boolean",
+        label: "Master/Slave mode (/i0)",
+        optional: false,
+        value: "/i0",
+        for: "host-only-private"
     };
 
     // netflags presets input
@@ -417,10 +822,9 @@ module.exports = function({deepClone, utils}, gamedefs) {
         syncOnly: true,
         choices: [
             {label: "Classic", value: "classic"},
-            {label: "Teamplay", value: "teamplay"},
-            {label: "Rebalanced", value: "rebalanced"},
+            {label: "Alternative", value: "alternative"},
+            {label: "Modern", value: "modern"},
             {label: "Hardcore", value: "hardcore"},
-            {label: "Overpowered", value: "overpowered"},
             {label: "---", value: "---"}
         ],
         dependsOn: {
@@ -431,42 +835,10 @@ module.exports = function({deepClone, utils}, gamedefs) {
                     if (!element.dataset.listening) {
                         element.dataset.listening = true;
                         element.addEventListener("input", e => {
-                            const preset = netflagsPresets[e.target.value.replace(/\"/g, "")];
-                            for (const nf of Object.keys(netFlagsADefs)) {
-                                if ((preset.netflagsA & netFlagsADefs[nf]) !== 0) {                            
-                                    document.getElementById(`game-param-netFlagA${parseNetFlagName(nf)}`).checked = true;
-                                } else {
-                                    document.getElementById(`game-param-netFlagA${parseNetFlagName(nf)}`).checked = false;
-                                }
-                            }
-                            for (const nf of Object.keys(netFlagsBDefs)) {
-                                if ((preset.netflagsB & netFlagsBDefs[nf]) !== 0) {
-                                    document.getElementById(`game-param-netFlagB${parseNetFlagName(nf)}`).checked = true;
-                                } else {
-                                    document.getElementById(`game-param-netFlagB${parseNetFlagName(nf)}`).checked = false;
-                                }
-                            }
-                            for (const nf of Object.keys(netFlagsCDefs)) {
-                                if ((preset.netflagsC & netFlagsCDefs[nf]) !== 0) {
-                                    document.getElementById(`game-param-netFlagC${parseNetFlagName(nf)}`).checked = true;
-                                } else {
-                                    document.getElementById(`game-param-netFlagC${parseNetFlagName(nf)}`).checked = false;
-                                }
-                            }
-                            for (const nf of Object.keys(weapFlagsDefs)) {
-                                if ((preset.weapflags & weapFlagsDefs[nf]) !== 0) {
-                                    document.getElementById(`game-param-weapFlag${parseNetFlagName(nf)}`).checked = true;
-                                } else {
-                                    document.getElementById(`game-param-weapFlag${parseNetFlagName(nf)}`).checked = false;
-                                }
-                            }
-                            for (const nf of Object.keys(invFlagsDefs)) {
-                                if ((preset.invflags & invFlagsDefs[nf]) !== 0) {
-                                    document.getElementById(`game-param-invFlag${parseNetFlagName(nf)}`).checked = true;
-                                } else {
-                                    document.getElementById(`game-param-invFlag${parseNetFlagName(nf)}`).checked = false;
-                                }
-                            }
+                            const selectedGamemode = c.ParamEl.multiplayerMode;
+                            const selectedPreset = e.target.value.replace(/\"/g, "");
+                            const preset = getFlags(selectedGamemode, selectedPreset);
+                            setFlags(preset);
                         });
                     }                    
                 }
@@ -636,6 +1008,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
             "disableAutoaim",
             "exploitMode",
             "allowMods",
+            "masterSlave",
             "recordDmo",
             "playDmo",
             "presets"
