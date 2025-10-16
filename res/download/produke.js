@@ -646,16 +646,6 @@ module.exports = function({deepClone, utils}, gamedefs) {
         }
     }
 
-    // send /teampicker automatically if any team based mode is selected
-    gamedefs.games.duke3d.executables.produke.parameters["teampicker"] = {
-        modeSupport: ["singleplayer", "multiplayer"],
-        type: "static",
-        addIf: c => {
-            return [3,4,5,6,9].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
-        },
-        value: "/teampicker"
-    };
-
     // skill
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.label = "Skill";
     gamedefs.games.duke3d.executables.produke.parameters.monstersSkill.type = "choice";    
@@ -758,7 +748,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // lock options
     gamedefs.games.duke3d.executables.produke.parameters.lockOptions = {
-        modeSupport: ["multiplayer", "singleplayer"],
+        modeSupport: ["multiplayer"],
         type: "boolean",
         label: "Lock Options",
         optional: false,
@@ -768,7 +758,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // lock players
     gamedefs.games.duke3d.executables.produke.parameters.lockPlayers = {
-        modeSupport: ["multiplayer", "singleplayer"],
+        modeSupport: ["multiplayer"],
         type: "boolean",
         label: "Lock Players",
         optional: false,
@@ -989,6 +979,28 @@ module.exports = function({deepClone, utils}, gamedefs) {
         }
     };
 
+    // send /teampicker automatically if any team based mode is selected
+    gamedefs.games.duke3d.executables.produke.parameters["teampicker"] = {
+        modeSupport: ["singleplayer", "multiplayer"],
+        type: "static",
+        value: "/teampicker",
+        addIf: c => {
+            return [3,4,5,6,9].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
+        }        
+    };
+
+    // send -master automatically if /lockoption or /lockplayers or /i0 is set
+    gamedefs.games.duke3d.executables.produke.parameters["master"] = {
+        modeSupport: ["multiplayer"],
+        type: "static",
+        for: "host-only-private",
+        value: "-master",
+        addIf: c => {
+            const p = c.GameRoom.Params;
+            return p.lockOptions || p.lockPlayers || p.masterSlave;
+        }        
+    };
+
     // reorder fields
     gamedefs.games.duke3d.executables.produke.parameters = reorderFields(
         gamedefs.games.duke3d.executables.produke.parameters, 
@@ -1003,14 +1015,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
             "extraLives",
             "botsNum",
             "botsAi",            
-            "lockOptions",
-            "lockPlayers",
             "disableAutoaim",
             "exploitMode",
-            "allowMods",
-            "masterSlave",
+            "allowMods",            
             "recordDmo",
             "playDmo",
+            "lockOptions",
+            "lockPlayers",
+            "masterSlave",
             "presets"
         ]
     );
