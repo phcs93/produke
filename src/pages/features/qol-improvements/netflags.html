@@ -203,12 +203,12 @@
         </tr>
         <tr>
             <td>
-                <span lang="en">[COOP/TEAM] Disable Spycam</span>
-                <span lang="pt">[COOP/TEAM] Desativar Spycam</span>
+                <span lang="en">[COOP/TEAM] Disable Spycam/Mapview</span>
+                <span lang="pt">[COOP/TEAM] Desativar Spycam/Mapview</span>
             </td>
             <td>
-                <span lang="en">Disables the Spycam/Coop view in cooperative and team-based modes for all players.</span>
-                <span lang="pt">Desativa o Spycam/Coop view nos modos cooperativo e baseados em time para todos os jogadores.</span>
+                <span lang="en">Disables the Spycam/Coop view in cooperative and team-based modes for all players. Will also not show allies on the map.</span>
+                <span lang="pt">Desativa o Spycam/Coop view nos modos cooperativo e baseados em time para todos os jogadores. Também não mostrará os aliados no mapa.</span>
             </td>
         </tr>
         <tr>
@@ -227,8 +227,8 @@
                 <span lang="pt">Números de Dano</span>
             </td>
             <td>
-                <span lang="en">Displays the inflicted damage on players when wathcing DMOs and on monsters in COOP.</span>
-                <span lang="pt">Exibe o dano causado em jogadores quando estiver assistindo DMOs ou em monstros no modo COOP.</span>
+                <span lang="en">Displays the inflicted damage on players and on monsters.</span>
+                <span lang="pt">Exibe o dano causado em jogadores e nos monstros.</span>
             </td>
         </tr>
         <tr>
@@ -443,8 +443,14 @@
                 <span lang="pt">[DOS] Bugs na Transição de Mapas Coop</span>
             </td>
             <td>
-                <span lang="en">Recreates certain bugs that occurred during map transitions in DOS cooperative mode.</span>
-                <span lang="pt">Recria certos bugs que ocorriam durante a transição de mapas no modo cooperativo do DOS.</span>
+                <span lang="en">Recreates certain bugs that occurred during map transitions in DOS cooperative mode:<br>
+                    (a) Everyone starts the next map with P1s health points;<br>
+                    (b) When passing to the map while holding a weapon with no ammo, on the next map the player start holding that weapon and the game will NOT switch automatically to another weapon with ammo;
+                </span>
+                <span lang="pt">Recria certos bugs que ocorriam durante a transição de mapas no modo cooperativo do DOS:<br>
+                    (a) Todo mundo iniciará o próximo mapa com os pontos de vida do P1;<br>
+                    (b) Ao passar ao proximo mapa segurando uma arma sem munição, no próximo mapa o player começará segurando essa mesma arma e o jogo NÃO trocará sozinho para outra arma que tenha munição;
+                </span>
             </td>
         </tr>
         <tr>
@@ -460,31 +466,31 @@
         <tr>
             <td>
                 <span lang="en">[DOS] Can Respawn Drowning</span>
-                <span lang="pt">[DOS] Pode Renascer Afogado</span>
+                <span lang="pt">[DOS] Pode Renascer se Afogando</span>
             </td>
             <td>
-                <span lang="en">Allows players to respawn underwater and instantly drown, matching the DOS behavior.</span>
-                <span lang="pt">Permite que jogadores renasçam debaixo d'água e morram afogados, igual à versão DOS.</span>
+                <span lang="en">If a player drowns and respawns on an underwater sector, he'll respawnd already receiving drowning damage, matching the DOS behavior (e.g. coop on E2L9 - Overlord).</span>
+                <span lang="pt">Se um jogador morrer afogado e renascer num setor de agua, ele irá renascer já levando dano de afogamento, igual à versão DOS (ex: coop no mapa E2L9 - Overlord).</span>
             </td>
         </tr>
         <tr>
             <td>
                 <span lang="en">[DOS] No Alt-Weapon Fast Switch</span>
-                <span lang="pt">[DOS] Sem Troca Rápida de Arma Secundária</span>
+                <span lang="pt">[DOS] Sem Troca Rápida para Arma Secundária</span>
             </td>
             <td>
-                <span lang="en">Disables the faster switching between alternate weapons that was not present in DOS.</span>
-                <span lang="pt">Desativa a troca rápida entre armas secundárias que não existia no DOS.</span>
+                <span lang="en">Disables the faster weapon switching (i.e. recoil animation cancel) into an alternate weapon, like it was in DOS (e.g. canceling post-fire shotgun animation into a slot6 weapon will always switch to Shrinker if you have ammo for both Shrinker and Expander, instead of switching to the last used weapon of that slot).</span>
+                <span lang="pt">Desativa a troca rápida de armas (i.e. cancelamento da animação de recuo) para uma arma secundária, como era no DOS (e.g. cancelar a animação pós-tiro da shotgun para uma arma do slot6 sempre lhe dará a Shrinker se você tiver munição para ambas Shrinker e Expander, ao invés de trocar para a ultima arma usada deste slot).</span>
             </td>
         </tr>
         <tr>
             <td>
                 <span lang="en">[DOS] Bad Expander Radius Owner</span>
-                <span lang="pt">[DOS] Raio de Expander com Erro no Dono</span>
+                <span lang="pt">[DOS] Dono Errado na Explosão de Expander</span>
             </td>
             <td>
-                <span lang="en">Recreates the original DOS bug where the Expander's explosion kills didn't count for who shot.</span>
-                <span lang="pt">Recria o bug original do DOS onde a explosão da Expander não contava pontos para quem atirou.</span>
+                <span lang="en">Recreates the original DOS bug where the Expander's explosion kills would count frags for the player who epxloded, instead of counting for who fired the Expander.</span>
+                <span lang="pt">Recria o bug original do DOS onde a mortes pela explosão da Expander contava frag para quem explodiu, e não para quem para quem atirou com a Expander.</span>
             </td>
         </tr>
     </tbody>
