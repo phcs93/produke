@@ -1,4 +1,62 @@
 <span lang="en">Now you can toggle the automatic weapon switch as well as set the weapon preference through the menu <pre>Options > Player Setup > Weapon Preference</pre>.</span>
 <span lang="pt">Agora você pode setar a troca automatica de arma como também a ordem de preferência das armas através do menu <pre>Options > Player Setup > Weapon Preference</pre>.</span>
 
+<span lang="en">The automatic weapon switch (for when picking a new weapon) now has 3 modes:</span>
+<span lang="pt">A troca automatica de armas (para quando uma nova arma é pega) agora possui 3 modos:</span>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                <span lang="en">MODE</span>
+                <span lang="pt">MODO</span>
+            </th>
+            <th>
+                <span lang="en">DESCRIPTION</span>
+                <span lang="pt">DESCRIÇÃO</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>OFF</td>
+            <td>
+                <span lang="en">When picking a new weapon, the game will NEVER automatically switch to the new one.</span>
+                <span lang="pt">Ao pegar uma nova arma, o jogo NUNCA trocará automaticamente para a arma nova.</span>
+            </td>
+        </tr>
+        <tr>
+            <td>ON</td>
+            <td>
+                <span lang="en">In this mode, the game will ALWAYS switch weapons when the weapon you picked is a new one.</span>
+                <span lang="pt">Nesse modo, o jogo SEMPRE trocará de arma quando para a arma que você pegou é uma arma nova.</span>
+            </td>
+        </tr>
+        <tr>
+            <td>BY PREFERENCE</td>
+            <td>
+                <span lang="en">In this mode, the automatic weapn switch will only occur in case the priority of the current weapon is inferior to the new one.</span>
+                <span lang="pt">Nesse modo, só ocorrerá a troca automatica ao pegar uma nova arma caso a prioridade da arma atual seja inferior á prioridade da arma nova.</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <img src="res/screenshots/weapon-preferences.png" alt="weapon preferences" class="screenshot">
+
+<span lang="en">The weapon preference list is relevant in the following cases:</span>
+<span lang="pt">A lista de preferencia de armas é relevante nos seguintes casos:</span>
+<ul>
+    <li>
+        <span lang="en">During an automatic wmpty weapon switch (only use on DOS duke).</span>
+        <span lang="pt">Durante uma troca automatica de arma vazia (único uso no DOS duke).</span>
+    </li>
+        <li>
+        <span lang="en">During an automatic weapon switch when picking a new weapon, if the automatic weapon switch mode is set to <pre>By Preference</pre>.</span>
+        <span lang="pt">Durante uma troca automatica de armas ao pegar uma arma nova, se o modo de troca automatica de armas estiver setado para <pre>By Preference</pre>.</span>
+    </li>
+    <li>
+        <span lang="en">To set the current weapon when (re)spawning. This will be mainly be of relevance in case the current session is using custom <pre>Starting Weapons</pre>, but may be of effect on normal games as well in case Pistol is of lower priority than Knee.</span>
+        <span lang="pt">Para setar a arma atual quando estiver (re)nascendo. Isto terá maior relevância caso a sessão de jogo estiver usando <pre>Starting Weapons</pre> customizados, porém também terá efeitos em jogos normais caso a prioridade da Pistol estiver menor que a da Knee (chute).</span>
+    </li>
+</ul>
