@@ -612,12 +612,6 @@ window["load-features"] = async () => {
                 "pt": "Correção de bugs conhecidos do jogo original (DOS)."
             },
             "sections": {
-                "expander-autoaim-fix": {
-                    "title": {
-                        "en": "Expander Autoaim Fix",
-                        "pt": "Correção da Autoaim da Expander"
-                    }
-                },
                 "expander-frag-fix": {
                     "title": {
                         "en": "Expander Frag Fix",
@@ -684,6 +678,12 @@ window["load-features"] = async () => {
                 "pt": "Correção de bugs conhecidos do xDuke."
             },
             "sections": {
+                "expander-autoaim-fix": {
+                    "title": {
+                        "en": "Expander Autoaim Fix",
+                        "pt": "Correção da Autoaim da Expander"
+                    }
+                },
                 "screenshot-fix": {
                     "title": {
                         "en": "Screenshot Fix",
