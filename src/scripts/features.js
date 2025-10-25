@@ -602,14 +602,14 @@ window["load-features"] = async () => {
                 }
             }
         },
-        "original-bug-fixes": {
+        "original-dos-bug-fixes": {
             "title": {
-                "en": "ORIGINAL BUG FIXES",
-                "pt": "CORREÇÕES DE BUGS ORIGINAIS"
+                "en": "ORIGINAL DOS BUG FIXES",
+                "pt": "CORREÇÕES DE BUGS ORIGINAIS DE DOS"
             },
             "description": {
-                "en": "Known bugs fixes from the original game (xDuke).",
-                "pt": "Correção de bugs conhecidos do jogo original (xDuke)."
+                "en": "Known bugs fixes from the original game (DOS).",
+                "pt": "Correção de bugs conhecidos do jogo original (DOS)."
             },
             "sections": {
                 "expander-autoaim-fix": {
@@ -630,22 +630,28 @@ window["load-features"] = async () => {
                         "pt": "Correção da Troca Rápida da Expander"
                     }
                 },
+                "respawn-shrunken-fix": {
+                    "title": {
+                        "en": "Respawn Shrunken Fix",
+                        "pt": "Correção de Renascer Encolhido"
+                    }
+                },
                 "drowning-respawn-fix": {
                     "title": {
                         "en": "Drowning Respawn Fix",
-                        "pt": "Correção do Renascimento de Afogamento"
+                        "pt": "Correção de Renascer se Afogando"
+                    }
+                },
+                "crane-grab-fix": {
+                    "title": {
+                        "en": "Crane Grab Fix",
+                        "pt": "Correção do Guindaste"
                     }
                 },
                 "tripbomb-on-slopes-fix": {
                     "title": {
                         "en": "Tripbomb on Slopes Fix",
                         "pt": "Correção de Tripbombs em Rampas"
-                    }
-                },
-                "screenshot-fix": {
-                    "title": {
-                        "en": "Screenshot Fix",
-                        "pt": "Correção de Screenshots"
                     }
                 },
                 "friendly-fire-fix": {
@@ -665,11 +671,35 @@ window["load-features"] = async () => {
                         "en": "Insuficient Spawn Points Fix",
                         "pt": "Correção dos Pontos de Renascimento Insuficientes"
                     }
-                },                
+                }
+            }
+        },
+        "original-xduke-bug-fixes": {
+            "title": {
+                "en": "XDUKE BUG FIXES",
+                "pt": "CORREÇÕES DE BUGS DO XDUKE"
+            },
+            "description": {
+                "en": "Known bugs fixes from xDuke.",
+                "pt": "Correção de bugs conhecidos do xDuke."
+            },
+            "sections": {
+                "screenshot-fix": {
+                    "title": {
+                        "en": "Screenshot Fix",
+                        "pt": "Correção de Screenshots"
+                    }
+                },             
                 "global-palette-fix": {
                     "title": {
                         "en": "Global Palette Reset Fix",
                         "pt": "Correção do Reset de Paletas Globais"
+                    }
+                },
+                "dos-demos-playeback-fix": {
+                    "title": {
+                        "en": "DOS Demos Playback Fix",
+                        "pt": "Correção de Reprodução das Demos de DOS"
                     }
                 }
             }
