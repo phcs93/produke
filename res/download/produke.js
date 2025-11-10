@@ -95,34 +95,35 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflags A definition
     const netFlagsADefs = {
-        "Weapons Pickable Once": 1,
+        "Weapons Are Pickable Only Once": 1,
         "Respawn Monsters": 2,
         "Respawn Items": 4,
         "Respawn Inventory": 8,
         "Markers": 16,
         "Don't Spawn Monsters": 32,
         "Don't Spawn Keycards": 64,
-        "[COOP/TEAM] Friendly Fire": 128,
-        "Spawn MP Only Switches": 256,
-        "Spawn MP Only Items": 512,
-        "Weapon Always Drops On Kill": 1024,
-        "Revealed Automap": 2048,
-        "No Target Names": 4096,
-        "No Map Exit": 8192,
-        "Force Respawn": 16384,
-        "[PVP] Respawn Farthest": 32768,
-        "[TEAM] Teamless Spawn Points": 65536,
-        "[COOP/TEAM] Disable Spycam": 131072,
-        "[COOP/TEAM] Autoaim On Allies": 262144,
-        "Damage Numbers": 524288,
-        "[COOP/TEAM/TRM] Overhead Info": 1048576,
-        "[COOP/TEAM/TRM] Outlines": 2097152,
-        "[CTF] Outline On Flags": 4194304,
-        "[CTF] Flag Return Instantly": 8388608,
-        "[CTF] Flag Auto Detonate": 16777216,
-        "[T/LMS] Restricted Spycam": 33554432,
-        "[T/LMS] Restricted Chat": 67108864,
-        "[SURV/TLMS] Lives Are Shared": 134217728
+        "Spawn MP Only Switches": 128,
+        "Spawn MP Only Items": 256,
+        "[COOP/TEAM] Friendly Fire": 512,
+        "[COOP/TEAM] Autoaim On Allies": 1024,
+        "[COOP/TEAM] Global Ally Sounds": 2048,
+        "[COOP/TEAM] Disable Spycam/Mapview": 4096,
+        "Revealed Automap": 8192,
+        "No Map Exit": 16384,
+        "No Target Names": 32768,
+        "Weapon Always Drops On Kill": 65536,
+        "Force Respawn": 131072,
+        "[PVP] Respawn Farthest": 262144,
+        "[TEAM] Teamless Spawn Points": 524288,
+        "Damage Numbers": 1048576,
+        "[COOP/TEAM/TRM] Overhead Info": 2097152,
+        "[COOP/TEAM/TRM] Outlines": 4194304,
+        "[CTF] Outline On Flags": 8388608,
+        "[CTF] Flag Return Instantly": 16777216,
+        "[CTF] Flag Auto Detonate": 33554432,
+        "[T/LMS] Restricted Spycam": 67108864,
+        "[T/LMS] Restricted Chat": 134217728,
+        "[SURV/TLMS] Lives Are Shared": 268435456
     };
 
     // netflags B definition
@@ -183,44 +184,45 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflagsA definition
     const NetFlagsA = {
-        GETWEAPONCE:                 1 << 0,   // 1
-        RESPAWN_MONSTERS:            1 << 1,   // 2
-        RESPAWN_ITEMS:               1 << 2,   // 4
-        RESPAWN_INVENTORY:           1 << 3,   // 8
-        MARKERS:                     1 << 4,   // 16
-        NO_MONSTERS:                 1 << 5,   // 32
-        NO_ACCESS:                   1 << 6,   // 64
-        FRIENDLY_FIRE:               1 << 7,   // 128
-        DMSWITCHES:                  1 << 8,   // 256
-        MPITEMS:                     1 << 9,   // 512
-        WEAPON_ALWAYS_DROP:          1 << 10,  // 1024
-        REVEALED_AUTOMAP:            1 << 11,  // 2048
-        DISABLE_TARGET_NAMES:        1 << 12,  // 4096
-        DISABLE_MAP_EXIT:            1 << 13,  // 8192
-        FORCE_RESPAWN:               1 << 14,  // 16384
-        RESPAWN_FARTHEST:            1 << 15,  // 32768
-        TEAM_USE_NORMAL_SPAWNS:      1 << 16,  // 65536
-        TEAM_NO_SPYCAM_MAPVIEW:      1 << 17,  // 131072
-        TEAM_AUTOAIM_ON_ALLIES:      1 << 18,  // 262144
-        DAMAGENUMS:                  1 << 19,  // 524288
-        COOP_TEAM_TRM_OVERHEAD:      1 << 20,  // 1048576
-        COOP_TEAM_TRM_OUTLINES:      1 << 21,  // 2097152
-        CTF_FLAG_OUTLINE:            1 << 22,  // 4194304
-        CTF_FLAG_INSTANT_RETURN:     1 << 23,  // 8388608
-        CTF_FLAG_AUTODETONATE:       1 << 24,  // 16777216
-        T_LMS_RESTRICTED_SPYCAM:     1 << 25,  // 33554432
-        T_LMS_RESTRICTED_CHAT:       1 << 26,  // 67108864
-        SURV_TLMS_SHARED_LIVES:      1 << 27,  // 134217728
+        GETWEAPONCE:                  1 << 0,   // 1
+        RESPAWN_MONSTERS:             1 << 1,   // 2
+        RESPAWN_ITEMS:                1 << 2,   // 4
+        RESPAWN_INVENTORY:            1 << 3,   // 8
+        MARKERS:                      1 << 4,   // 16
+        NO_MONSTERS:                  1 << 5,   // 32
+        NO_ACCESS:                    1 << 6,   // 64
+        DMSWITCHES:                   1 << 7,   // 128
+        MPITEMS:                      1 << 8,   // 256
+        COOPTEAM__FRIENDLY_FIRE:      1 << 9,   // 512
+        COOPTEAM__AUTOAIM_ON_ALLIES:  1 << 10,  // 1024
+        COOPTEAM__GLOBAL_ALLY_SOUNDS: 1 << 11,  // 2048
+        COOPTEAM__NO_SPYCAM_MAPVIEW:  1 << 12,  // 4096
+        REVEALED_AUTOMAP:             1 << 13,  // 8192
+        DISABLE_MAP_EXIT:             1 << 14,  // 16384
+        DISABLE_TARGET_NAMES:         1 << 15,  // 32768
+        WEAPON_ALWAYS_DROP:           1 << 16,  // 65536
+        FORCE_RESPAWN:                1 << 17,  // 131072
+        RESPAWN_FARTHEST:             1 << 18,  // 262144
+        TEAM__USE_NORMAL_SPAWNS:      1 << 19,  // 524288        
+        DAMAGENUMS:                   1 << 20,  // 1048576
+        TRMCOOPTEAM__OVERHEAD:        1 << 21,  // 2097152
+        TRMCOOPTEAM__OUTLINES:        1 << 22,  // 4194304
+        CTF__FLAG_OUTLINE:            1 << 23,  // 8388608
+        CTF__FLAG_INSTANT_RETURN:     1 << 24,  // 16777216
+        CTF__FLAG_AUTODETONATE:       1 << 25,  // 33554432
+        T_LMS__RESTRICTED_SPYCAM:     1 << 26,  // 67108864
+        T_LMS__RESTRICTED_CHAT:       1 << 27,  // 134217728
+        SURV_TLMS__SHARED_LIVES:      1 << 28,  // 268435456
     };
 
     // netflagsB definition
     const NetFlagsB = {
-        TEAM_LASER_COLORS:           1 << 0,   // 1
-        CTF_NOROIDS:                 1 << 1,   // 2
-        CTF_NOJPACK:                 1 << 2,   // 4
-        TRM_NO_INFINITE_JPACK:       1 << 3,   // 8
-        TRM_NO_SHRINKER_IMMUNITY:    1 << 4,   // 16
-        TRM_NO_FREEZER_WEAKNESS:     1 << 5,   // 32
+        TEAM__LASER_COLORS:           1 << 0,   // 1
+        CTF__NO_ROIDS:                1 << 1,   // 2
+        CTF__NO_JETPACK:              1 << 2,   // 4
+        TRM__NO_INFINITE_JPACK:       1 << 3,   // 8
+        TRM__NO_SHRINKER_IMMUNITY:    1 << 4,   // 16
+        TRM__NO_FREEZER_WEAKNESS:     1 << 5,   // 32
     };
 
     // netflagsC definition
@@ -271,25 +273,25 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // default netflags presets per game mode category
     const DEFAULT_NETFLAGS_SP         = 0;
-    const DEFAULT_NETFLAGS_PVP_SPWN   = 0 | NetFlagsA.MARKERS | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
-    const DEFAULT_NETFLAGS_PVP_NOSPWN = NetFlagsA.GETWEAPONCE | 0 | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | 0 | 0 | NetFlagsA.FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
-    const DEFAULT_NETFLAGS_COOP       = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_PVP_SPWN   = 0 | NetFlagsA.MARKERS | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_PVP_NOSPWN = NetFlagsA.GETWEAPONCE | 0 | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_COOP       = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
 
     // base netflags presets
-    const BASE_TDM_TLMS           = NetFlagsA.TEAM_USE_NORMAL_SPAWNS | NetFlagsA.T_LMS_RESTRICTED_SPYCAM | NetFlagsA.T_LMS_RESTRICTED_CHAT;
+    const BASE_TDM_TLMS           = NetFlagsA.TEAM__USE_NORMAL_SPAWNS | NetFlagsA.T_LMS__RESTRICTED_SPYCAM | NetFlagsA.T_LMS__RESTRICTED_CHAT;
     const BASE_LMS                = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST;
     const BASE_MODERN             = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.DISABLE_MAP_EXIT | NetFlagsA.DAMAGENUMS;
     const BASE_HARDCORE           = NetFlagsA.DISABLE_TARGET_NAMES;
     const BASE_CLASSIC_TEAMPLAY   = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | 0 | 0;
-    const BASE_ALT_TEAMPLAY       = 0 | NetFlagsA.COOP_TEAM_TRM_OVERHEAD | 0 | 0 | 0;
-    const BASE_MODERN_TEAMPLAY    = 0 | NetFlagsA.COOP_TEAM_TRM_OVERHEAD | NetFlagsA.COOP_TEAM_TRM_OUTLINES | 0 | 0;
-    const BASE_HARDCORE_TEAMPLAY  = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | NetFlagsA.TEAM_NO_SPYCAM_MAPVIEW | NetFlagsA.TEAM_AUTOAIM_ON_ALLIES;
+    const BASE_ALT_TEAMPLAY       = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | 0 | 0 | 0;
+    const BASE_MODERN_TEAMPLAY    = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | NetFlagsA.TRMCOOPTEAM__OUTLINES | 0 | 0;
+    const BASE_HARDCORE_TEAMPLAY  = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | NetFlagsA.COOPTEAM__NO_SPYCAM_MAPVIEW | NetFlagsA.COOPTEAM__AUTOAIM_ON_ALLIES;
 
     // netflagsA preset combinations
-    const PRESET_NETFLAGS_CLASSIC_COOP  = DEFAULT_NETFLAGS_COOP | BASE_CLASSIC_TEAMPLAY;
-    const PRESET_NETFLAGS_ALT_COOP      = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURV_TLMS_SHARED_LIVES | BASE_ALT_TEAMPLAY;
+    const PRESET_NETFLAGS_CLASSIC_COOP  = DEFAULT_NETFLAGS_COOP | NetFlagsA_COOPTEAM__GLOBAL_ALLY_SOUNDS | BASE_CLASSIC_TEAMPLAY;
+    const PRESET_NETFLAGS_ALT_COOP      = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURV_TLMS__SHARED_LIVES | BASE_ALT_TEAMPLAY;
     const PRESET_NETFLAGS_MODERN_COOP   = NetFlagsA.GETWEAPONCE | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | 0 | 0 | NetFlagsA.MPITEMS | 0 | BASE_MODERN_TEAMPLAY;
-    const PRESET_NETFLAGS_HARDCORE_COOP = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURV_TLMS_SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
+    const PRESET_NETFLAGS_HARDCORE_COOP = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURV_TLMS__SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
 
     const PRESET_NETFLAGS_CLASSIC_FFA   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0;
     const PRESET_NETFLAGS_ALT_FFA       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
@@ -299,12 +301,12 @@ module.exports = function({deepClone, utils}, gamedefs) {
     const PRESET_NETFLAGS_CLASSIC_TEAM  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
     const PRESET_NETFLAGS_ALT_TEAM      = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
     const PRESET_NETFLAGS_MODERN_TEAM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_HARDCORE_TEAM = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURV_TLMS_SHARED_LIVES;
+    const PRESET_NETFLAGS_HARDCORE_TEAM = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURV_TLMS__SHARED_LIVES;
 
     const PRESET_NETFLAGS_CLASSIC_CTF   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_ALT_CTF       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF_FLAG_INSTANT_RETURN;
-    const PRESET_NETFLAGS_MODERN_CTF    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY | NetFlagsA.CTF_FLAG_OUTLINE;
-    const PRESET_NETFLAGS_HARDCORE_CTF  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.CTF_FLAG_INSTANT_RETURN | NetFlagsA.CTF_FLAG_AUTODETONATE;
+    const PRESET_NETFLAGS_ALT_CTF       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN;
+    const PRESET_NETFLAGS_MODERN_CTF    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY | NetFlagsA.CTF__FLAG_OUTLINE;
+    const PRESET_NETFLAGS_HARDCORE_CTF  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN | NetFlagsA.CTF__FLAG_AUTODETONATE;
 
     const PRESET_NETFLAGS_CLASSIC_LMS   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | 0;
     const PRESET_NETFLAGS_ALT_LMS       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
@@ -318,14 +320,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflagsB preset combinations
     const PRESET_NETFLAGSB_CLASSIC        = 0;
-    const PRESET_NETFLAGSB_ALT            = NetFlagsB.TEAM_LASER_COLORS;
-    const PRESET_NETFLAGSB_MODERN         = NetFlagsB.TEAM_LASER_COLORS;
+    const PRESET_NETFLAGSB_ALT            = NetFlagsB.TEAM__LASER_COLORS;
+    const PRESET_NETFLAGSB_MODERN         = NetFlagsB.TEAM__LASER_COLORS;
     const PRESET_NETFLAGSB_HARDCORE       = 0;
 
     const PRESET_NETFLAGSB_CLASSIC_TERM   = PRESET_NETFLAGSB_CLASSIC | 0 | 0;
-    const PRESET_NETFLAGSB_ALT_TERM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TRM_NO_SHRINKER_IMMUNITY;
-    const PRESET_NETFLAGSB_MODERN_TERM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TRM_NO_INFINITE_JPACK | 0;
-    const PRESET_NETFLAGSB_HARDCORE_TERM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TRM_NO_INFINITE_JPACK | NetFlagsB.TRM_NO_SHRINKER_IMMUNITY;
+    const PRESET_NETFLAGSB_ALT_TERM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TRM__NO_SHRINKER_IMMUNITY;
+    const PRESET_NETFLAGSB_MODERN_TERM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TRM__NO_INFINITE_JPACK | 0;
+    const PRESET_NETFLAGSB_HARDCORE_TERM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TRM__NO_INFINITE_JPACK | NetFlagsB.TRM__NO_SHRINKER_IMMUNITY;
 
     // weapflags presets
     const DEFAULT_WEAPFLAGS              = StartingWeapon.PISTOL;
