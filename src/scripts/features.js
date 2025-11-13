@@ -408,6 +408,12 @@ window["load-features"] = async () => {
                         "pt": "Chat Salvo nas Demos"
                     }
                 },
+                "map-crc-on-demos": {
+                    "title": {
+                        "en": "Usermap CRC on Demos",
+                        "pt": "CRC de Usermaps nas Demos"
+                    }
+                },
                 "demo-outlines": {
                     "title": {
                         "en": "Demo Outlines",
