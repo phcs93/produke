@@ -145,11 +145,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[1.3D] Double Kick": 16,
         "[1.3D] No Expander": 32,
         "Fix Tripbombs On Slopes": 64,
-        "[DOS] Coop Map Transition Bugs": 128,
+        "[DOS] Map Start Bugs": 128,
         "[DOS] No Suicide If FFire Is Off": 256,
         "[DOS] Can Respawn Drowning": 512,
-        "[DOS] No Alt-Weapon Fast Switch": 1024,
-        "[DOS] Bad Expander Radius Owner": 2048
+        "[DOS] Can Respawn Shrunked": 1024,
+        "[DOS] Bad Expander Radius Owner": 2048,
+        "[DOS] Alt-Weapon Switching Bugs": 4096,
+        "[DOS] Dead player swaping Bugs": 8192,
+        "[DOS] Useless Nightvision": 16384
     };
 
     // weapflags definition
@@ -234,11 +237,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
         _13D_ENABLE_DOUBLE_KICK:             1 << 4,  // 16
         _13D_DISABLE_EXPANDER:               1 << 5,  // 32
         FIX_TRIPBOMB_ON_SLOPES:              1 << 6,  // 64
-        ORIGBHV_COOP_LEVEL_TRANSITION_BUGS:  1 << 7,  // 128
-        ORIGBHV_FFIRE_NO_SUICIDE:            1 << 8,  // 256
+        ORIGBHV_MAP_START_BUGS:              1 << 7,  // 128
+        ORIGBHV_FFIRE_NO_SUICIDE:            1 << 8,  // 256        
         ORIGBHV_DROWNING_RESPAWN:            1 << 9,  // 512
-        ORIGBHV_NO_ALTWEAPON_FASTSWITCH:     1 << 10, // 1024
+        ORIGBHV_SHRUNK_RESPAWN:              1 << 10, // 1024
         ORIGBHV_EXPANDER_RADIUS:             1 << 11, // 2048
+        ORIGBHV_ALTWEAPON_SWITCHING_BUGS:    1 << 12, // 4096
+        ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:    1 << 13, // 8192
+        ORIGBHV_BAD_NIGHTVISION_GLOW:        1 << 14, // 16384
     };
 
     // weapflags definitions

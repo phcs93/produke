@@ -487,17 +487,19 @@
         </tr>
         <tr>
             <td>
-                <span lang="en">[DOS] Coop Map Transition Bugs</span>
-                <span lang="pt">[DOS] Bugs na Transição de Mapas Coop</span>
+                <span lang="en">[DOS] Map Start Bugs</span>
+                <span lang="pt">[DOS] Bugs de Início de Mapa</span>
             </td>
             <td>
-                <span lang="en">Recreates certain bugs that occurred during map transitions in DOS cooperative mode:<br/>
-                    (a) Everyone starts the next map with P1's health points;<br/>
-                    (b) When passing to the next map while holding a weapon with no ammo, the player start holding that weapon and the game will NOT switch automatically to another weapon with ammo;
+                <span lang="en">Recreates certain bugs that occurred during game start in DOS Duke:<br/>
+                    (a) If a spawn point X/Y position is shared between 2 sectors (i.e. SOS), then the player may spawn on the wrong sector (only for the 1st spawn), instead of spawning on the sector the APLAYER sprite is placed (e.g. E2L11 - Lunatic Fringe(P3, P4, P5, P6), E4L9 - Derelitic(P5, P6), h-32.map(P3));<br/>
+                    (b) In COOP, everyone starts the next map with P1's health points;<br/>
+                    (c) In COOP, when passing to the next map while holding a weapon with no ammo, the player start holding that weapon and the game will NOT switch automatically to another weapon with ammo;
                 </span>
-                <span lang="pt">Recria certos bugs que ocorriam durante a transição de mapas no modo cooperativo do DOS:<br/>
-                    (a) Todo mundo iniciará o próximo mapa com os pontos de vida do P1;<br/>
-                    (b) Ao passar para o proximo mapa segurando uma arma sem munição, o player começará segurando essa mesma arma e o jogo NÃO trocará sozinho para outra arma que tenha munição;
+                <span lang="pt">Recria certos bugs que ocorriam durante o início de jogo no DOS Duke:<br/>
+                    (a) Se a posição X/Y de um ponto de nascimento é compartilhado por 2 setores (i.e. SOS), então o player talvez nascerá no setor errado (só para o primeiro nascimento), ao invés de nascer no setor em que a sprite APLAYER foi colocada (ex: E2L11 - Lunatic Fringe(P3, P4, P5, P6), E4L9 - Derelitic(P5, P6), h-32.map(P3));<br/>
+                    (b) No COOP, todo mundo iniciará o próximo mapa com os pontos de vida do P1;<br/>
+                    (c) No COOP, ao passar para o proximo mapa segurando uma arma sem munição, o player começará segurando essa mesma arma e o jogo NÃO trocará sozinho para outra arma que tenha munição;
                 </span>
             </td>
         </tr>
@@ -570,6 +572,22 @@
                 <span lang="pt">Habilita certos bugs originais do DOS duke no qual o jogo, em certos contextos, se confunde entre jogador morto e o player mais proximo quando:<br/>
                     (a) Jogador é morto enquanto estiver sendo carregado por um guindaste, então o player mais próximo é teleportado em seu lugar;<br/>
                     (b) Jogador é comido por uma Greenslime, então a slime irá teleportar instantaneamente para o jogador mais proximo e irá começar a comê-lo;
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span lang="en">[DOS] Useless Nightvision</span>
+                <span lang="pt">[DOS] Nightvision Inútil</span>
+            </td>
+            <td>
+                <span lang="en">Restores the original Nightvision behavior:<br/>
+                    (a) Limited glow (sprite shading set to 0 isntead of -127(proDuke default));<br/>
+                    (b) Allies/yourself will also glow;
+                </span>
+                <span lang="pt">Restaura o comportamento original do Nightvision:<br/>
+                    (a) Brilho limitado (escurecimento da sprite setada para 0 ao invés de -127(padrão do proDuke));<br/>
+                    (b) Aliados/você mesmo também brilharão;
                 </span>
             </td>
         </tr>
