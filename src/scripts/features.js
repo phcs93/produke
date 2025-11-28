@@ -114,16 +114,22 @@ window["load-features"] = async () => {
                         "pt": "Time no Automap"
                     }
                 },
-                "team-colored-tripboms": {
+                "team-friendly-fire": {
                     "title": {
-                        "en": "Team Colored Tripbombs",
-                        "pt": "Tripbombs Coloridas por Time"
+                        "en": "Team Friendly Fire",
+                        "pt": "Fogo Amigo de Time"
                     }
                 },
                 "team-smart-autoaim": {
                     "title": {
                         "en": "Team Smart Autoaim",
                         "pt": "Mira Automatica Inteligente"
+                    }
+                },
+                "team-colored-tripboms": {
+                    "title": {
+                        "en": "Team Colored Tripbombs",
+                        "pt": "Tripbombs Coloridas por Time"
                     }
                 },
                 "team-smart-nightvision": {
@@ -136,12 +142,6 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Team Scorebar Modes",
                         "pt": "Modos de Scorebar de Time"
-                    }
-                },
-                "team-friendly-fire": {
-                    "title": {
-                        "en": "Team Friendly Fire",
-                        "pt": "Fogo Amigo de Time"
                     }
                 },
                 "team-picker": {
