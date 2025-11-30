@@ -123,7 +123,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[CTF] Flag Auto Detonate": 33554432,
         "[T/LMS] Restricted Spycam": 67108864,
         "[T/LMS] Restricted Chat": 134217728,
-        "[SURV/TLMS] Lives Are Shared": 268435456
+        "[COOP] KeyCards Are Shared": 268435456,
+        "[SURV/TLMS] Lives Are Shared": 536870912
     };
 
     // netflags B definition
@@ -215,7 +216,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         CTF__FLAG_AUTODETONATE:       1 << 25,  // 33554432
         T_LMS__RESTRICTED_SPYCAM:     1 << 26,  // 67108864
         T_LMS__RESTRICTED_CHAT:       1 << 27,  // 134217728
-        SURV_TLMS__SHARED_LIVES:      1 << 28,  // 268435456
+        COOP__SHARED_ACCESS:          1 << 28,  // 268435456
+        SURVTLMS__SHARED_LIVES:       1 << 29,  // 536870912
     };
 
     // netflagsB definition
@@ -295,9 +297,14 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflagsA preset combinations
     const PRESET_NETFLAGS_CLASSIC_COOP  = DEFAULT_NETFLAGS_COOP | NetFlagsA_COOPTEAM__GLOBAL_ALLY_SOUNDS | BASE_CLASSIC_TEAMPLAY;
-    const PRESET_NETFLAGS_ALT_COOP      = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURV_TLMS__SHARED_LIVES | BASE_ALT_TEAMPLAY;
+    const PRESET_NETFLAGS_ALT_COOP      = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURVTLMS__SHARED_LIVES | BASE_ALT_TEAMPLAY;
     const PRESET_NETFLAGS_MODERN_COOP   = NetFlagsA.GETWEAPONCE | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | 0 | 0 | NetFlagsA.MPITEMS | 0 | BASE_MODERN_TEAMPLAY;
-    const PRESET_NETFLAGS_HARDCORE_COOP = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURV_TLMS__SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
+    const PRESET_NETFLAGS_HARDCORE_COOP = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURVTLMS__SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
+
+    const PRESET_NETFLAGS_CLASSIC_SURV  = PRESET_NETFLAGS_CLASSIC_COOP | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_ALT_SURV      = PRESET_NETFLAGS_ALT_SURV | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_MODERN_SURV   = PRESET_NETFLAGS_MODERN_SURV | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_HARDCORE_SURV = PRESET_NETFLAGS_HARDCORE_SURV | NetFlagsA.COOP__SHARED_ACCESS;
 
     const PRESET_NETFLAGS_CLASSIC_FFA   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0;
     const PRESET_NETFLAGS_ALT_FFA       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
@@ -307,7 +314,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     const PRESET_NETFLAGS_CLASSIC_TEAM  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
     const PRESET_NETFLAGS_ALT_TEAM      = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
     const PRESET_NETFLAGS_MODERN_TEAM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_HARDCORE_TEAM = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURV_TLMS__SHARED_LIVES;
+    const PRESET_NETFLAGS_HARDCORE_TEAM = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURVTLMS__SHARED_LIVES;
 
     const PRESET_NETFLAGS_CLASSIC_CTF   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY | 0;
     const PRESET_NETFLAGS_ALT_CTF       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN;
@@ -369,8 +376,15 @@ module.exports = function({deepClone, utils}, gamedefs) {
         switch (preset) {
             case "classic": {
                 switch (gametype) {
-                    case GameType.COOP: case GameType.SURV: {
+                    case GameType.COOP: {
                         netflagsA = PRESET_NETFLAGS_CLASSIC_COOP;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_SURV;
                         netflagsB = PRESET_NETFLAGSB_CLASSIC;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS;
@@ -416,8 +430,15 @@ module.exports = function({deepClone, utils}, gamedefs) {
             }
             case "alternative": {
                 switch (gametype) {
-                    case GameType.COOP: case GameType.SURV: {
+                    case GameType.COOP: {
                         netflagsA = PRESET_NETFLAGS_ALT_COOP;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_ALT_SURV;
                         netflagsB = PRESET_NETFLAGSB_ALT;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS;
@@ -463,8 +484,15 @@ module.exports = function({deepClone, utils}, gamedefs) {
             }
             case "modern": {
                 switch (gametype) {
-                    case GameType.COOP: case GameType.SURV: {
+                    case GameType.COOP: {
                         netflagsA = PRESET_NETFLAGS_MODERN_COOP;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_SURV;
                         netflagsB = PRESET_NETFLAGSB_MODERN;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS;
@@ -510,8 +538,15 @@ module.exports = function({deepClone, utils}, gamedefs) {
             }
             case "hardcore": {
                 switch (gametype) {
-                    case GameType.COOP: case GameType.SURV: {
+                    case GameType.COOP: {
                         netflagsA = PRESET_NETFLAGS_HARDCORE_COOP;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS;
+                        break;
+                    }
+                    case GameType.SURV: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_SURV;
                         netflagsB = PRESET_NETFLAGSB_HARDCORE;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS;
