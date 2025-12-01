@@ -646,6 +646,10 @@ module.exports = function({deepClone, utils}, gamedefs) {
     // change to produke name and executable
     gamedefs.games.duke3d.executables.produke.name = "proDuke";
     gamedefs.games.duke3d.executables.produke.files.main.path = "produke.exe";
+    gamedefs.games.duke3d.executables.produke.networking = {
+        modes: ['p2p'], 
+        ipv6:true
+    };
 
     // remove arguments that have been moved to netflags
     delete gamedefs.games.duke3d.executables.produke.parameters.noMonsters;
