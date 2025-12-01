@@ -819,7 +819,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         type: "boolean",
         label: "Disable Autoaim",
         optional: false,
-        value: "/disableautoaim"
+        value: "/disableautoaim",
+        for: "private"
     };
 
     // exploit mode
@@ -828,7 +829,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         type: "boolean",
         label: "Exploit Mode (tiles + visiblity)",
         optional: false,
-        value: "/exploitmode"
+        value: "/exploitmode",
+        for: "private"
     };
 
     // allow mods
@@ -837,7 +839,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         type: "boolean",
         label: "Allow Mods (con / art / dat / etc)",
         optional: false,
-        value: "/allowmods"
+        value: "/allowmods",
+        for: "private"
     };
 
     // master/slave
