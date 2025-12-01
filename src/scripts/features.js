@@ -227,6 +227,12 @@ window["load-features"] = async () => {
                         "en": "Starting Inventory",
                         "pt": "Inventário Inicial"
                     }
+                },
+                "typing-and-menu-icon": {
+                    "title": {
+                        "en": "Typing And Menu Icon",
+                        "pt": "Ícone de Mensagem e Menu"
+                    }
                 }
             }
         },
