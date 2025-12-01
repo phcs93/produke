@@ -647,7 +647,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.name = "proDuke";
     gamedefs.games.duke3d.executables.produke.files.main.path = "produke.exe";
     gamedefs.games.duke3d.executables.produke.networking = {
-        modes: ['p2p'], 
+        modes: ['p2p', 'cs'], 
         ipv6:true
     };
 
@@ -844,13 +844,20 @@ module.exports = function({deepClone, utils}, gamedefs) {
     };
 
     // master/slave
+    // gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
+    //     modeSupport: ["multiplayer"],
+    //     type: "boolean",
+    //     label: "Master/Slave mode (/i0)",
+    //     optional: false,
+    //     value: "/i0",
+    //     for: "host-only-private"
+    // };
     gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
         modeSupport: ["multiplayer"],
-        type: "boolean",
-        label: "Master/Slave mode (/i0)",
-        optional: false,
-        value: "/i0",
-        for: "host-only-private"
+        type: "static",
+        addIf: c => c.GameRoom?.Net?.Mode == 'p2p',        
+        value: c => ["-net", "-p" + c?.GameRoom?.MyPort, ...utils.sortedPlayersIpsAndPorts(c, '-n1')],
+        for:"private"
     };
 
     // netflags presets input
@@ -1085,6 +1092,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         optional: false,
         syncOnly: true,
         choices: [ {label: "", value: ""} ],
+        for: "private",
         dependsOn: {
             params: "html",
             show: () => {
