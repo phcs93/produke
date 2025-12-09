@@ -855,7 +855,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
         modeSupport: ["multiplayer"],
         type: "static",
-        addIf: c => c.GameRoom?.Net?.Mode == 'p2p',        
+        addIf: c => c.GameRoom?.Net?.Mode == 'cs',        
         value: c => ["-net", "-p" + c?.GameRoom?.MyPort, ...utils.sortedPlayersIpsAndPorts(c, '-n1')],
         for:"private"
     };
