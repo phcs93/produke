@@ -677,7 +677,13 @@ window["load-features"] = async () => {
                         "en": "Insuficient Spawn Points Fix",
                         "pt": "Correção dos Pontos de Renascimento Insuficientes"
                     }
-                }
+                },
+                "wrong-global-palette-fix": {
+                    "title": {
+                        "en": "Wrong Global Palette Fix",
+                        "pt": "Correção da Paleta Global Incorreta"
+                    }
+                }                
             }
         },
         "original-xduke-bug-fixes": {
