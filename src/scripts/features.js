@@ -342,6 +342,18 @@ window["load-features"] = async () => {
                         "pt": "Prioridade de Troca de Armas"
                     }
                 },
+                "macro-editor": {
+                    "title": {
+                        "en": "Macro Editor",
+                        "pt": "Editor de Macros"
+                    }
+                },
+                "offline-multiplayer": {
+                    "title": {
+                        "en": "Offline Multiplayer",
+                        "pt": "Multiplayer Offline"
+                    }
+                },
                 "user-map-selector": {
                     "title": {
                         "en": "User Map Selector",
@@ -352,12 +364,6 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "BOTs Menu",
                         "pt": "Menu de BOTs"
-                    }
-                },
-                "macro-editor": {
-                    "title": {
-                        "en": "Macro Editor",
-                        "pt": "Editor de Macros"
                     }
                 },
                 "auto-screenshots": {
@@ -371,13 +377,7 @@ window["load-features"] = async () => {
                         "en": "Damage Numbers",
                         "pt": "Números de Dano"
                     }
-                },
-                "offline-multiplayer": {
-                    "title": {
-                        "en": "Offline Multiplayer",
-                        "pt": "Multiplayer Offline"
-                    }
-                }
+                }                
             }
         },
         "demo-improvements": {
@@ -389,13 +389,7 @@ window["load-features"] = async () => {
                 "en": "Various improvements for demo recording and playback.",
                 "pt": "Várias melhorias na hora de gravar e assistir demos."
             },
-            "sections": {
-                "demo-cams": {
-                    "title": {
-                        "en": "Demo Cams",
-                        "pt": "Cameras de Demo"
-                    }
-                },
+            "sections": {                
                 "demo-autorecord": {
                     "title": {
                         "en": "Demo Autorecord",
@@ -414,16 +408,10 @@ window["load-features"] = async () => {
                         "pt": "Chat Salvo nas Demos"
                     }
                 },
-                "map-crc-on-demos": {
+                "record-after-map-change": {
                     "title": {
-                        "en": "Usermap CRC on Demos",
-                        "pt": "CRC de Usermaps nas Demos"
-                    }
-                },
-                "demo-outlines": {
-                    "title": {
-                        "en": "Demo Outlines",
-                        "pt": "Contornos em Demos"
+                        "en": "Record After Map Change",
+                        "pt": "Gravar ao Trocar de Mapa"
                     }
                 },
                 "keep-recording": {
@@ -432,18 +420,30 @@ window["load-features"] = async () => {
                         "pt": "Continuar Gravando ao Sair"
                     }
                 },
-                "record-after-map-change": {
-                    "title": {
-                        "en": "Record After Map Change",
-                        "pt": "Gravar ao Trocar de Mapa"
-                    }
-                },
                 "coop-demos": {
                     "title": {
                         "en": "Coop Demos",
                         "pt": "Demos de Coop"
                     }
-                }
+                },
+                "map-crc-on-demos": {
+                    "title": {
+                        "en": "Usermap CRC on Demos",
+                        "pt": "CRC de Usermaps nas Demos"
+                    }
+                },
+                "demo-cams": {
+                    "title": {
+                        "en": "Demo Cams",
+                        "pt": "Cameras de Demo"
+                    }
+                },
+                "demo-outlines": {
+                    "title": {
+                        "en": "Demo Outlines",
+                        "pt": "Contornos em Demos"
+                    }
+                }                
             }
         },
         "engine-improvements": {
