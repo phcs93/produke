@@ -630,10 +630,10 @@ window["load-features"] = async () => {
                         "pt": "Correção da Pontuação da Expander"
                     }
                 },
-                "expander-fastswitch-fix": {
+                "altweapon-switch-fix": {
                     "title": {
-                        "en": "Expander FastSwitch Fix",
-                        "pt": "Correção da Troca Rápida da Expander"
+                        "en": "Expander Switch Fix",
+                        "pt": "Correção de Troca Para a Expander"
                     }
                 },
                 "respawn-shrunken-fix": {
