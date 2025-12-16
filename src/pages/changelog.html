@@ -6,8 +6,8 @@
             <h1>Alpha 0.3</h1>
             <div class="flex-grow"></div>
             <h3>
-                <span lang="en">October ??, 2025</span>
-                <span lang="pt">?? de Outubro de 2025</span>
+                <span lang="en">December ??, 2025</span>
+                <span lang="pt">?? de Dezembro de 2025</span>
             </h3>
         </div>
 
@@ -118,8 +118,8 @@
                 <span lang="pt">Contagem de secrets e de monstros mortos ao exibir o mapa.</span>
             </li>
             <li>
-                <span lang="en">New console command <pre>MAP <map_name></pre> to quickly open a given user map.</span>
-                <span lang="pt">Novo comando de console <pre>MAP <map_name></pre> para trocar rapidamente de user map.</span>
+                <span lang="en">New console command <pre>MAP &lt;map_name&gt;</pre> to quickly open a given user map.</span>
+                <span lang="pt">Novo comando de console <pre>MAP &lt;nome_mapa&gt;</pre> para trocar rapidamente de user map.</span>
             </li>
         </ul>
 
@@ -306,6 +306,18 @@
 
         <ul>
             <li>
+                <span lang="en">Fixed a bug that happenned on the first spawning if the spawn point's X/Y position is shared between 2 sectors (i.e. SOS), then the player may spawn on the wrong sector instead of spawning on the sector the APLAYER sprite is placed (e.g. E2L11 - Lunatic Fringe(P3, P4, P5, P6), E4L9 - Derelitic(P5, P6), h-32.map(P3)).</span>
+                <span lang="pt">Correção de um bug que acontecia no primeiro nascimento caso a posição X/Y de um ponto de nascimento fosse compartilhado por 2 setores (i.e. SOS), então o player talvez nasceria no setor errado ao invés de nascer no setor em que a sprite APLAYER foi colocada (ex: E2L11 - Lunatic Fringe(P3, P4, P5, P6), E4L9 - Derelitic(P5, P6), h-32.map(P3)).</span>
+            </li>
+            <li>
+                <span lang="en">Fixed a bug that happenned on COOP in which every other player would always start with P1's health points.</span>
+                <span lang="pt">Correção de um bug que acontecia no COOP no qual todos os jogadores começavam com os pontos de vida do P1.</span>
+            </li>
+            <li>
+                <span lang="en">Fixed a bug that happenned on COOP in which if a player were carrying a weapon with no ammo at the moment the level ended, he would then start the next map carrying that empty weapon and the game wouldn't try to perform a weapon switch.</span>
+                <span lang="pt">Correção de um bug que acontecia no COOP no qual se um jogador estivesse carregando uma arma sem munição no exato momento em que a fase acabasse, ele começaria o próximo mapa com essa arma vazia e o jogo não tentaria realizar uma troca de arma.</span>
+            </li>
+            <li>
                 <span lang="en">Fixed a bug where the player would respawn shrunk in some situations.</span>
                 <span lang="pt">Correção de um bug onde o jogador renascia encolhido em algumas situações.</span>
             </li>
@@ -314,8 +326,16 @@
                 <span lang="pt">Correção de um bug onde o guindaste pegava o jogador mais próximo quando o jogador agarrado morria.</span>
             </li>
             <li>
-                <span lang="en">Fixed a bug where a wrong global palette would be set while watching demos or peeking ally screen.</span>
-                <span lang="pt">Correção de um bug onde uma paleta global incorreta era utilizada durante a reprodução de demos ou vendo a tela de um aliado.</span>
+                <span lang="en">Fixed a bug that happened after a Player is eaten up by a Greenslime, the slime would instantly warp to the nearest player and would immediately start eating him up.</span>
+                <span lang="pt">Correção de um bug que ocorria após um Jogador ser comido por uma Greenslime, a slime teleportava instantaneamente para o jogador mais proximo já o atacando.</span>
+            </li>
+            <li>
+                <span lang="en">Fixed a bug related to weapon switching, in which the game wouldn't even consider the Expander when doing an automatic switch when out of ammo OR when cancelling the recoil animation for a fast-switch.</span>
+                <span lang="pt">Correção de um bug relacionado à troca de armas no qual o jogo nem considerava a Expander ao fazer uma troca automatica por falta de munição OU quando cancelando a animação de recuo para uma troca rápida.</span>
+            </li>
+            <li>
+                <span lang="en">Fixed a bug where the game would default to P1's global palette (e.g. underwater palette) when performing screen flashes (e.g. when picking up an item) when displaying other player's screen when watching demos OR when peeking and ally's screen.</span>
+                <span lang="pt">Correção de um bug onde o jogo usava por padrão a paleta global (e.g. paleta de embaixo d'agua) do P1 ao fazer as piscadas de tela (e.g. quando se pega um item) enquanto mostrava a tela de outros players durante a reprodução de demos OU ao ver a tela de um aliado.</span>
             </li>
         </ul>
 

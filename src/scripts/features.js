@@ -654,6 +654,12 @@ window["load-features"] = async () => {
                         "pt": "Correção do Guindaste"
                     }
                 },
+                "greenslime-fix": {
+                    "title": {
+                        "en": "Greenslime Fix",
+                        "pt": "Correção da Slime"
+                    }
+                },
                 "tripbomb-on-slopes-fix": {
                     "title": {
                         "en": "Tripbomb on Slopes Fix",
@@ -666,6 +672,12 @@ window["load-features"] = async () => {
                         "pt": "Correção do Fogo Amigo"
                     }
                 },
+                "coop-map-start-fix": {
+                    "title": {
+                        "en": "COOP Map Start Fixes",
+                        "pt": "Correções do Início de Mapa em COOP"
+                    }
+                },
                 "too-many-spawn-points-fix": {
                     "title": {
                         "en": "Too Many Spawn Points Fix",
@@ -676,6 +688,12 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Insuficient Spawn Points Fix",
                         "pt": "Correção dos Pontos de Renascimento Insuficientes"
+                    }
+                },
+                "wrong-sector-spawn-point-fix": {
+                    "title": {
+                        "en": "First Spawn on Wrong Sector Fix",
+                        "pt": "Correção da Primeiro Nascimento em Setor Incorreto"
                     }
                 },
                 "wrong-global-palette-fix": {
@@ -714,7 +732,7 @@ window["load-features"] = async () => {
                         "pt": "Correção do Reset de Paletas Globais"
                     }
                 },
-                "dos-demos-playeback-fix": {
+                "dos-demos-playback-fix": {
                     "title": {
                         "en": "DOS Demos Playback Fix",
                         "pt": "Correção de Reprodução das Demos de DOS"
