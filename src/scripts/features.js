@@ -168,6 +168,12 @@ window["load-features"] = async () => {
                         "pt": "Cores dos Jogadores"
                     }
                 },
+                "typing-and-menu-icon": {
+                    "title": {
+                        "en": "Typing And Menu Icon",
+                        "pt": "Ícone de Mensagem e Menu"
+                    }
+                },
                 "new-spycam-modes": {
                     "title": {
                         "en": "New Spycam Modes",
@@ -216,6 +222,18 @@ window["load-features"] = async () => {
                         "pt": "Renascer Mais Distante"
                     }
                 },
+                "damage-numbers": {
+                    "title": {
+                        "en": "Damage Numbers",
+                        "pt": "Números de Dano"
+                    }
+                },
+                "netflags": {
+                    "title": {
+                        "en": "NetFlags",
+                        "pt": "NetFlags"
+                    }
+                },
                 "starting-weapons": {
                     "title": {
                         "en": "Starting Weapons",
@@ -227,13 +245,7 @@ window["load-features"] = async () => {
                         "en": "Starting Inventory",
                         "pt": "Inventário Inicial"
                     }
-                },
-                "typing-and-menu-icon": {
-                    "title": {
-                        "en": "Typing And Menu Icon",
-                        "pt": "Ícone de Mensagem e Menu"
-                    }
-                }
+                }                
             }
         },
         "hud-improvements": {
@@ -323,13 +335,7 @@ window["load-features"] = async () => {
                 "en": "Various improvements at the game menu to make the game less dependant on a launcher.",
                 "pt": "Várias melhorias no menu para fazer o jogo ser menos dependente de um launcher."
             },
-            "sections": {
-                "netflags": {
-                    "title": {
-                        "en": "NetFlags",
-                        "pt": "NetFlags"
-                    }
-                },
+            "sections": {                
                 "player-setup": {
                     "title": {
                         "en": "Player Setup",
@@ -371,13 +377,7 @@ window["load-features"] = async () => {
                         "en": "Auto Screenshots",
                         "pt": "Screenshots Automáticas"
                     }
-                },
-                "damage-numbers": {
-                    "title": {
-                        "en": "Damage Numbers",
-                        "pt": "Números de Dano"
-                    }
-                }                
+                }                                
             }
         },
         "demo-improvements": {
