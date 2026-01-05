@@ -705,7 +705,7 @@ window["load-features"] = async () => {
                 "steroids-trail-fixes": {
                     "title": {
                         "en": "Steroids Trail Fixes",
-                        "pt": "Correção do Rastro de Steroids"
+                        "pt": "Correções no Rastro de Steroids"
                     }
                 }   
             }
