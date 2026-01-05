@@ -701,7 +701,13 @@ window["load-features"] = async () => {
                         "en": "Wrong Global Palette Fix",
                         "pt": "Correção da Paleta Global Incorreta"
                     }
-                }                
+                },
+                "steroids-trail-fixes": {
+                    "title": {
+                        "en": "Steroids Trail Fixes",
+                        "pt": "Correção do Rastro de Steroids"
+                    }
+                }   
             }
         },
         "original-xduke-bug-fixes": {
