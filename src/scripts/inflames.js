@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
     // play/pause button
-    localStorage.inflames = localStorage.inflames === true || localStorage.inflames === "true";
+    localStorage.inflames = localStorage.inflames !== false && localStorage.inflames !== "false"
     const button = document.getElementById("toggle-inflames");
     button.dataset.inflames = localStorage.inflames;
     button.onclick = () => {
