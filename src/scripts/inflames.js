@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
+    // play/pause button
+    localStorage.inflames = localStorage.inflames === true || localStorage.inflames === "true";
+    const button = document.getElementById("toggle-inflames");
+    button.dataset.inflames = localStorage.inflames;
+    button.onclick = () => {
+        const inflames = localStorage.inflames === true || localStorage.inflames === "true";
+        localStorage.inflames = !inflames;
+        button.dataset.inflames = !inflames;
+    };
+
     const canvas = document.getElementById("inflames");
     const gl = canvas.getContext("webgl", {
         alpha: false,
@@ -75,10 +85,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const iResolutionLoc = gl.getUniformLocation(program, "iResolution");
 
     function render(time) {
-        gl.uniform1f(iTimeLoc, time * 0.001);
-        gl.uniform2f(iResolutionLoc, width, height);
-
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        if (localStorage.inflames === true || localStorage.inflames === "true") {
+            gl.uniform1f(iTimeLoc, time * 0.001);
+            gl.uniform2f(iResolutionLoc, width, height);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+        }
         requestAnimationFrame(render);
     }
 

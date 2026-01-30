@@ -1,0 +1,30 @@
+button#toggle-inflames {
+    background-color: transparent;
+    border: none;
+    width: 64px;
+    height: 64px;
+    transition: all 1s ease-in-out;
+    & > img {
+        transition: all 0.2s ease-in-out;   
+        opacity: 0;
+        display: none;
+    }
+}
+
+canvas#inflames:hover ~ div > button#toggle-inflames[data-inflames="true"] > img#pause-icon,
+canvas#inflames ~ div:hover > button#toggle-inflames[data-inflames="true"] > img#pause-icon,
+canvas#inflames ~ div > button#toggle-inflames[data-inflames="true"]:hover > img#pause-icon,
+canvas#inflames ~ div > button#toggle-inflames[data-inflames="true"] > img#pause-icon:hover
+{
+    opacity: 1;
+    display: block;
+}
+
+canvas#inflames:hover ~ div > button#toggle-inflames[data-inflames="false"] > img#play-icon,
+canvas#inflames ~ div:hover > button#toggle-inflames[data-inflames="false"] > img#play-icon,
+canvas#inflames ~ div > button#toggle-inflames[data-inflames="false"]:hover > img#play-icon,
+canvas#inflames ~ div > button#toggle-inflames[data-inflames="false"] > img#play-icon:hover
+{
+    opacity: 1;
+    display: block;
+}
