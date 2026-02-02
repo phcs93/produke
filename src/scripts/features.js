@@ -563,11 +563,23 @@ window["load-features"] = async () => {
                         "en": "Boots Halves Fall Damage",
                         "pt": "Botas Diminuem o Dano de Queda pela Metade"
                     }
-                },
-                "holoduke-triggers-autoaim": {
+                },                
+                /*"holoduke-triggers-autoaim": {
                     "title": {
                         "en": "Holoduke Triggers Autoaim",
                         "pt": "Holoduke Ativa a Mira Automática"
+                    }
+                }*/
+               "holoduke-fixd-angle": {
+                    "title": {
+                        "en": "Holoduke with Fixed Angle",
+                        "pt": "Holoduke com Ângulo Fixo",
+                    }
+                },
+                "holoduke-additional-frames": {
+                    "title": {
+                        "en": "Holoduke Additional Frames",
+                        "pt": "Frames adicionais do Holoduke"
                     }
                 }
             }
