@@ -570,7 +570,7 @@ window["load-features"] = async () => {
                         "pt": "Holoduke Ativa a Mira Automática"
                     }
                 }*/
-               "holoduke-fixd-angle": {
+               "holoduke-fixed-angle": {
                     "title": {
                         "en": "Holoduke with Fixed Angle",
                         "pt": "Holoduke com Ângulo Fixo",
