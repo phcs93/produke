@@ -642,10 +642,10 @@ window["load-features"] = async () => {
                         "pt": "Correção da Pontuação da Expander"
                     }
                 },
-                "altweapon-switch-fix": {
+                "weapon-switch-fix": {
                     "title": {
-                        "en": "Expander Switch Fix",
-                        "pt": "Correção de Troca Para a Expander"
+                        "en": "Weapon Switch Fix",
+                        "pt": "Correção de Troca de Armas"
                     }
                 },
                 "respawn-shrunken-fix": {
