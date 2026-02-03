@@ -18,8 +18,8 @@
             </div>
         </a> -->
 
-        <span lang="en">First of all, the proDuke team wish a happy Duke3D 30th anniversary to all Duke fans - on January 26, 1996, Duke3D was having its first release as a shareware version.</span>
-        <span lang="pt">Primeiramente, nós da equipe proDuke desejamos um feliz aniversário de 30 anos de Duke3D a todos os Dukers - em 26 de janeiro de 1996, Duke3D estava tendo seu primeiro lançamento, como uma versão shareware.</span>
+        <span lang="en">First of all, the proDuke team wish to all Duke fans a happy Duke3D 30th anniversary - on January 26, 1996, Duke3D was having its first release as a shareware version.</span>
+        <span lang="pt">Primeiramente, nós da equipe proDuke desejamos a todos os Dukers um feliz aniversário de 30 anos de Duke3D - em 26 de janeiro de 1996, Duke3D estava tendo seu primeiro lançamento, como uma versão shareware.</span>
 
         <img src="res/updates/duke3d-30-years.png" alt="30years">
         
@@ -134,6 +134,10 @@
         </h2>
 
         <ul>
+            <li>
+                <span lang="en">Improved security measures against potential cheaters.</span>
+                <span lang="pt">Métodos de segurança aprimorados contra potenciais cheaters.</span>
+            </li>
             <li>
                 <span lang="en">Static SDL.DLL and SDL_MIXER.DLL embeded inside the produke.exe. No need to have these files in the game directory anymore. This also improves game performance.</span>
                 <span lang="pt">SDL.DLL e SDL_MIXER.DLL estáticas incorporadas dentro do produke.exe. Não é mais necessário ter esses arquivos no diretório do jogo. Isso também aumenta a performance do jogo.</span>
@@ -337,6 +341,10 @@
             <li>
                 <span lang="en">Fixed a bug related to weapon switching, in which the game wouldn't even consider the Expander when doing an automatic switch when out of ammo OR when cancelling the recoil animation for a fast-switch.</span>
                 <span lang="pt">Correção de um bug relacionado à troca de armas no qual o jogo nem considerava a Expander ao fazer uma troca automatica por falta de munição OU quando cancelando a animação de recuo para uma troca rápida.</span>
+            </li>
+            <li>
+                <span lang="en">Fixed a bug related to weapon switching, in which the game would performar a buggy empty auto switch after stomping a shrunk player (e.g. if shooting twice from point-blank (without releasing fire) with a Shrinker with exactly 2 ammo, after the stomp the player will be stuck with a non-flashing Shrinker and will be unable to fire).</span>
+                <span lang="pt">Correção de um bug relacionado à troca de armas no qual ocorria uma troca automatica por arma vazia bugada após pisar num jogador encolhido (e.g. com a Shrinker com exatamente 2 tiros restantes, ao atirar 2 tiros em seguida a queima-roupa: após o pisão o jogador ficará preso segurando uma Shrinker bugada sem animaçao e ficará incapaz de atirar.</span>
             </li>
             <li>
                 <span lang="en">Fixed a bug where the game would default to P1's global palette (e.g. underwater palette) when performing screen flashes (e.g. when picking up an item) when displaying other player's screen when watching demos OR when peeking and ally's screen.</span>
