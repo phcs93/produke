@@ -244,7 +244,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         ORIGBHV_DROWNING_RESPAWN:            1 << 9,  // 512
         ORIGBHV_SHRUNK_RESPAWN:              1 << 10, // 1024
         ORIGBHV_EXPANDER_RADIUS:             1 << 11, // 2048
-        ORIGBHV_ALTWEAPON_SWITCHING_BUGS:    1 << 12, // 4096
+        ORIGBHV_WEAPON_SWITCHING_BUGS:       1 << 12, // 4096
         ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:    1 << 13, // 8192
         ORIGBHV_BAD_NIGHTVISION_GLOW:        1 << 14, // 16384
     };
