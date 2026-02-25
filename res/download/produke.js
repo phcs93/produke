@@ -104,20 +104,20 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "Don't Spawn Keycards": 64,
         "Spawn MP Only Switches": 128,
         "Spawn MP Only Items": 256,
-        "[COOP/TEAM] Friendly Fire": 512,
-        "[COOP/TEAM] Autoaim On Allies": 1024,
-        "[COOP/TEAM] Global Ally Sounds": 2048,
-        "[COOP/TEAM] Disable Spycam/Mapview": 4096,
+        "[COOP/TEAMS] Friendly Fire": 512,
+        "[COOP/TEAMS] Autoaim On Allies": 1024,
+        "[COOP/TEAMS] Global Ally Sounds": 2048,
+        "[COOP/TEAMS] Disable Spycam/Mapview": 4096,
         "Revealed Automap": 8192,
         "No Map Exit": 16384,
         "No Target Names": 32768,
         "Weapon Always Drops On Kill": 65536,
         "Force Respawn": 131072,
         "[PVP] Respawn Farthest": 262144,
-        "[TEAM] Teamless Spawn Points": 524288,
+        "[TEAMS] Teamless Spawn Points": 524288,
         "Damage Numbers": 1048576,
-        "[COOP/TEAM/TRM] Overhead Info": 2097152,
-        "[COOP/TEAM/TRM] Outlines": 4194304,
+        "[COOP/TEAMS/TERM] Overhead Info": 2097152,
+        "[COOP/TEAMS/TERM] Outlines": 4194304,
         "[CTF] Outline On Flags": 8388608,
         "[CTF] Flag Return Instantly": 16777216,
         "[CTF] Flag Auto Detonate": 33554432,
@@ -129,12 +129,12 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // netflags B definition
     const netFlagsBDefs = {
-        "[TEAM] Colored Tripbombs": 1,
+        "[TEAMS] Colored Tripbombs": 1,
         "[CTF] No Steroids If With Flag": 2,
         "[CTF] No Jetpack If With Flag": 4,
-        "[TRM] No Infinite Jetpack": 8,
-        "[TRM] No Shrinker Immunity": 16,
-        "[TRM] No Freezer Weakness": 32
+        "[TERM] No Infinite Jetpack": 8,
+        "[TERM] No Shrinker Immunity": 16,
+        "[TERM] No Freezer Weakness": 32
     };
 
     // netflags C definition
@@ -209,8 +209,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         RESPAWN_FARTHEST:             1 << 18,  // 262144
         TEAM__USE_NORMAL_SPAWNS:      1 << 19,  // 524288        
         DAMAGENUMS:                   1 << 20,  // 1048576
-        TRMCOOPTEAM__OVERHEAD:        1 << 21,  // 2097152
-        TRMCOOPTEAM__OUTLINES:        1 << 22,  // 4194304
+        TERMCOOPTEAM__OVERHEAD:        1 << 21,  // 2097152
+        TERMCOOPTEAM__OUTLINES:        1 << 22,  // 4194304
         CTF__FLAG_OUTLINE:            1 << 23,  // 8388608
         CTF__FLAG_INSTANT_RETURN:     1 << 24,  // 16777216
         CTF__FLAG_AUTODETONATE:       1 << 25,  // 33554432
@@ -225,9 +225,9 @@ module.exports = function({deepClone, utils}, gamedefs) {
         TEAM__LASER_COLORS:           1 << 0,   // 1
         CTF__NO_ROIDS:                1 << 1,   // 2
         CTF__NO_JETPACK:              1 << 2,   // 4
-        TRM__NO_INFINITE_JPACK:       1 << 3,   // 8
-        TRM__NO_SHRINKER_IMMUNITY:    1 << 4,   // 16
-        TRM__NO_FREEZER_WEAKNESS:     1 << 5,   // 32
+        TERM__NO_INFINITE_JPACK:       1 << 3,   // 8
+        TERM__NO_SHRINKER_IMMUNITY:    1 << 4,   // 16
+        TERM__NO_FREEZER_WEAKNESS:     1 << 5,   // 32
     };
 
     // netflagsC definition
@@ -291,8 +291,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
     const BASE_MODERN             = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.DISABLE_MAP_EXIT | NetFlagsA.DAMAGENUMS;
     const BASE_HARDCORE           = NetFlagsA.DISABLE_TARGET_NAMES;
     const BASE_CLASSIC_TEAMPLAY   = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | 0 | 0;
-    const BASE_ALT_TEAMPLAY       = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | 0 | 0 | 0;
-    const BASE_MODERN_TEAMPLAY    = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | NetFlagsA.TRMCOOPTEAM__OUTLINES | 0 | 0;
+    const BASE_ALT_TEAMPLAY       = 0 | NetFlagsA.TERMCOOPTEAM__OVERHEAD | 0 | 0 | 0;
+    const BASE_MODERN_TEAMPLAY    = 0 | NetFlagsA.TERMCOOPTEAM__OVERHEAD | NetFlagsA.TERMCOOPTEAM__OUTLINES | 0 | 0;
     const BASE_HARDCORE_TEAMPLAY  = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | NetFlagsA.COOPTEAM__NO_SPYCAM_MAPVIEW | NetFlagsA.COOPTEAM__AUTOAIM_ON_ALLIES;
 
     // netflagsA preset combinations
@@ -338,9 +338,9 @@ module.exports = function({deepClone, utils}, gamedefs) {
     const PRESET_NETFLAGSB_HARDCORE       = 0;
 
     const PRESET_NETFLAGSB_CLASSIC_TERM   = PRESET_NETFLAGSB_CLASSIC | 0 | 0;
-    const PRESET_NETFLAGSB_ALT_TERM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TRM__NO_SHRINKER_IMMUNITY;
-    const PRESET_NETFLAGSB_MODERN_TERM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TRM__NO_INFINITE_JPACK | 0;
-    const PRESET_NETFLAGSB_HARDCORE_TERM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TRM__NO_INFINITE_JPACK | NetFlagsB.TRM__NO_SHRINKER_IMMUNITY;
+    const PRESET_NETFLAGSB_ALT_TERM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TERM__NO_SHRINKER_IMMUNITY;
+    const PRESET_NETFLAGSB_MODERN_TERM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TERM__NO_INFINITE_JPACK | 0;
+    const PRESET_NETFLAGSB_HARDCORE_TERM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TERM__NO_INFINITE_JPACK | NetFlagsB.TERM__NO_SHRINKER_IMMUNITY;
 
     // weapflags presets
     const DEFAULT_WEAPFLAGS              = StartingWeapon.PISTOL;
@@ -1036,11 +1036,11 @@ module.exports = function({deepClone, utils}, gamedefs) {
         }
     };
 
-    // send /teampicker automatically if any team based mode is selected
+    // send /TEAMSpicker automatically if any team based mode is selected
     gamedefs.games.duke3d.executables.produke.parameters["teampicker"] = {
         modeSupport: ["singleplayer", "multiplayer"],
         type: "static",
-        value: "/teampicker",
+        value: "/TEAMSpicker",
         addIf: c => {
             return [3,4,5,6,9].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
         }        
