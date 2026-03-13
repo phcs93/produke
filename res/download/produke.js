@@ -147,7 +147,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[1.3D] No Expander": 32,
         "Fix Tripbombs On Slopes": 64,
         "[DOS] Map Start Bugs": 128,
-        "[DOS] No Suicide If FFire Is Off": 256,
+        "[DOS] FFire excludes self": 256,
         "[DOS] Can Respawn Drowning": 512,
         "[DOS] Can Respawn Shrunked": 1024,
         "[DOS] Bad Expander Radius Owner": 2048,
@@ -240,7 +240,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         _13D_DISABLE_EXPANDER:               1 << 5,  // 32
         FIX_TRIPBOMB_ON_SLOPES:              1 << 6,  // 64
         ORIGBHV_MAP_START_BUGS:              1 << 7,  // 128
-        ORIGBHV_FFIRE_NO_SUICIDE:            1 << 8,  // 256        
+        ORIGBHV_FFIRE_EXCLUDES_SELF:         1 << 8,  // 256
         ORIGBHV_DROWNING_RESPAWN:            1 << 9,  // 512
         ORIGBHV_SHRUNK_RESPAWN:              1 << 10, // 1024
         ORIGBHV_EXPANDER_RADIUS:             1 << 11, // 2048
