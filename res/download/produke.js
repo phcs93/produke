@@ -114,7 +114,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "Weapon Always Drops On Kill": 65536,
         "Force Respawn": 131072,
         "[PVP] Respawn Farthest": 262144,
-        "[TEAMS] Teamless Spawn Points": 524288,
+        "[TEAMS] Mixed Team Spawn Points": 524288,
         "Damage Numbers": 1048576,
         "[COOP/TEAMS/TERM] Overhead Info": 2097152,
         "[COOP/TEAMS/TERM] Outlines": 4194304,
@@ -207,7 +207,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         WEAPON_ALWAYS_DROP:           1 << 16,  // 65536
         FORCE_RESPAWN:                1 << 17,  // 131072
         RESPAWN_FARTHEST:             1 << 18,  // 262144
-        TEAM__USE_NORMAL_SPAWNS:      1 << 19,  // 524288        
+        TEAM__MIXED_TEAM_SPAWNS:      1 << 19,  // 524288        
         DAMAGENUMS:                   1 << 20,  // 1048576
         TERMCOOPTEAM__OVERHEAD:        1 << 21,  // 2097152
         TERMCOOPTEAM__OUTLINES:        1 << 22,  // 4194304
@@ -286,7 +286,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     const DEFAULT_NETFLAGS_COOP       = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
 
     // base netflags presets
-    const BASE_TDM_TLMS           = NetFlagsA.TEAM__USE_NORMAL_SPAWNS | NetFlagsA.T_LMS__RESTRICTED_SPYCAM | NetFlagsA.T_LMS__RESTRICTED_CHAT;
+    const BASE_TDM_TLMS           = NetFlagsA.TEAM__MIXED_TEAM_SPAWNS | NetFlagsA.T_LMS__RESTRICTED_SPYCAM | NetFlagsA.T_LMS__RESTRICTED_CHAT;
     const BASE_LMS                = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST;
     const BASE_MODERN             = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.DISABLE_MAP_EXIT | NetFlagsA.DAMAGENUMS;
     const BASE_HARDCORE           = NetFlagsA.DISABLE_TARGET_NAMES;
