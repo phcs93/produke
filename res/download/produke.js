@@ -150,10 +150,11 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[DOS] FFire excludes self": 256,
         "[DOS] Can Respawn Drowning": 512,
         "[DOS] Can Respawn Shrunked": 1024,
-        "[DOS] Bad Expander Radius Owner": 2048,
-        "[DOS] Alt-Weapon Switching Bugs": 4096,
-        "[DOS] Dead player swaping Bugs": 8192,
-        "[DOS] Useless Nightvision": 16384
+        "[DOS] Bad Shrinker Hit Detection": 2048,
+        "[DOS] Bad Expander Radius Owner": 4096,
+        "[DOS] Alt-Weapon Switching Bugs": 8192,
+        "[DOS] Dead player swaping Bugs": 16384,
+        "[DOS] Useless Nightvision": 32768
     };
 
     // weapflags definition
@@ -243,10 +244,11 @@ module.exports = function({deepClone, utils}, gamedefs) {
         ORIGBHV_FFIRE_EXCLUDES_SELF:         1 << 8,  // 256
         ORIGBHV_DROWNING_RESPAWN:            1 << 9,  // 512
         ORIGBHV_SHRUNK_RESPAWN:              1 << 10, // 1024
-        ORIGBHV_EXPANDER_RADIUS:             1 << 11, // 2048
-        ORIGBHV_WEAPON_SWITCHING_BUGS:       1 << 12, // 4096
-        ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:    1 << 13, // 8192
-        ORIGBHV_BAD_NIGHTVISION_GLOW:        1 << 14, // 16384
+        ORIGBHV_SHRINKER_HIT_DETECT:         1 << 11, // 2048
+        ORIGBHV_EXPANDER_RADIUS:             1 << 12, // 4096
+        ORIGBHV_WEAPON_SWITCHING_BUGS:       1 << 13, // 8192
+        ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:    1 << 14, // 16384
+        ORIGBHV_BAD_NIGHTVISION_GLOW:        1 << 15, // 32768
     };
 
     // weapflags definitions

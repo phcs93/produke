@@ -636,6 +636,12 @@ window["load-features"] = async () => {
                 "pt": "Correção de bugs conhecidos do jogo original (DOS)."
             },
             "sections": {
+                "shrinker-hit-detection-fix": {
+                    "title": {
+                        "en": "Shrinker Hit Detection Fix",
+                        "pt": "Correção da Detecção de Hit da Shrinker"
+                    }
+                },
                 "expander-frag-fix": {
                     "title": {
                         "en": "Expander Frag Fix",
