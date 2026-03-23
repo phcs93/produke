@@ -84,6 +84,12 @@ window["load-features"] = async () => {
                         "pt": "Contornos do Time"
                     }
                 },
+                "offscreen-markers": {
+                    "title": {
+                        "en": "Offscreen Markers",
+                        "pt": "Marcadores Fora da Tela"
+                    }
+                },
                 "team-info": {
                     "title": {
                         "en": "Team Overhead Info",
