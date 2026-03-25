@@ -130,7 +130,7 @@ window["load-features"] = async () => {
                     "title": {
                         "en": "Team Smart Autoaim",
                         "pt": "Mira Automatica Inteligente"
-                    }
+                    } 
                 },
                 "team-colored-tripboms": {
                     "title": {
@@ -780,7 +780,13 @@ window["load-features"] = async () => {
                 "pt": "Informações sobre como utilizar os recursos novos do produke em usermaps."
             },
             "sections": {
-                "mapping-guide-team-spawn-points": {
+                "getting-started": {
+                    "title": {
+                        "en": "Getting Started",
+                        "pt": "Começando"
+                    }
+                },
+                "team-spawn-points": {
                     "title": {
                         "en": "Team Spawn Points",
                         "pt": "Pontos de Nascimento de Time"
