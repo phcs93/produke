@@ -770,42 +770,6 @@ window["load-features"] = async () => {
                 }
             }
         },
-        "mapping-guide": {
-            "title": {
-                "en": "MAPPING GUIDE",
-                "pt": "GUIA PARA CRIAR MAPAS"
-            },
-            "description": {
-                "en": "Information for how to use produke's new features on usermaps.",
-                "pt": "Informações sobre como utilizar os recursos novos do produke em usermaps."
-            },
-            "sections": {
-                "getting-started": {
-                    "title": {
-                        "en": "Getting Started",
-                        "pt": "Começando"
-                    }
-                },
-                "team-spawn-points": {
-                    "title": {
-                        "en": "Team Spawn Points",
-                        "pt": "Pontos de Nascimento de Time"
-                    }
-                },
-                "spawn-order": {
-                    "title": {
-                        "en": "Spawn Order",
-                        "pt": "Ordem de Nascimento"
-                    }
-                },
-                "flags": {
-                    "title": {
-                        "en": "Flags",
-                        "pt": "Bandeiras"
-                    }
-                }
-            }
-        },
         "for-developers": {
             "title": {
                 "en": "FOR DEVELOPERS",
