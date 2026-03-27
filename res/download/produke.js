@@ -121,7 +121,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[COOP/TEAMS] Friendly Fire": 512,
         "[COOP/TEAMS] Autoaim On Allies": 1024,
         "[COOP/TEAMS] Global Ally Sounds": 2048,
-        "[COOP/TEAMS] Disable Spycam/Mapview": 4096,
+        "[COOP/TEAMS] No Spycam/Mapview": 4096,
         "Revealed Automap": 8192,
         "No Map Exit": 16384,
         "No Target Names": 32768,
