@@ -31,11 +31,25 @@ module.exports = function({deepClone, utils}, gamedefs) {
                 float: right;
             }
 
+            div:has(+div>div>input#game-param-scoreLimit),
+            div:has(+div>div>input#game-param-timeLimit),
+            div:has(+div>div>input#game-param-extraLives),
+            div:has(+div>div>input#game-param-botsNum) {
+                width: 100%;
+            }
+
+            input:has(+input#game-param-scoreLimit),
+            input:has(+input#game-param-timeLimit),
+            input:has(+input#game-param-extraLives),
+            input:has(+input#game-param-botsNum) {
+                width: 64px;
+            }
+
             input#game-param-scoreLimit,
             input#game-param-timeLimit,
             input#game-param-extraLives,
             input#game-param-botsNum
-            {
+            {                
                 width: calc(480px - 72px - 4px) !important;
             }
 
