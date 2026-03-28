@@ -51,8 +51,8 @@
 <span lang="en">This is done because, on that case, the map has clearly been made with symmetrical bases in mind, so it wouldn't make sense for a player to spawn on a non symmetrical spawn point. Note that maps that have both TEAM and normal DM spawn points will not be treated as a special case and will function normally.</span>
 <span lang="pt">Isso é feito pois, nesse caso, o mapa foi claramente feito pensando em bases simétricas, então não faria sentido para um jogador nascer em um ponto de nascimento não-simétrico. Note que mapas que tenham ambos pontos de nascimento de TIME e de DM não serão tratados como casos especiais e funcionarão normalmente.</span>
 
-<span lang="en">The following chart describes how proDuke assigns spawn points on the different game modes:</span>
-<span lang="pt">A tabela baixo explica como o proDuke distribui os spawns points nos diferentes modos de jogo:</span>
+<span lang="en">The following chart describes how proDuke assigns spawn points on the different game modes, considering how the NetFlag <pre>[TEAMS] Mixed Team Spawn Points</pre> can affect it:</span>
+<span lang="pt">A tabela baixo explica como o proDuke distribui os spawns points nos diferentes modos de jogo, levando em conta como a NetFlag <pre>[TEAMS] Mixed Team Spawn Points</pre> pode afetar isso:</span>
 <table>
     <thead>
         <tr>
@@ -93,7 +93,7 @@
             </td>
             <td><!-- classic map (only FFA) + TEAM modes -->
                 <span lang="en">Normal TDM / TLMS match<br/>
-                    <strong style="color: tomato;">(Unsupported for CTF -> Throws warning of incompatibility)</strong><br/>
+                    <strong style="color: red;">(Unsupported for CTF -> Throws warning of incompatibility)</strong><br/>
                     <br/>
                     <small>Distributes players on the DM spawns</small><br/>
                     <small style="color: skyblue;">("arrow" is used)</small>
@@ -101,7 +101,7 @@
                     <strong style="color: var(--progold);">NETFLAG:</strong> no effect, since the map has no TEAM spawn points
                 </span>
                 <span lang="pt">Partida normal de TDM / TLMS<br/>
-                    <strong style="color: tomato;">(Sem supote à CTF -> Lançará aviso de incompatibilidade)</strong><br/>
+                    <strong style="color: red;">(Sem supote à CTF -> Lançará aviso de incompatibilidade)</strong><br/>
                     <br/>
                     <small>Distribui os jogadores nos spawns de DM</small><br/>
                     <small style="color: skyblue;">("flecha" é utilizada)</small>
@@ -139,7 +139,9 @@
                         Or a FORTS style map (TDM / TLMS with base relevance)<br/>
                     <br/>
                     <small>Distributes players on the TEAM spawns</small><br/>
-                    <small style="color: tomato;">("arrow" is NOT used!)</small>
+                    <small style="color: tomato;">("arrow" is NOT used!)</small><br/>
+                    <small>Exception: if part of the players are on TEAMS without proper spawns (and the NETFLAG is off), then they'll spawn on the "arrow"</small><br/>
+                    <small style="color: red;">(Throws warning of incompatibility)</small>
                     <hr>
                     <strong style="color: var(--progold);">NETFLAG [OFF]:</strong> each team starts on their own base (ideal for CTF or TDM/TLMS on a FORTS map)<br/>
                     <strong style="color: var(--progold);">NETFLAG [ON]:</strong> assigns the TEAM spawns indiscriminatelly (ideal for normal TDM/TLMS, so players can spawn anywhere)
@@ -148,7 +150,9 @@
                         Ou um mapa de FORTS (TDM / TLMS com bases fixas)<br/>
                     <br/>
                     <small>Distribui os jogadores nos spawns de TIME</small><br/>
-                    <small style="color: tomato;">("flecha" NÃO é utilizada!)</small>
+                    <small style="color: tomato;">("flecha" NÃO é utilizada!)</small><br/>
+                    <small>Exceção: se parte dos jogadores estiverem em TIMES sem spawns próprios (e a NETFLAG está desligada), então todos eles nascerão na "flecha"</small><br/>
+                    <small style="color: red;">(Lançará aviso de incompatibilidade)</small>
                     <hr>
                     <strong style="color: var(--progold);">NETFLAG [OFF]:</strong> cada time nascerá na sua própria base (ideal para CTF ou TDM/TLMS em um mapa do tipo FORTS)<br/>
                     <strong style="color: var(--progold);">NETFLAG [ON]:</strong> atribui os spawns de TIME de forma indiscriminada (ideal para TDM/TLMS normais, para que os jogadores possam nascer em qualquer lugar)
@@ -159,12 +163,12 @@
         <tr>
             <td>
                 <span lang="en">proDuke map<br/>
-                    <small>(spawn points: DM + TEAM)</small></span>
+                    <small>(spawn points: DM + TEAM)</small></span><br/>
                     <br/>
                     <span style="color: seagreen;">The mapper deliberatelly chose to do it that way (unusual)</span>
                 </span>
                 <span lang="pt">Mapa feito para o proDuke<br/>
-                    <small>(spawn points: DM + TIME)</small></span>
+                    <small>(spawn points: DM + TIME)</small><br/>
                     <br/>
                     <span style="color: seagreen;">O mapper deliberadamente escolheu fazer desse jeito (incomum)</span>
                 </span>
@@ -189,14 +193,20 @@
             <td><!-- produke map (BOTH) + TEAM modes -->
                 <span lang="en">Map made for proDuke, with multiple modes in mind (unusual)<br/>
                     <br/>
-                    <small>Distributes players on the TEAM spawns ("arrow" is NOT used - DM spawns are not used)</small><br/>
+                    <small>Distributes players on the TEAM spawns</small><br/>
+                    <small style="color: tomato;">("arrow" is NOT used!)</small><br/>
+                    <small>Exception: if part of the players are on TEAMS without proper spawns (and the NETFLAG is off), then they'll spawn on the "arrow"</small><br/>
+                    <small style="color: red;">(Throws warning of incompatibility)</small>
                     <hr>
                     <strong style="color: var(--progold);">NETFLAG [OFF]:</strong> each team starts on their own base (ideal for CTF or TDM/TLMS on a FORTS map)<br/>
                     <strong style="color: var(--progold);">NETFLAG [ON]:</strong> assigns the TEAM spawns indiscriminatelly (ideal for normal TDM/TLMS, so players can spawn anywhere)
                 </span>
                 <span lang="pt">Mapa feito para o proDuke, com vários modos de jogo em mente (incomum)<br/>
                     <br/>
-                    <small>Distribui os jogadores nos spawns de TIME ("flecha" NÃO é utilizada  - spawns de DM não sao utilizados)</small><br/>
+                    <small>Distribui os jogadores nos spawns de TIME</small><br/>
+                    <small style="color: tomato;">("flecha" NÃO é utilizada!)</small><br/>
+                    <small>Exceção: se parte dos jogadores estiverem em TIMES sem spawns próprios (e a NETFLAG está desligada), então todos eles nascerão na "flecha"</small><br/>
+                    <small style="color: red;">(Lançará aviso de incompatibilidade)</small>
                     <hr>
                     <strong style="color: var(--progold);">NETFLAG [OFF]:</strong> cada time nascerá na sua própria base (ideal para CTF ou TDM/TLMS em um mapa do tipo FORTS)<br/>
                     <strong style="color: var(--progold);">NETFLAG [ON]:</strong> atribui os spawns de TIME de forma indiscriminada (ideal para TDM/TLMS normais, para que os jogadores possam nascer em qualquer lugar)
