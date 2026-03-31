@@ -1,2 +1,141 @@
-<span lang="en">[UNDER CONSTRUCTION]</span>
-<span lang="pt">[EM CONSTRUÇÃO]</span>
+<span lang="en">On Duke3D, respawns spots are random (except in COOP), but the first spawns spots are not! They follow a specific order, and that order is an integral part of the map's balance. Just think about the most famous map for 1v1 of all time: Hollywood Holocaust - the balance of it wouldn't be the same if P2 spawned in some other place other than the bathroom... Because of that, P2 ends up having the Medkit and Steroids advantage, since P1 has to spend his Steroids in order to secure his Jetpack, while P2 can take his own without having to spend his Steroids.</span>
+<span lang="pt">No Duke3D, os locais de renascimentos são aleatórios (exceto em COOP), mas os primeiros nascimentos não são! Eles seguem uma ordem específica, e essa ordem é parte integral do balanceamento do mapa. Pense a respeito do mapa mais famoso em partidas 1v1 de todos os tempos: Hollywood Holocaust - seu balanceamento não seria o mesmo se o P2 nascesse em outro lugar que não fosse o banheiro... Devido a isso, o P2 acaba tendo vantagem de Medkit e de Steroids, pois o P1 precisa gastar seu Steroids para garantir o Jetpack, já o P2 pode pegar o seu próprio sem gastar seu Steroids.</span>
+
+<span lang="en">As you should know, P1's spawn point will be on the "arrow", with the other player's spawn points being APLAYER sprites (DM -> lotag = 0, COOP -> lotag = 1)... But how does the spawn order is defined by the game? Well, the higher the ID of the APLAYER sprite, then sooner it will be picked. Meaning the last APLAYER sprite to be put on the map will be the first one to be used. This means that if you want to be specific with the first spawn order, you have to put all the APLAYER sprites on reverse order, or you'll have to switch them around later.</span>
+<span lang="pt">Como você provavelmente já deve saber, o ponto de nascimento do P1 será na "flecha", já os dos demais serão nas sprites APLAYER (DM -> lotag = 0, COOP -> lotag = 1)... Mas como a ordem de nascimento é definida pelo jogo? Bom, quanto mais alto for o ID da sprite APLAYER, então antes ela será escolhida pelo jogo. Isso quer dizer que, a ultima sprite APLAYER colocada no mapa será a primeira a ser usada. Logo, caso você queira ser capaz de escolher especificamente qual será a ordem de primeiro nascimento, você terá que colocar todas as sprites APLAYER em ordem reversa, ou então você terá depois que ficar trocando elas de posição uma a uma.</span>
+
+<span lang="en">Now, it should be obvious that when doing CTF maps or FORTS maps each team will have their own base, and assuming the bases are equal, the spawn order should also be equal. That means that it's not enough for the APLAYER sprites positions to be symmetrical, actually both sides of the map should have equal spawning orders as well, so the first spawn follows the same order. Not only that, but if the Netflag <pre>[TEAMS] Mixed Team Spawn Points</pre> is being used, then the spawning order must be interleaved (e.g. P1 Blue, P1 Red, P2 Blue, P2 Red, etc), otherwise one side may have more starting players than the other. To do all these adjustments by hand would be quite annoying and time consuming, so, to help with that task, we implemented a few routines on the <pre>produke.m32</pre> script to help you with the proccess of ordering the APLAYER sprites.</span>
+<span lang="pt">Agora, deve ser óbvio que ao fazer mapas de CTF ou no estilo FORTS cada time terá sua própria base, e, assumindo que as bases sejam iguais, a ordem de nascimento também deve ser igual. Isso significa que não é suficiente que as sprites APLAYER estejam em posições simétricas, ambos os lados do mapa devem ter ordens de nascimento iguais para que o primeiro nascimento siga a mesma ordem. Não apenas isso, mas caso a Netflag <pre>[TEAMS] Mixed Team Spawn Points</pre> esteja sendo usada, então a ordem dos pontos de nascimento devem estar intercaladas (e.g. P1 Azul, P1 Vermelho, P2 Azul, P2 Vermelho, etc), caso contrário alguma base poderá ter mais players de início que a outra. Fazer esses ajustamentos manualmente seria bastante irritante e consumiria batante tempo, então, para ajudar com essa tarefa, nós implementamos algumas rotinas no script <pre>produke.m32</pre> para ajudar com o processo de ordenação das sprites APLAYER.</span>
+
+<span lang="en">Assuming you follwed all the steps on the <a href="https://produke.com.br/?p=mapping-guide#getting-started">Getting Started</a>, section, the <pre>produke.m32</pre> script is already being included automatically. So, to use the helper routines from it, all you have to do is to open the Mapster32 console (usually via the key `) and then type the command <pre>do ROUTINE_NAME</pre>. Below there's a list of all helper routines available:</span>
+<span lang="pt">Assumindo que você seguiu todos os passos da seção <a href="https://produke.com.br/?p=mapping-guide#getting-started">Começando</a>, o script <pre>produke.m32</pre> já estará sendo inicializado automaticamente. Então, para usar as rotinas de automatização nele presentes, tudo que você precisa fazer é abrir o console do Mapster32 (normalmente pela tecla ') e então digitar o comando <pre>do NOME_ROTINA</pre>. A seguir está a lista com todas as rotinas disponíveis:</span>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                <span lang="en">Routine name</span>
+                <span lang="pt">Nome da rotina</span>
+            </th>
+            <th>
+                <span lang="en">Description</span>
+                <span lang="pt">Descrição</span>
+            </th>
+        </tr>
+    </thead>
+	<tbody>
+        <tr>
+            <td>
+            	<span>po_get</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Sets the <pre>extra</pre> of every APLAYER sprite with the current sprite order (starting at 1).</br>
+            		It correctly separates the APLAYER sprites in distinct groups (COOP / DM / Blue-Team / Red-Team / Green-Team / Brown-Team).
+            	</span>
+                <span lang="pt">Coloca no <pre>extra</pre> de toda sprite APLAYER sua ordem atual (começando em 1).</br>
+                	Corretamente separa as sprites APLAYER em grupos distintos (COOP / DM / Time Azul / Time Vermelho / Time Verde / Time Marrom).
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span>po_set</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Reorders the APLAYER sprites based on their <pre>extra</pre> (first call po_get to fill them for you, do your adjustments, and then run po_set).</br>
+            		When reordering TEAM spawn points, it will apropriatelly interleave across teams, so if playing with <pre>[TEAMS] Mixed Team Spawn Points</pre>, the initial spawn will still be symmetric.
+            	</span>
+                <span lang="pt">Reordenada as sprites APLAYER com base no seu <pre>extra</pre> (primeiro chame po_get para preenchê-los para você, faça suas modificações, e então rode po_set).</br>
+                	Ao reordenar os spawn poitns de TIME, eles serão corretamente intercalados pelos times, para que caso esteja jogando com <pre>[TEAMS] Mixed Team Spawn Points</pre>, o nascimento inicial ainda esteja simétrico.
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span>po_clear</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Clears the <pre>extra</pre> of the APLAYER sprites. Not extremelly needed, but recommended to do before releasing the map publicly.</span>
+                <span lang="pt">Apaga o <pre>extra</pre> das sprites APLAYER. Não é extremamente necessário, mas recomendado de fazer antes de lançar o mapa publicamente.</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span>cam_get</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Similar to po_get, but for the CAMERA1 sprites, since they follow the same logic (i.e. ID ordered).</span>
+                <span lang="pt">Similar ao po_get, mas para as sprites CAMERA1, já que elas seguem a mesma lógica (i.e. sem ordem de ID).</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span>cam_set</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Similar to po_set, but for the CAMERA1 sprites.</span>
+                <span lang="pt">Similar ao po_set, mas para as sprites CAMERA1.</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span>cam_clear</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Similar to po_clear, but for the CAMERA1 sprites.</span>
+                <span lang="pt">Similar ao po_clear, mas para as sprites CAMERA1.</span>
+            </td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span>ang_fix</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Adjusts the angle of certain effect sprites when the angle have meaning, so when doing a X+Y flip on the whole map the effects will have their behavior preserved.</span>
+                <span lang="pt">Ajusta o ângulo de sprites de efeito quando o ângulo possui sugnificado, para que quando fizer uma ivnersão X+Y do mapa, os efeitos terão seus efeitos preservados.</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+            	<span>bump_tags</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Bumps the non-zero channel tags of every sprite/wall/sector by 5000.</span>
+                <span lang="pt">Incrementa todas as tags de interligação que não estejam zeradas em 5000.</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+            	<span>actor_fix</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            	<span lang="en">Sets actors size & cstat to how they are in game.</span>
+                <span lang="pt">Seta o tamanho e o cstat das sprites actors para como elas são in game.</span>
+            </td>
+        </tr>
+   	</tbody>
+</table>
+
+<span lang="en">It's not the objective now to go over every routine above. What we'll take a look at now are <pre>po_get</pre> and <pre>po_set</pre>. So, as explained above, <pre>po_get</pre> will set the extra of every APLAYER sprite to their current order. If you run <pre>po_get</pre> (by openning the console and typing <pre>do po_get</pre>) on E1L1.map for example, it will set the extra of the APLAYER sprite from the bathroom to 1 (since that's P2's start point), the one on the exit to 2 (since that's P3 start point), and so on... The idea is to get the extra of every APLAYER sprite to a value that you choose, and then run <pre>po_set</pre> to reorder them based on the values you choose.</span>
+<span lang="pt">Não é o objetivo agora adentrar em todas as rotinas acima. O que nós vamos olhar agora são <pre>po_get</pre> e <pre>po_set</pre>. Então, como explicado acima, <pre>po_get</pre> setará o extra de toda sprite APLAYER para sua ordem atual. Se você rodar <pre>po_get</pre> (abrindo o console e digitando <pre>do po_get</pre>) no E1L1.map por exemplo, ele setará o extra da sprite APLAYER do banheiro para 1 (pois é usado como ponto inicial do P2), setará o extra da que está no exit para 2 (pois é o ponto inicial do P3), e por assim em diante. A ideia é voc^ter preenchido o extra de toda sprite APLAYER para o valor que você escolher, e então chamar <pre>po_set</pre> para reordenar elas com base nos valores que você escolheu.</span>
