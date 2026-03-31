@@ -46,7 +46,7 @@
             		When reordering TEAM spawn points, it will apropriatelly interleave across teams, so if playing with <pre>[TEAMS] Mixed Team Spawn Points</pre>, the initial spawn will still be symmetric.
             	</span>
                 <span lang="pt">Reordenada as sprites APLAYER com base no seu <pre>extra</pre> (primeiro chame po_get para preenchê-los para você, faça suas modificações, e então rode po_set).</br>
-                	Ao reordenar os spawn poitns de TIME, eles serão corretamente intercalados pelos times, para que caso esteja jogando com <pre>[TEAMS] Mixed Team Spawn Points</pre>, o nascimento inicial ainda esteja simétrico.
+                	Ao reordenar os pontos de nascimento de TIME, eles serão corretamente intercalados pelos times, para que caso esteja jogando com <pre>[TEAMS] Mixed Team Spawn Points</pre>, o nascimento inicial ainda esteja simétrico.
                 </span>
             </td>
         </tr>
@@ -65,7 +65,7 @@
             </td>
             <td>
             	<span lang="en">Similar to po_get, but for the CAMERA1 sprites, since they follow the same logic (i.e. ID ordered).</span>
-                <span lang="pt">Similar ao po_get, mas para as sprites CAMERA1, já que elas seguem a mesma lógica (i.e. sem ordem de ID).</span>
+                <span lang="pt">Similar ao po_get, mas para as sprites CAMERA1, já que elas seguem a mesma lógica (i.e. seguem ordem de ID).</span>
             </td>
         </tr>
         <tr>
@@ -93,31 +93,29 @@
             </td>
             <td>
             	<span lang="en">Adjusts the angle of certain effect sprites when the angle have meaning, so when doing a X+Y flip on the whole map the effects will have their behavior preserved.</span>
-                <span lang="pt">Ajusta o ângulo de sprites de efeito quando o ângulo possui sugnificado, para que quando fizer uma ivnersão X+Y do mapa, os efeitos terão seus efeitos preservados.</span>
+                <span lang="pt">Ajusta o ângulo de sprites de efeito quando o ângulo possui significado, para que ao fazer uma inversão X+Y do mapa, os efeitos terão seus comportamentos preservados.</span>
             </td>
         </tr>
-
         <tr>
             <td>
             	<span>bump_tags</span>
             </td>
             <td>
             	<span lang="en">Bumps the non-zero channel tags of every sprite/wall/sector by 5000.</span>
-                <span lang="pt">Incrementa todas as tags de interligação que não estejam zeradas em 5000.</span>
+                <span lang="pt">Incrementa todas as tags de interligação não-zeradas em 5000.</span>
             </td>
         </tr>
-
         <tr>
             <td>
             	<span>actor_fix</span>
             </td>
             <td>
-            	<span lang="en">Sets actors size & cstat to how they are in game.</span>
-                <span lang="pt">Seta o tamanho e o cstat das sprites actors para como elas são in game.</span>
+            	<span lang="en">Sets actors sprites size & cstat to how they are in game.</span>
+                <span lang="pt">Seta o tamanho e o cstat das sprites actors para como elas são durante o jogo.</span>
             </td>
         </tr>
    	</tbody>
 </table>
 
 <span lang="en">It's not the objective now to go over every routine above. What we'll take a look at now are <pre>po_get</pre> and <pre>po_set</pre>. So, as explained above, <pre>po_get</pre> will set the extra of every APLAYER sprite to their current order. If you run <pre>po_get</pre> (by openning the console and typing <pre>do po_get</pre>) on E1L1.map for example, it will set the extra of the APLAYER sprite from the bathroom to 1 (since that's P2's start point), the one on the exit to 2 (since that's P3 start point), and so on... The idea is to get the extra of every APLAYER sprite to a value that you choose (first by calling <pre>po_get</pre> and after that editing each one individually when needed by the <pre>ALT + M</pre> hotkey), and then run <pre>po_set</pre> to reorder them based on the values you choose.</span>
-<span lang="pt">Não é o objetivo agora adentrar em todas as rotinas acima. O que nós vamos olhar agora são <pre>po_get</pre> e <pre>po_set</pre>. Então, como explicado acima, <pre>po_get</pre> setará o extra de toda sprite APLAYER para sua ordem atual. Se você rodar <pre>po_get</pre> (abrindo o console e digitando <pre>do po_get</pre>) no E1L1.map por exemplo, ele setará o extra da sprite APLAYER do banheiro para 1 (pois é usado como ponto inicial do P2), setará o extra da que está no exit para 2 (pois é o ponto inicial do P3), e por assim em diante. A ideia é você ter preenchido o extra de toda sprite APLAYER para o valor que você escolher (primeiro chamando <pre>po_get</pre> e então editando as individualmente quando necessário pelo atalho <pre>ALT + M</pre>), e então chamar <pre>po_set</pre> para reordenar elas com base nos valores que você escolheu.</span>
+<span lang="pt">Não é o objetivo agora adentrar em todas as rotinas acima. Analisaremos apenas <pre>po_get</pre> e <pre>po_set</pre> por enquanto. Então, como explicado acima, <pre>po_get</pre> setará o extra de toda sprite APLAYER para sua ordem atual. Se você rodar <pre>po_get</pre> (abrindo o console e digitando <pre>do po_get</pre>) no E1L1.map por exemplo, ele setará o extra da sprite APLAYER do banheiro para 1 (pois é usado como ponto inicial do P2), setará o extra da que está no exit para 2 (pois é o ponto inicial do P3), e por assim em diante. A ideia é você ter preenchido o extra de toda sprite APLAYER para o valor que você escolher (primeiro chamando <pre>po_get</pre> e então editando as individualmente quando necessário pelo atalho <pre>ALT + M</pre>), e então chamar <pre>po_set</pre> para reordenar elas com base nos valores que você escolheu.</span>
