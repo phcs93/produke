@@ -1052,11 +1052,11 @@ module.exports = function({deepClone, utils}, gamedefs) {
         }
     };
 
-    // send /TEAMSpicker automatically if any team based mode is selected
+    // send /teampicker automatically if any team based mode is selected
     gamedefs.games.duke3d.executables.produke.parameters["teampicker"] = {
         modeSupport: ["singleplayer", "multiplayer"],
         type: "static",
-        value: "/TEAMSpicker",
+        value: "/teampicker",
         addIf: c => {
             return [3,4,5,6,9].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
         }        
