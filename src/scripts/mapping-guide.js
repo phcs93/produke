@@ -35,6 +35,18 @@ window["load-mapping-guide"] = async () => {
                         "en": "Flags",
                         "pt": "Bandeiras"
                     }
+                },
+                "gamemode-exclusive": {
+                    "title": {
+                        "en": "Game Mode Exclusive Items",
+                        "pt": "Itens Exclusivos por Modo de Jogo"
+                    }
+                },
+                "indestructible-mirrors": {
+                    "title": {
+                        "en": "Indestructible Mirrors",
+                        "pt": "Espelhos Indestrutíveis"
+                    }
                 }
             }
         }

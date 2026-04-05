@@ -132,7 +132,7 @@ window["load-features"] = async () => {
                         "pt": "Mira Automatica Inteligente"
                     } 
                 },
-                "team-colored-tripboms": {
+                "team-colored-tripbombs": {
                     "title": {
                         "en": "Team Colored Tripbombs",
                         "pt": "Tripbombs Coloridas por Time"

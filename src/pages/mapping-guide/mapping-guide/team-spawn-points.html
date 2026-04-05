@@ -36,20 +36,17 @@
     </div>
 </div>
 <img src="res/screenshots/team-spawn-points.png" alt="team spawn points" class="screenshot" style="border: none;">
+<span lang="en"><strong>NOTE:</strong> On the screenshot above the APLAYER sprites had their paletes altered but this is not necessary. Only the HI-TAG ha to be changed.</span>
+<span lang="pt"><strong>NOTE:</strong> Na imagem acima as sprites APLAYER tiveram suas paletas alteradas, porém isso não é necessário. Apenas o HI-TAG precisa ser alterado.</span>
 
-<span lang="en">The player one spawn point (the "arrow" on the 2d map - set with pressing the scroll-lock key in mapster32) is not used in team based modes unless there are not enough team spawn points defined.</span>
-<span lang="pt">O ponto de nascimento do player 1 (a "flecha" na visão 2d - setado apertando a tecla scoll-lock no mapster32) não é utilizado em modos baseados em times a não ser que não existam pontos de nascimento de time o suficiente.</span>
+<span lang="en">When playing on a team game mode, the player one spawn point (the "arrow" on the 2d map - set with pressing the scroll-lock key in mapster32) will not be used, unless there are no team spawns for a given team.</span>
+<span lang="pt">Quando estiver jogando em um modo de jogo de times, o ponto de nascimento do player 1 (a "flecha" na visão 2d - setado apertando a tecla scoll-lock no mapster32) não será utilizado, a não ser que não existam pontos de nascimento para um time específico.</span>
 
 <span lang="en">In case the match is being played with the <pre>Netplay Options > NetFlags > [TEAMS] Mixed Team Spawn Points</pre> netflag, the game will treat the team spawn points as normal spawn points (i.e. the team spawn points will be assigned to the players regardless of the teams they're in).</span>
 <span lang="pt">Caso a partida esteja sendo jogada com a netflag <pre>Netplay Options > NetFlags > [TEAMS] Mixed Team Spawn Points</pre>, o jogo irá tratar os pontos de nascimento de time como pontos de nascimento normais (i.e. os pontos do nascimento de time serão distribuídos entre os players independente dos times a qual façam parte).</span>
 
-<span lang="en">This useful so CTF made maps that have symmetrical bases (with corresponding team spawn points) can be normally played as TDM/TLMS maps, that is, to have the the players to be randomly spawned through all the map instead of spawning only on their corresponding base. It's recommended to keep this option off in case of CTF matches, because of the nature of the CTF mode which normally requires maps made of symmetrical bases.</span>
-<span lang="pt">Esse comportamento é recomendado para que mapas feitos para CTF com bases simétricas (com pontos de nascimento correspondentes) funcionem corretamente como mapas de TDM/TLMS, isto é, com os players nascendo aleatoriamente por todo o mapa ao invés de apenas em suas respectivas bases. É recomendando que essa opção permaneça desligada em partidas CTF, dada a natureza desse mdo que comumente requer mapas compostos por bases simétricas.</span>
-
-<span lang="en">Finally, <strong>there's a special case in which proDuke will ignore the "arrow" spawn point</strong> which will occur if 4 conditions are met: if that netflag is enabled + the current game mode is NOT COOP/SURVIVAL + if the map has TEAM spawn points (i.e. APLAYER sprite with hitag > 0) + if the map does NOT has DM spawn points (i.e. APLAYER sprite with lotag = 0 and hitag = 1).</span>
-<span lang="pt">Por fim, <strong>há um caso especial no qual o proDuke irá ignorar o ponto de nascimento da "flecha"</strong> que ocorrerá caso 4 condições ocorram: se essa netflag estiver ligada + o modo de jogo atual NÃO for COOP/SOBREVIVÊNCIA + o mapa tiver pontos de nascimento de TIME (i.e. sprites APLAYER com hitag > 0) + NÃO tiver pontos de nascimento de DM (i.e. sprites APLAYER com lotag = 0 e hitag = 0).</span>
-<span lang="en">This is done because, on that case, the map has clearly been made with symmetrical bases in mind, so it wouldn't make sense for a player to spawn on a non symmetrical spawn point. Note that maps that have both TEAM and normal DM spawn points will not be treated as a special case and will function normally.</span>
-<span lang="pt">Isso é feito pois, nesse caso, o mapa foi claramente feito pensando em bases simétricas, então não faria sentido para um jogador nascer em um ponto de nascimento não-simétrico. Note que mapas que tenham ambos pontos de nascimento de TIME e de DM não serão tratados como casos especiais e funcionarão normalmente.</span>
+<span lang="en">This useful so CTF made maps that have symmetrical bases (with corresponding team spawn points) can be normally played as TDM/TLMS maps, that is, to have the the players to be randomly spawned through all the map instead of spawning only on their corresponding base. It's recommended to keep this option off in case of CTF matches, because of the nature of the CTF mode which normally requires maps made of symmetrical bases. The same is true in case of TDM/TLMS on a FORTS style map.</span>
+<span lang="pt">Esse comportamento é recomendado para que mapas feitos para CTF com bases simétricas (com pontos de nascimento correspondentes) funcionem corretamente como mapas de TDM/TLMS, isto é, com os players nascendo aleatoriamente por todo o mapa ao invés de apenas em suas respectivas bases. É recomendando que essa opção permaneça desligada em partidas CTF, dada a natureza desse modo que comumente requer mapas compostos por bases simétricas. O mesmo é verdade no caso de TDM/TLMS em um mapa do estilo FORTS.</span>
 
 <span lang="en">The following chart describes how proDuke assigns spawn points on the different game modes, considering how the NetFlag <pre>[TEAMS] Mixed Team Spawn Points</pre> can affect it:</span>
 <span lang="pt">A tabela baixo explica como o proDuke distribui os spawns points nos diferentes modos de jogo, levando em conta como a NetFlag <pre>[TEAMS] Mixed Team Spawn Points</pre> pode afetar isso:</span>
@@ -129,7 +126,7 @@
                 <span lang="pt">Provável mapa de CTF, mas também compatível com TDM / TLMS (e também FFA)<br/>
                     <br/>
                     <small>Distribui os jogadores nos spawns de TIME</small><br/>
-                    <small style="color: tomato;">("flecha" NÃO é utilizada - similar a como funciona quando a NETFLAG tá ligada e o mapa possui spawns de TIME)</small><br/>
+                    <small style="color: tomato;">("flecha" NÃO é utilizada - similar a como funciona quando a NETFLAG está ligada e o mapa possui spawns de TIME)</small><br/>
                     <hr>
                     <strong style="color: var(--progold);">NETFLAG:</strong> sem efeito, já que o jogo terá que usar os spawns de TIME indiscriminadamente (caso excepcional - não há outra alternativa)
                 </span>
