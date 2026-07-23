@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (activeLink) {
         activeLink.classList.add("active"); 
     } else {
-        if (currentUrl !== "{domain}") {
+        if (currentUrl !== "{domain}/") {
             document.querySelector('div#navbar > a').classList.add("active"); 
         }
     }
