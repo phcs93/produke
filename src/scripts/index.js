@@ -63,7 +63,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (activeLink) {
         activeLink.classList.add("active"); 
     } else {
-        document.querySelector('div#navbar > a').classList.add("active"); 
+        if (currentUrl !== "{domain}") {
+            document.querySelector('div#navbar > a').classList.add("active"); 
+        }
     }
 
     // set current menu link
