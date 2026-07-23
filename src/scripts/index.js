@@ -15,39 +15,45 @@ document.addEventListener("DOMContentLoaded", async () => {
         "pt": "MUDAR PARA PORTUGUÊS"
     };
 
-    // if user is using a supported language
-    if (supportedLangs.includes(browserLang)) {
+    const langBox = document.getElementById("lang");
 
-        // if url language is not browser language
-        if (urlLang !== browserLang) {
-            // suggest user to use their language
-            suggestLanguage(browserLang);
+    if (langBox) {
+
+        // if user is using a supported language
+        if (supportedLangs.includes(browserLang)) {
+
+            // if url language is not browser language
+            if (urlLang !== browserLang) {
+                // suggest user to use their language
+                suggestLanguage(browserLang);
+            }
+
+        } else {
+
+            // if we don't support user language
+            // and user is not using english        
+            if (urlLang !== "en") {
+                // suggest user to use english
+                suggestLanguage("en");
+            }
+
         }
 
-    } else {
+        // set combobox language to current url language
+        langBox.value = urlLang;
 
-        // if we don't support user language
-        // and user is not using english        
-        if (urlLang !== "en") {
-            // suggest user to use english
-            suggestLanguage("en");
+        // change language combobox event
+        langBox.onchange = (e) => {
+            const selector = `link[hreflang="${e.target.value}"]`;
+            const href = document.querySelector(selector).href
+            window.location.href = href;
+        };
+
+        // shows a tooltip suggesting the user to change the language
+        function suggestLanguage(lang) {
+            langBox.parentElement.dataset.suggestion = langSuggestions[lang];
         }
 
-    }
-
-    // set combobox language to current url language
-    document.getElementById("lang").value = urlLang;
-
-    // change language combobox event
-    document.getElementById("lang").onchange = (e) => {
-        const selector = `link[hreflang="${e.target.value}"]`;
-        const href = document.querySelector(selector).href
-        window.location.href = href;
-    };
-
-    // shows a tooltip suggesting the user to change the language
-    function suggestLanguage(lang) {
-        document.getElementById("lang").parentElement.dataset.suggestion = langSuggestions[lang];
     }
 
     // set current navbar link
@@ -67,12 +73,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // back to top button
-    document.getElementById("back-to-top").onclick = e => {
-        e.preventDefault(); 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    };
+    const backToTop = document.getElementById("back-to-top");
+    if (backToTop) {
+        backToTop.onclick = e => {
+            e.preventDefault(); 
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        };
+    }
 
 });
