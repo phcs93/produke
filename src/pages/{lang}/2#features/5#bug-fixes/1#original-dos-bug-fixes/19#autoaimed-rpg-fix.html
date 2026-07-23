@@ -1,0 +1,33 @@
+<title lang="en">Autoaimed RPG Fix</title>
+<title lang="pt">Correção da RPG Automirada</title>
+
+<span lang="en">Auto aimed RPGs will not detonate when inside the 256 units radius of the X/Y coordinates (Z axis was ignored) of its auto aim target. This behavior would result on the RPGs detonating without touching anything, and to make things worse, the RPG projectiles splash damage would still originate at the targeted actors coordinates! Now, this early detonation check was totally removed.</span>
+<span lang="pt">RPGs atiradas com auto aim não irão mais se auto detonar quando dentro de uma distância radial de 256 unidades em relação às coordenadas X/Y (eixo Z era ignorado) de seu alvo de auto aim. Esse comportamento resultava em RPGs que se detonavam sem encostar em nada, e para fazer as coisas piores, o dano em área originava nas coordenadas do actor alvo! Agora, essa checagem de detonaçao antecipada foi totalmente removida.</span>
+
+<span lang="en">As seen in the following video:</span>
+<span lang="pt">Como visto no seguinte vídeo:</span>
+
+<a href="https://www.youtube.com/watch?v=EckqF0g9xXo">https://www.youtube.com/watch?v=EckqF0g9xXo</a>
+
+<span lang="en">This fix can be disabled via the netflag <pre>Netplay Options > NetFlags > [DOS] BAD HIT DETECTION ON AUTO AIMED RPGS</pre>.</span>
+<span lang="pt">Essa correção pode ser desabilitada pela netflag <pre>Netplay Options > NetFlags > [DOS] BAD HIT DETECTION ON AUTO AIMED RPGS</pre>.</span>
+
+<span lang="en">If the fix is disabled and a bugged kill happens, a new obituary icon will be displayed:</span>
+<span lang="pt">Se essa correção estiver desabilitada e uma morte bugada ocorrer, um novo ícone de obituário será exibido:</span>
+
+<div class="flex-columns flex-gap-32 flex-justify-content-center">
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="height: 80px;" class="sprite" src="{$common}/res/sprites/bugged-rpg-kill.png" alt="bugged rpg obituary" title="bugged rpg obituary">
+        <label class="badge">
+            <span lang="en">BUGGED RPG KILL</span>
+            <span lang="pt">MORTE POR RPG BUGADA</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="height: 80px;" class="sprite" src="{$common}/res/sprites/bugged-dev-kill.png" alt="bugged dev obituary" title="bugged dev obituary">
+        <label class="badge">
+            <span lang="en">BUGGED DEV KILL</span>
+            <span lang="pt">MORTE POR DEV BUGADA</span>
+        </label>
+    </div>
+</div>

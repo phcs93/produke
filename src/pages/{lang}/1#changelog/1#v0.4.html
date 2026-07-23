@@ -1,0 +1,283 @@
+<title lang="en">Alpha 0.4</title>
+<title lang="pt">Alpha 0.4</title>
+
+<style>
+    div.box > h1, div.box > hr:first-of-type {
+        display: none;
+    }
+</style>
+
+<div class="flex-columns">
+    <h1>Alpha 0.4</h1>
+    <div class="flex-grow"></div>
+    <h3>
+        <span lang="en">July 23rd, 2026</span>
+        <span lang="pt">23 de Julho de 2026</span>
+    </h3>
+</div>
+
+<hr>
+
+<a href="{$common}/res/download/produke-alpha-v0.4.zip" download="produke-alpha-v0.4.zip">
+    <div class="flex-columns flex-gap-16 flex-align-items-center">
+        <img style="width: 16px;" src="{$common}/res/icons/zip.png" alt="produke-alpha-v0.4.zip">
+        produke-alpha-v0.4.zip
+    </div>
+</a>
+
+<p>
+    <span lang="en">Finally, v0.4 is out! This version has 3 new big features (Demo Player, AVI capture mode, Multi RTS), some other smaller improvements and a few bug fixes.</span>
+    <span lang="pt">Finalmente a versão v0.4 está pronta! Essa versão possui 3 grandes funcionalidades de destaque (Player de Demos, Modo de captura de AVI, Multi RTS), outras pequenas melhorias e algumas correções de bugs.</span>
+</p>
+
+<img src="{$common}/res/updates/produke-0.4.png" alt="produke-0.4">
+
+<h2>
+    <span lang="en">New Features</span>
+    <span lang="pt">Novas Funcionalidades</span>
+</h2>
+
+<ul>
+    <li>
+        <span lang="en"><strong>We added a demo player in proDuke</strong>. On the main menu, go to the PLAY DEMO option. There, all .dmo files from your /dmos folder will be listed. There's the possibility to filter the results, so you can find the desired demo faster. Upon selecting a demo, a little summary of it will be displayed, showing various informations about the selected demo like the game mode, map, match duration, player names, etc. Pressing ENTER will then finally load the demo for playback.</span>
+        <span lang="pt"><strong>Nós adicionamos um player de dmos no proDuke</strong>. No menu principal, entre na opção PLAY DEMO. Ela irá listar todos os arquivos .dmo da sua pasta /dmos. Há também a opção de filtrar as demos para que você consiga achá-las mais rapidamente. Ao selecionar uma delas, um pequeno resumo da demo será exibido, mostrando varias informações sobre a demo selecionada, como o modo de jogo, o mapa, a duração da partida, os nomes dos jogadores, etc. Ao apertar ENTER, a demo será então finalmente carregada para reprodução.</span>
+        <span lang="en">
+            <ul>
+                <li><strong>The playback starts paused by default</strong>. Make sure to go to <pre>OPTIONS > RECORDING SETUP > PLAYBACK OPTIONS > DEMO PLAYER KEYS...</pre> to check the default controls. The demo player has the same controls you can find on standard video players: you can pause/start, advance forward/backwards, rewind back to the start or jump to the very end! One of the best features of it is that the advance forward/backwards controls will increment tic by tic when paused. Also, you can freely switch the view to other players using the SpyCam (i.e. Coop View) hotkey, even when paused. With all of that as well as other proDuke features like Player Outlines and Damage Numbers, the level of understanding of whats going on gets on a whole another level.</li>
+            </ul>
+        </span>                
+        <span lang="pt">
+            <ul>
+                <li><strong>A reprodução começa pausada por padrão</strong>. Certifique-se de ir em <pre>OPTIONS > RECORDING SETUP > PLAYBACK OPTIONS > DEMO PLAYER KEYS...</pre> para conferir as teclas padrões. O player de demos tem os mesmos controles que você encontra nos players de vídeo: é possível pausar/resumir, avançar para frente/trás, rebobinar ao início ou pular diretamente para o final! Uma das melhores características dele é que, se você usar os controles de avançar para frente/trás enquanto a reprodução está pausada, ele avançará a demo tic por tic! Você também pode mudar de tela normalmente usando a função SpyCam (i.e. Coop View), mesmo quando pausado. Isso tudo em conjunto com outras funcionalidades do proDuke, como os Contornos nos Jogadores e os Números de Dano, faz com que o nível de entendimento de uma partida chegue a outro nível.</li>
+            </ul>
+        </span>
+    </li>
+    <li>
+        <span lang="en">Implemented various checks so the demo may still be written correctly in case of a crash or unexpected closing.</span>
+        <span lang="pt">Implementadas várias checagens para que a demo seja escrita corretamente mesmo em caso de travamento ou fechamento inesperado.</span>
+    </li>
+    <li>
+        <span lang="en">New "currently recording a dmo" status icon on the upper-right corner of the screen, to match the new demo player controls art.</span>
+        <span lang="pt">Novo ícone para o status "gravação de demo ativada" no canto direito-superior da tela, para seguir os mesmos padrões dos controles do novo player de demos.</span>
+    </li>
+    <li>
+        <span lang="en">The demo auto recorder now has the new NETPLAY ONLY mode. Also, the <pre>OPTIONS > RECORDING SETUP > PLAYBACK OPTIONS > RECORD</pre> had its options reworked. Now the options are OFF/ONCE/ALWAYS/NETPLAY ONLY. Note that the /r command line now sets the record mode to ONCE, and that will only happen if RECORD is set to OFF on your cfg file. Also, the F8 hotkey for quick record mode switch that was added on the previous proDuke release is now removed, since it was useless.</span>
+        <span lang="pt">O gravador de demos automático agora tem um modo novo: NETPLAY ONLY (apenas partidas online). Além disso, as opções em <pre>OPTIONS > RECORDING SETUP > PLAYBACK OPTIONS > RECORD</pre> agora são OFF/ONCE/ALWAYS/NETPLAY ONLY. Note que a linha de comando /r seta o modo de gravação para ONCE, e isso só ocorrerá caso a opção salva no cfg esteja em OFF. Além disso, o atalho para a rápida troca no modo de gravação que foi adicionado à tecla F8 na versão anterior do proDuke foi removido, pois era inútil.</span>
+    </li>
+    <li>
+        <span lang="en">It's now possible to disable the chat messages, chat macros and RTS sounds from the demo playback via new options present on the <pre>RECORDING SETUP > PLAYBACK OPTIONS</pre> menu.</span>
+        <span lang="pt">Agora é possível desabilitar as mensagens do chat, mensagens macro e os sons RTS ao estar vendo uma demo através de novas opções presentes no menu <pre>RECORDING SETUP > PLAYBACK OPTIONS</pre>.</span>
+    </li>
+    <li>
+        <span lang="en">There's now a <strong>Headless AVI Capture mode</strong> in proDuke, which is perfect if you want to batch generate videos of your matches to upload to youtube or somewhere else. Given a .dmo file, it will generate a corresponding .avi file. The match is recorded at non-live time and without having to display the match on your screen. The recording time is usually faster than the watch time, but that depends on your PC specs as well as the current video resolution. Make sure to go to go <a href="{domain}/en/features/improvements/demo-improvements/#video-recorder">Video Recorder</a> for more details.</span>
+        <span lang="pt">Agora o proDuke possui um <strong>modo de captura de vídeos AVI headless</strong>, que é perfeito caso você queira gerar arquivos de video em lote para subir para o youtube ou algum outro lugar. Dado um arquivo .dmo, ele irá gerar o arquivo .avi correspondente. A partida será reproduzida e processada fora do tempo real, sem ter que exibir nada na tela. O tempo de gravação costuma ser mais rápido que o tempo de assistir a demo, mas isso depende da potência do seu PC como também da resolução de tela selecionada. Visite a seção <a href="{domain}/pt/recursos/melhorias/melhorias-em-demos/#gravador-de-video">Gravador de Vídeo</a> para saber mais detalhes.</span>
+    </li>
+    <li>
+        <span lang="en">Support for <strong>Multiple RTS files loaded</strong>. Each player can have it's own distinct RTS file selected, and for the sound playback the game will load the RTS file by demand. The end result is that everyone will be able to hear the corresponding sounds of the RTS files you choose, even if their curently selected RTS is diferent from yours! Yes, this means that it's possible to, for example, have a sound from DUKE.RTS and SW.RTS playing at the same time! But, of course, all players need to have matching .rts files on the /rts folder. You can select your RTS file through <pre>OPTIONS > PLAYER OPTIONS > REMOTE RIDICULE</pre>. The F8 key will also be a shortcut to that. Or, you can use the new "RTS" console command. Make sure to enable the RTS sound playback by setting <pre>OPTIONS > SOUND SETUP > VOICE QUOTES</pre> to FULL.</span>
+        <span lang="pt">Suporte para <strong>Multiplos RTS carregados</strong>. Cada jogador poderá ter selecionado um arquivo RTS distinto e na hora de tocar os sons de um RTS o jogo o carregará sob demanda. O resultado final é que todos serão capazes de escutar os sons do seu RTS, mesmo que os outros estejam com outra RTS selecionada! Sim, isso significa que será possível, por exemplo, ter um som do DUKE.RTS tocando ao mesmo tempo em que um som do SW.RTS também esteja! Porém, obviamente é necessário que todos compartilhem os mesmos arquivos RTS em suas pastas /rts. Você poderá selecionar sua RTS pelo menu <pre>OPTIONS > PLAYER OPTIONS > REMOTE RIDICULE</pre>. A tecla F8 servirá de atalho para isso. Ou, você também poderá utilizar o comando "RTS" no console. Certifique-se de habilitar os sons RTS trocando a opção em <pre>OPTIONS > SOUND SETUP > VOICE QUOTES</pre> para FULL.</span>
+    </li>
+    <li>
+        <span lang="en">Holding the ALT key now shows the sound names of the currently selected RTS file. This can be disabled on the menu <pre>OPTIONS > HUD/MENU SETUP > RTS SOUND NAMES</pre>.</span>
+        <span lang="pt">Ao segurar a tecla ALT os nomes dos sons do RTS selecionado serão exibidos. Isso pode ser desabilitado pelo menu <pre>OPTIONS > HUD/MENU SETUP > RTS SOUND NAMES</pre>.</span>
+    </li>
+    <li>
+        <span lang="en">Support for custom music for usermaps. The game will look for a <pre>.mid</pre> file of the same name of the map file to use as music (e.g. iod2.mid will be loaded automatically for iod2.map).</span>
+        <span lang="pt">Suporte para musicas custom nos usermaps. O jogo irá procurar por um arquivo <pre>.mid</pre> com mesmo nome do mapa para usar como musica (e.g. iod2.mid será carregada automaticamente para iod2.map).</span>
+    </li>
+    <li>
+        <span lang="en">Mouse sensibility now suports smaller increments.</span>
+        <span lang="pt">Sensibilidade do mouse agora permite um ajuste mais refinado.</span>
+    </li>
+    <li>
+        <span lang="en">The multiplayer scores screen on the end of a match now has a 5 sec countdown timer, so AFK players can't block a new match from starting.</span>
+        <span lang="pt">A tela de pontuaçao no fim de partida agora possui uma contagem regressiva de 5 segundos, para que jogadores AFK náo impeçam a próxima partida de iniciar.</span>
+    </li>
+    <li>
+        <span lang="en">The splash screen before a new game (the one saying "ENTERING <i>map name</i>") now shows the name of the player that started the new match, if in multiplayer.</span>
+        <span lang="pt">A tela de transição antes de um novo jogo (que tem escrito "ENTERING... <i>nome do mapa</i>") agora mostra o nome do player que iniciou a nova partida, se em multiplayer.</span>
+    </li>
+    <li>
+        <span lang="en">New CREDITS screen with proDuke credits.</span>
+        <span lang="pt">Nova tela de CREDITS com os creditos do proDuke.</span>
+    </li>
+    <li>
+        <span lang="en">Demo dumping code to aid the developers in debugging dmo playback out of syncs.</span>
+        <span lang="pt">Codigo de dumps das demos, utilizada para ajudar nós desenvolvedores a corrigir erros de perda de sincronia na reprodução das dmos.</span>
+    </li>
+</ul>
+
+<h2>
+    <span lang="en">Improvements</span>
+    <span lang="pt">Melhorias</span>
+</h2>
+
+<ul>
+    <li>
+        <span lang="en">The usermap listing screen can be filtered as well, like the new DMO and RTS screens.</span>
+        <span lang="pt">A tela com a listagem de usermaps agora pode ser filtrada, assim como as novas telas de DMO e RTS.</span>
+    </li>
+    <li>
+        <span lang="en">Mini HUD weapons now have better centered text. If playing versions of the game that have less weapons (1.3D/FULL or 1.3/Shareware) now only the correct weapons are displayed.</span>
+        <span lang="pt">As armas no Mini HUD agora tem seu texto melhor centralizado. Se estiver jogando em versões do jogo que possuem menos armas (1.3D/FULL ou 1.3/Shareware) agora apenas as armas corretas serão exibidas.</span>
+    </li>
+    <li>
+        <span lang="en">The game will now refuse to load maps the same name as reg maps that are on the game folder UNLESS if playing with /allowmods.</span>
+        <span lang="pt">O jogo agora irá recusar a leitura de mapas que possuem o mesmo nome dos mapas regs que estejam na pasta do jogo, A NÃO SER que estejam jogando com /allowmods.</span>
+    </li>
+    <li>
+        <span lang="en">Newer demos will now have additional metadata: final player/team scores, obituaries, announcer events and the moment of out of sync, if that happens.</span>
+        <span lang="pt">As novas demos agroa terão informações adicionais nos metadados: pontuaçao final dos jogadores/times, obituarios, eventos de announcer e o momento em que ocorreu o out of sync, se for o caso.</span>
+    </li>
+    <li>
+        <span lang="en">New Obituary message for bugged RPG/Devistator missiles (see the new NetFlagC [DOS] BAD HIT DETECTION ON AUTO AIMED RPGS) to understand.</span>
+        <span lang="pt">Novas mensagens de obituario para misseis de RPG/Devistator bugados (veja a nova NetFlagC [DOS] BAD HIT DETECTION ON AUTO AIMED RPGS) para entender.</span>
+    </li>
+    <li>
+        <span lang="en">New NetFlagC <pre>[DOS] BAD HIT DETECTION ON AUTO AIMED RPGS</pre>, which restores the bug of auto-aimed RPGs having infinite vertical reach on its auto-aim target, due to the projectile detonating prematurely when inside a 256 unit wide X/Y radius (Z coordinates were ignored, that's why the bug exists).</span>
+        <span lang="pt">Nova NetFlagC <pre>[DOS] BAD HIT DETECTION ON AUTO AIMED RPGS</pre>, que restaura o bug no qual RPGs com auto-aim possuem alcance vertical infinito em relação ao alvo da auto-aim, devido ao projetil detonar prematuramente quando dentro de uma distancia de 256 units nas coordanas X/Y (coordenadas Z eram ignoradas, daí a origem do bug).</span>
+    </li>
+    <li>
+        <span lang="en">
+            The NetFlagC <pre>[DOS] MAP START BUGS</pre> was renamed to <pre>[DOS] CLASSIC MAP START BEHAVIORS</pre>, and now has 2 additional effects:
+            <ul>
+                <li>(a) The palette filters for itens/weapons/buttons/cracks to be exclusive to certain game modes (similar to how pal 1 makes them exclusive for multiplayer) can be disabled through this netflag.</li>
+                <li>(b) The proDuke TEAM Spawn points (i.e. APLAYER sprites with a non-zero hitag) are now treated as normal DM Spawn points (to keep compatibility with bad designed older maps, e.g. warhouse.map).</li>
+            </ul>
+        </span>
+        <span lang="pt">
+            A NetFlagC <pre>[DOS] MAP START BUGS</pre> foi renomeada para <pre>[DOS] CLASSIC MAP START BEHAVIORS</pre>, e agora possui 2 efeitos adicionais:
+            <ul>
+                <li>(a) Os filtros de paleta para itens/armas/botões/rachaduras serem exclusivas de certos modos de jogo (similar para como a paleta 1 faz com que itens sejam exclusivos em jogos multiplayer) podem ser desabiltiados por meio dessa netflag.</li>
+                <li>(b) Os pontos de renascimento de TIME do proDuke (i.e. sprites APLAYER sprites de hitag não zerado) agora são tratadas como pontos de renascimento de DM normais (para manter a compatibilidade com mapas antigos mal feitos, e.g. warhouse.map).</li>
+            </ul>  
+	    </span>
+    </li>
+    <li>
+        <span lang="en">
+            The NetFlagC <pre>[DOS] CAN RESPAWN SHRUNK</pre> was renamed to <pre>[DOS] INVALID SHRINK STATES</pre>, and now has 1 additional effect:
+            <ul>
+                <li>(a) Restores a bug that when a player gets hit by a shrinker shot while shrinking (got hit twice, one hit right after the other), when growing back to normal he would immediately shrink again, due to the 2nd hit being stored/queued.</li>
+            </ul>
+	    </span>
+        <span lang="pt">
+            A NetFlagC <pre>[DOS] CAN RESPAWN SHRUNK</pre> foi renomeada para <pre>[DOS] INVALID SHRINK STATES</pre>, e agora possui um efeito adicional:
+            <ul>
+                <li>(a) Restaura o bug em que ao levar um tiro de shrinker durante a animação de diminuição (levou dois tiros, um logo após o outro), ao crescer de volta ao normal ele imediatamente diminui novamente, devido ao segundo hit ter ficado "guardado"/"enfileirado".</li>
+            </ul>
+	    </span>
+    </li>
+    <li>
+        <span lang="en">
+            The NetFlagC <pre>[DOS] WEAPON SWITCHING BUGS</pre> now has 3 additional effects:
+            <ul>
+                <li>(a) Restores a bug in which, when with HANDREMOTE_WEAPON, using the Next/Prev Weapon functions will simply do nothing</li>
+                <li>(b) Restores a bug in which canceling fire into Next/Prev Weapon doesn't work as expected, instead it will Always do nothing (Prev) or always switch into Expander (Next)</li>
+                <li>(c) Restores a bug in which, when out of ammo for any weapon, when attempting to switch to Next Weapon the game will briefly switch into your empty Pistol, instead of doing nothing</li>
+            </ul>
+	    </span>
+        <span lang="pt">
+            A NetFlagC <pre>[DOS] WEAPON SWITCHING BUGS</pre> agora possui 3 efeitos adicionais:
+            <ul>
+                <li>(a) Restaura o bug no qual, quando carregando o HANDREMOTE_WEAPON (detonador da pipe bomb), o uso das funções Next/Prev Weapon simplesmente não farão nada</li>
+                <li>(b) Restaura o bug no qual o cancelamento de animação de tiro em Next/Prev Weapon não funciona como esperado, ao invés disso ele sempre não fará nada (Prev) ou sempre trocará para a Expander (Next)</li>
+                <li>(c) Restaura o bug no qual, quando sem munição para qualquer arma, ao tentar trocar de arma com a função Next Weapon, o jogo irá brevemente trocar para a sua Pistola vazia, ao invés de não fazer nada</li>
+            </ul>
+        </span>
+    </li>
+    <li>
+        <span lang="en">Various small UI/UX improvements.</span>
+        <span lang="pt">Várias melhorias de UI/UX.</span>
+    </li>
+</ul>
+
+<h2>
+    <span lang="en">Bug Fixes</span>
+    <span lang="pt">Correções de Bugs</span>
+</h2>
+
+<ul>
+    <li>
+        <span lang="en">proDuke Demos that do not have a Player1 (e.g. on a previous match P1 was present but decided to quit before the start of the recorded match) now playback properly.</span>
+        <span lang="pt">Demos do proDuke que não possuem um Jogador1 (e.g. numa partida anterior o Jogador1 estava presente mas decidou sair antes do inicio da partida que foi gravada) agora são reproduzidas corretamente.</span>
+    </li>
+    <li>
+        <span lang="en">Launching a netplay match with the /q command line (for bots) will no longer result in corrupted dmos (the BOTS would not be there, as they should, since we did not implement BOTS for netplay yet, but the total player count was being incremented, which would affect the dmo file write proccess).</span>
+        <span lang="pt">Iniciar uma partida online em conjunto com a linha de comando /q (para bots) não irá mais resultar em dmos corrompidas (os BOTS não estariam em jogo, como esperado, já que nós não implementamos ainda o suporte para BOTS em partidas online, porém o contador total de players estava sendo incrementado, o que acabava afetando a escrita das dmos).</span>
+    </li>
+    <li>
+        <span lang="en">Fixed an issue where the <pre>-name</pre> command line could force incorrect team or color values when the name string was long enough.</span>
+        <span lang="pt">Corrigido um problema em que a linha de comando <pre>-name</pre> podia forçar valores incorretos de time ou cor quando a string de nome era longa o suficiente.</span>
+    </li>
+    <li>
+        <span lang="en">Fixed a bug regarding the new Auto Weapon Switch mode <pre>BY PREFERENCE</pre> in which the check would give invalid results if the current wapon was HANDREMOTE_WEAPON.</span>
+        <span lang="pt">Arrumado um bug relacionado ao novo modo de troca de arma automática <pre>BY PREFERENCE</pre>, no qual a checagem resultaria em valores inválidos se a arma atual fosse o detornador de pipe bombs.</span>
+    </li>
+    <li>
+        <span lang="en">The Score Limit now can properly detect a DRAW on all game modes. Before, the player with the smaller internal ID would have preference in draw game situations.</span>
+        <span lang="pt">O limite de pontuação agora é capaz de detectar EMPATES em todos os modos de jogo. Antes, o jogador de ID menor teria vantagem em situações de empate.</span>
+    </li>
+        <li>
+        <span lang="en">Damage Numbers from the previous match/dmo are now cleared when starting a new match/dmo playback.</span>
+        <span lang="pt">Números de Dano da partida/demo anterior agora são limpados ao começar uma nova partida ou reprodução de demo.</span>
+    </li>
+    <li>
+        <span lang="en">TEAM Spawn points with invalid hitags (>4) are now treated as normal DM Spawn points.</span>
+        <span lang="pt">Pontos de nascimento de TIME com hitags invalidas (>4) agora são tratadas como pontos de nascimento normais de DM.</span>
+    </li>
+    <li>
+        <span lang="en">During a demo playback, in case the Crosshair type is set to A.A. Tied, the crosshair tile used will now be based on auto aim used by the current player on screen, instead of being based on the local player settings.</span>
+        <span lang="pt">Durante uma reprodução de demo, caso a confiruação da Crosshair esteja em A.A. Tied (i.e. vinculada ao tipo de auto aim), a mira utilizada será baseada no tipo de auto aim do player sendo exibido natela, ao invés de se basear na configuração do player local.</span>
+    </li>
+</ul>
+
+<h2>
+    <span lang="en">xDuke Bug Fixes</span>
+    <span lang="pt">Correções de Bugs do xDuke</span>
+</h2>
+
+<ul>
+    <li>
+        <span lang="en">The autoaim toggle hotkey was still being checked while on typing mode.</span>
+        <span lang="pt">A tecla de trocar o modo de autoaim ainda era checada durante o digitar no chat.</span>
+    </li>
+</ul>
+
+<h2>
+    <span lang="en">Original Bug Fixes</span>
+    <span lang="pt">Correções de Bugs Originais</span>
+</h2>
+
+<ul>
+    <li>
+        <span lang="en">Auto aimed RPGs will not detonate when inside the 256 units radius of the X/Y coordinates (Z axis was ignored) of its auto aim target. This behavior would result on the RPGs detonating without touching anything, and to make things worse, the RPG projectiles splash damage would still originate at the targeted actors coordinates! Now, this early detonation check was totally removed (the original behavior can be reverted by enabling the <pre>[DOS] BAD HIT DETECTION ON AUTO AIMED RPGS</pre> NetFlagC).</span>
+        <span lang="pt">RPGs atiradas com auto aim não irão mais se auto detonar quando dentro de uma distância radial de 256 unidades em relação às coordenadas X/Y (eixo Z era ignorado) de seu alvo de auto aim. Esse comportamento resultava em RPGs que se detonavam sem encostar em nada, e para fazer as coisas piores, o dano em área originava nas coordenadas do actor alvo! Agora, essa checagem de detonaçao antecipada foi totalmente removida (o comportamento original pode ser revertido ao ligar a NetFlagC <pre>[DOS] BAD HIT DETECTION ON AUTO AIMED RPGS</pre>).</span>
+    </li>
+    <li>
+        <span lang="en">When with HANDREMOTE_WEAPON, Next/Prev now work properly (the original behavior can be reverted through the can be reverted by enabling the <pre>[DOS] WEAPON SWITCHING BUGS</pre> NetFlagC).</span>
+        <span lang="pt">Quando estiver segurando o detonador de pipe bombs, as funções de Next/Prev Weapon agora funcionam corretamente (o comportamento original pode ser revertido ao ligar a NetFlagC <pre>[DOS] WEAPON SWITCHING BUGS</pre>).</span>
+    </li>
+    <li>
+        <span lang="en">Canceling fire into Next Weapon would ALWAYS attempt to switch into Expander, now it properly tries to switch into the next weapon (the original behavior can be reverted by enabling the <pre>[DOS] WEAPON SWITCHING BUGS</pre> NetFlagC).</span>
+        <span lang="pt">Cancelar a animação de tiro em Next Weapon resultava SEMPRE na tentativa de trocar para a Expander, agora o jogo corretamente tentará trocar para a próxima arma (o comportamento original pode ser revertido ao ligar a NetFlagC <pre>[DOS] WEAPON SWITCHING BUGS</pre>).</span>
+    </li>
+    <li>
+        <span lang="en">If you don't have ammo for anything, Next Weapon will do nothing, as it should. On the original game it would briefly switch into your empty pistol to only end up switching back into kick again (the original behavior can be reverted by enabling the <pre>[DOS] WEAPON SWITCHING BUGS</pre> NetFlagC).</span>
+        <span lang="pt">Caso você nao tenha munição para nada, a função Next Weapon agora corretamente não fará nada. No jogo original, ela trocaria para sua pistola vazia, para então trocar de volta para o chute (o comportamento original pode ser revertido ao ligar a NetFlagC <pre>[DOS] WEAPON SWITCHING BUGS</pre>).</span>
+    </li>
+    <li>
+        <span lang="en">Now the check to not display the crosshair on screen due to watching a camera will check if the proper player is on the camera or not, instead of seeing for the local player (relevant when using the Spy Cam function).</span>
+        <span lang="pt">Agora a checagem de não desenhar a mira na tela por estar vendo uma tela de câmera irá checar se o o player correto está na câmera ou não, ao invés de checar pelo player local (relevante ao usar a tecla de Spy Cam).</span>
+    </li>
+    <li>
+        <span lang="en">Now the F7 mode (3rd person view) is now per player instead of being only for yourself (or only to the Player1, in case of demo playback).</span>
+        <span lang="pt">Agora o modo F7 (visão em 3a pessoa) é separada por jogador ao invés de ser apenas para si mesmo (ou apenas para o Jogador1, no caso de reproduçãode demo).</span>
+    </li>
+    <li>
+        <span lang="en">Quotes/chat messages from the previous match/dmo are now cleared when starting a new match/dmo playback.</span>
+        <span lang="pt">Mensagens/chat da partida/demo anterior agora são limpadas ao começar uma nova partida ou reprodução de demo.</span>
+    </li>
+    <li>
+        <span lang="en">The RTS sound playback will not be stopped anymore when going/leaving an underwater sector as well as when pausing the game.</span>
+        <span lang="pt">Os sons RTS não serão interrompidos ao entrar/sair de um setor de água ou quando o jogo for pausado.</span>
+    </li>
+</ul>

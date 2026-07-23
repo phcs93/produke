@@ -1,0 +1,108 @@
+body {
+    background-color: #050505;
+    color: lightgray;
+    font-family: Verdana;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 32px !important;
+}
+
+div#site-header {
+    position: absolute; 
+    top: 64px; 
+    /* left: calc(50% - 144px); */
+    width: calc(100% - 32px);
+}
+
+img#icon {
+    image-rendering: pixelated;
+    height: 128px;
+}
+
+img#logo {
+    image-rendering: pixelated;
+    height: 32px;
+}
+
+img#author {
+    image-rendering: pixelated;
+    height: 16px;
+}
+
+img#site-author {
+    image-rendering: pixelated;
+    height: 16px;
+}
+
+div#navbar {
+
+    background-color: #1E1E1E;
+    padding: 16px;
+    /* position: sticky; */
+    top: 0;
+    z-index: 999;
+    box-shadow: 0px 5px 5px black;
+
+    & > a {
+        font-weight: bold;
+        &.active {
+            text-decoration: underline;
+        }
+    }
+
+    & > span.separator {
+        color: var(--progold);
+    }
+
+}
+
+select#lang {
+    background-color: #050505;
+    color: lightgrey;
+    border: none;
+    outline:0px;
+    cursor: pointer;
+    height: 22px;
+}
+
+div:has(>select#lang)::after {
+    content: attr(data-suggestion);
+    color: var(--progold);
+    font-size: 12px;
+    margin-left: 8px;
+    height: 22px;
+    line-height: 22px;
+    font-weight: bold;
+    padding: 0px 8px;
+    border-radius: 4px;
+}
+
+img#hand-icon {
+    display: none;
+}
+
+div:has(>select#lang)[data-suggestion] {
+    img#hand-icon {
+        display: block;
+        height: 22px;
+        margin-left: 8px;
+        animation: hand-move 1s infinite;
+    }
+}
+
+@keyframes hand-move {
+    0% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    100% { transform: translateX(-3px); }
+}
+
+button#back-to-top {
+    background-image: url("{$common}/res/icons/up.svg");
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 64px;
+    height: 64px;
+    position: sticky;
+    top: 32px;
+}

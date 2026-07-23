@@ -1,33 +1,30 @@
-<html lang="en">
+<html lang="{lang}">
 
     <head>
 
-        <title>proDuke</title>    
-        <meta name="description" content="proDuke is a Duke Nukem 3D port based on xDuke 19.7.1. You can play with proDuke on NukemNet. proDuke is made by HellFire and LARD.">
+        <title>proDuke</title>
+        <meta lang="en" name="description" content="proDuke is a Duke Nukem 3D port based on xDuke 19.7.1. You can play with proDuke on NukemNet. proDuke is made by HellFire and LARD.">
+        <meta lang="pt" name="description" content="proDuke é um port do Duke Nukem 3D baseado no xDuke 19.7.1. Você pode jogar com proDuke no NukemNet. proDuke é feito por HellFire e LARD.">
 
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">    
 
-        <link rel="shortcut icon" href="res/favicon.png" type="image/x-icon">
+        {alternates}
 
-        <link rel="stylesheet" href="lib/el-checkbox/el-checkbox.css">
+        <link rel="shortcut icon" href="{$common}/res/favicon.png" type="image/x-icon">
 
-        <link rel="stylesheet" href="src/styles/colors.css">
-        <link rel="stylesheet" href="src/styles/flex.css">
-        <link rel="stylesheet" href="src/styles/menu.css">
-        <link rel="stylesheet" href="src/styles/style.css">
-        <link rel="stylesheet" href="src/styles/terminator.css">
+        <link rel="stylesheet" href="{$common}/lib/el-checkbox/el-checkbox.css">
 
-        <link rel="stylesheet" href="index.css">
-        <script src="index.js"></script>
+        <link rel="stylesheet" href="{$common}/src/styles/colors.css">
+        <link rel="stylesheet" href="{$common}/src/styles/flex.css">
+        <link rel="stylesheet" href="{$common}/src/styles/menu.css">
+        <link rel="stylesheet" href="{$common}/src/styles/style.css">
+        <link rel="stylesheet" href="{$common}/src/styles/terminator.css">
 
-        <link rel="stylesheet" href="src/styles/inflames.css">
-        <script src="src/scripts/inflames.js"></script>
-        
-        <script src="src/scripts/home.js"></script>
-        <script src="src/scripts/features.js"></script>
-        <script src="src/scripts/mapping-guide.js"></script>
-        <script src="src/scripts/args-builder.js"></script>
-        <script src="src/scripts/changelog.js"></script>
+        <link rel="stylesheet" href="{$common}/src/styles/index.css">
+        <script src="{$common}/src/scripts/index.js"></script>
+
+        <link rel="stylesheet" href="{$common}/src/styles/inflames.css">
+        <script src="{$common}/src/scripts/inflames.js"></script>
 
     </head>
 
@@ -37,79 +34,60 @@
 
             <canvas id="inflames" height="64"></canvas>
 
-            <div class="flex-rows flex-gap-16 padding-16" style="position: absolute; top: 64px; left: calc(50% - 144px);">
-            <!-- <div class="flex-rows flex-gap-16 padding-16" style="padding: 64px;"> -->
+            <div id="site-header" class="flex-rows flex-gap-16 padding-16">
 
                 <div class="flex-justify-content-center">
-                    <img id="icon" src="res/icon.gif" alt="produke icon">                
+                    <img id="icon" src="{$common}/res/icon.gif" alt="produke icon">                
                 </div>
     
                 <div class="flex-justify-content-center">
-                    <img id="logo" src="res/logo.png" alt="produke logo">
+                    <img id="logo" src="{$common}/res/logo.png" alt="produke logo">
                 </div>      
                 
                 <div class="flex-justify-content-center">
-                    <img id="author" src="res/byhellfire.png" alt="produke author">
+                    <img id="author" src="{$common}/res/byhellfire.png" alt="produke author">
                 </div>
 
             </div>
 
-            <div class="flex-rows flex-gap-16 padding-16" style="position: absolute; top: 32px; right: 32px;">
+            <div id="inflames-controls" class="flex-rows flex-gap-16 padding-16" style="position: absolute; top: 32px; right: 32px;">
                 <button id="toggle-inflames">
-                    <img src="res/icons/pause.svg" id="pause-icon" alt="pause animation">
-                    <img src="res/icons/play.svg" id="play-icon" alt="play animation">                    
+                    <img src="{$common}/res/icons/pause.svg" id="pause-icon" alt="pause animation">
+                    <img src="{$common}/res/icons/play.svg" id="play-icon" alt="play animation">                    
                 </button>
             </div>
 
             <div class="flex-rows flex-gap-32">
 
                 <div id="navbar" class="flex-columns flex-grow flex-justify-content-center flex-gap-16">
-                    <a href="?p=home">
-                        <span lang="en">HOME</span>
-                        <span lang="pt">INICIO</span>
-                    </a>
+
+                    <a href="{domain}/en" lang="en">HOME</a>
+                    <a href="{domain}/pt" lang="pt">INÍCIO</a>
+
                     <span class="separator">|</span>
-                    <a href="?p=features">
-                        <span lang="en">FEATURES</span>
-                        <span lang="pt">FUNCIONALIDADES</span>
-                    </a>
-                    <span class="separator">|</span>
-                    <a href="?p=nukemnet-support">
-                        <span lang="en">NUKEMNET SUPPORT</span>
-                        <span lang="pt">SUPORTE AO NUKEMNET</span>
-                    </a> 
-                    <span class="separator">|</span>
-                    <a href="?p=mapping-guide">
-                        <span lang="en">MAPPING GUIDE</span>
-                        <span lang="pt">GUIA PARA CRIAR MAPAS</span>
-                    </a>
-                    <span class="separator">|</span>
-                    <a href="?p=args-builder">
-                        <span lang="en">ARGS BUILDER</span>
-                        <span lang="pt">CONSTRUTOR DE ARGUMENTOS</span>
-                    </a>
-                    <span class="separator">|</span>
-                    <a href="?p=changelog">
-                        <span lang="en">CHANGELOG</span>
-                        <span lang="pt">ATUALIZAÇÕES</span>
-                    </a>
-                    <span class="separator">|</span>
-                    <a href="?p=about">
-                        <span lang="en">ABOUT</span>
-                        <span lang="pt">SOBRE</span>
-                    </a>
-                    <div id="lang-flag"></div>
+
+                    {navbar}
+
+                </div>
+
+                <div class="flex-justify-content-center">
                     <select id="lang">
-                        <option value="en">EN</option>
-                        <option value="pt">PT</option>
+                        <option value="en">English</option>
+                        <option value="pt">Português</option>
                     </select>
+                    <img src="{$common}/res/icons/hand.svg" id="hand-icon" alt="hand">
                 </div>
         
-                <div id="container" class="flex-justify-content-center"></div>
+                <div id="container" class="flex-justify-content-center">
+                    <div class="flex-columns flex-gap-32">
+                        {menu}
+                        {content}                        
+                    </div>
+                </div>
 
                 <div class="flex-justify-content-center">
                     <a href="https://github.com/phcs93/produke">
-                        <img id="site-author" src="res/sitebylard.png" alt="site author">
+                        <img id="site-author" src="{$common}/res/sitebylard.png" alt="site author">
                     </a>                    
                 </div>
 

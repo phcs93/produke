@@ -1,0 +1,129 @@
+<title lang="en">Demo Player</title>
+<title lang="pt">Player de Demos</title>
+
+<span lang="en">A fully featured demo player has been implemented in-game and can be accessed via the main menu under the new <pre>PLAY DEMO</pre> option.</span>
+<span lang="pt">Um player de demos completo foi implementado no jogo e pode ser acessado pelo menu principal na nova opção <pre>PLAY DEMO</pre>.</span>
+
+<img src="{$common}/res/screenshots/demo-player-1.png" alt="play demo" class="screenshot">
+
+<span lang="en">The game will list all demos in proDuke's demo folder.</span>
+<span lang="pt">O jogo vai listar todas as demos da pasta de demos do proDuke.</span>
+
+<img src="{$common}/res/screenshots/demo-player-2.png" alt="demo list" class="screenshot">
+
+<span lang="en">You can filter demos by pressing <pre>INSERT</pre>. Press <pre>DELETE</pre> to clean filters and <pre>F5</pre> to refresh the listing.</span>
+<span lang="pt">Você pode filtrar as demos apertando <pre>INSERT</pre>. Pressione <pre>DELETE</pre> para limpar os filtros e <pre>F5</pre> para atualizar a listagem.</span>
+
+<img src="{$common}/res/screenshots/demo-player-3.png" alt="demo filter" class="screenshot">
+
+<span lang="en">After selecting a demo on the list, a summary will be shown with all details of the match.</span>
+<span lang="pt">Ao selecionar uma demo na lista, um sumário com todas as informações da partida será exibido.</span>
+
+<img src="{$common}/res/screenshots/demo-player-4.png" alt="demo summary" class="screenshot">
+
+<span lang="en">After selecting playback, the demo will start as paused. From here, a player will be shown on top of the screen with the current status of the demo playback.</span>
+<span lang="pt">Ao selecionar playback, a demo vai inicar pausada. Daqui em diante, um player será exibido no topo da tela mostrando o estado atual da reprodução da demo.</span>
+
+<img src="{$common}/res/screenshots/demo-player-5.png" alt="demo player" class="screenshot">
+
+<span lang="en">It's possible to play, pause, advance and return one tic, speed up and speed down the playback and even jump to a specific tic. <br>There is a new menu at <pre>Options > Recording Setup > Playback Options > Demo Player Hotkeys</pre> where you can set the demo playback controls keybindings. When the player is hidden, an icon will be shown at the top right corner indicating the current playback state.</span>
+<span lang="pt">É possivel dar play, pausar, avançar e voltar um tic, aumentar e diminuir a velocidade de reprodução e até pular para um tic especifico. <br>Existe um novo menu em <pre>Options > Recording Setup > Playback Options > Demo Player Hotkeys</pre> onde você pode configurar as teclas para controle do player de demo. Ao esconder o player, um ícone mostrando o estado atual será exibido no canto superior direto.</span>
+
+<img src="{$common}/res/screenshots/demo-player-6.png" alt="demo keybindings" class="screenshot">
+
+<span lang="en">Here is what each icon means and their default key:</span>
+<span lang="pt">Aqui está o que cada ícone significa e a tecla padrão de cada função:</span>
+
+<div class="flex-columns flex-gap-32 flex-justify-content-center">
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/demo-player-play.png" alt="demo player play" title="demo player play">        
+        <label class="badge">
+            <span lang="en">PLAYING</span>
+            <span lang="pt">RODANDO</span>
+        </label>
+        <label class="badge">
+            <span lang="en">SPACE</span>
+            <span lang="pt">ESPAÇO</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/demo-player-pause.png" alt="demo player paused" title="demo player paused">
+        <label class="badge">
+            <span lang="en">PAUSED</span>
+            <span lang="pt">PAUSADO</span>
+        </label>
+        <label class="badge">
+            <span lang="en">SPACE</span>
+            <span lang="pt">ESPAÇO</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/demo-player-stop.png" alt="demo player stopped" title="demo player stopped">
+        <label class="badge">
+            <span lang="en">STOPPED (START/END)</span>
+            <span lang="pt">PARADO (INÍCIO/FIM)</span>
+        </label>
+        <label class="badge">
+            <span lang="en">HOME / END</span>
+            <span lang="pt">HOME / END</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px; margin-top: 15px;" class="sprite" src="{$common}/res/sprites/demo-player-fast-forward.png" alt="demo player fast forward" title="demo player fast forward">
+        <label class="badge">
+            <span lang="en">FAST FORWARD</span>
+            <span lang="pt">AVANÇO RÁPIDO</span>
+        </label>
+        <label class="badge">
+            <span lang="en">PAGE UP / PAGE DOWN</span>
+            <span lang="pt">PAGE UP / PAGE DOWN</span>
+        </label>
+    </div>
+</div>
+
+<div class="flex-columns flex-gap-32 flex-justify-content-center">
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/demo-player-step-forward.png" alt="demo step foward" title="demo step foward">        
+        <label class="badge">
+            <span lang="en">ADVANCE ONE TIC <br>(PAUSED)</span>
+            <span lang="pt">AVANÇAR UM TIC <br>(PAUSADO)</span>
+        </label>
+        <label class="badge">
+            <span lang="en">RIGHT ARROW KEY</span>
+            <span lang="pt">SETA PARA DIREITA</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/demo-player-step-back.png" alt="demo step back" title="demo step back">        
+        <label class="badge">
+            <span lang="en">RETURN ONE TIC <br>(PAUSED)</span>
+            <span lang="pt">VOLTAR UM TIC <br>(PAUSADO)</span>
+        </label>
+        <label class="badge">
+            <span lang="en">LEFT ARROW KEY</span>
+            <span lang="pt">SETA PARA ESQUERDA</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px; margin-top: 15px;" class="sprite" src="{$common}/res/sprites/demo-player-step-forward-playing.png" alt="demo step foward" title="demo step foward">        
+        <label class="badge">
+            <span lang="en">ADVANCE TICS <br>(PLAYING)</span>
+            <span lang="pt">AVANÇAR TICS <br>(RODANDO)</span>
+        </label>
+        <label class="badge">
+            <span lang="en">RIGHT ARROW KEY</span>
+            <span lang="pt">SETA PARA DIREITA</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px; margin-top: 15px;" class="sprite" src="{$common}/res/sprites/demo-player-step-back-playing.png" alt="demo step back" title="demo step back">        
+        <label class="badge">
+            <span lang="en">RETURN TICS <br>(PLAYING)</span>
+            <span lang="pt">VOLTAR TICS <br>(RODANDO)</span>
+        </label>
+        <label class="badge">
+            <span lang="en">LEFT ARROW KEY</span>
+            <span lang="pt">SETA PARA ESQUERDA</span>
+        </label>
+    </div>
+</div>

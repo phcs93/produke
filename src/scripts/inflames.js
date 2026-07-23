@@ -41,7 +41,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     `;
 
-    const fragmentShaderSource = await (await fetch(`res/shaders/inflames.glsl`)).text();
+    let fragmentShaderSource = await (await fetch(`{$common}/res/shaders/inflames.glsl`)).text();
+
+    if (window.location.href.indexOf("terminator") > -1) {
+        fragmentShaderSource = fragmentShaderSource.replace(
+            "vec3 fire = 1.25 * f * vec3(0.733, 0.635, 0.278);",
+            "vec3 fire = 1.25 * f * vec3(0.733, 0.0, 0.0);"
+            //"vec3 fire = 1.5*vec3(f, fff, fff*fff);",
+        );
+        fragmentShaderSource = fragmentShaderSource.replace(
+            "sparks = sparkLife * sparksGray * vec3(0.733, 0.635, 0.278);",
+            "sparks = sparkLife * sparksGray * vec3(0.733, 0.0, 0.0);"
+        );        
+    }
 
     function createShader(type, source) {
         const shader = gl.createShader(type);

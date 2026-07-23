@@ -160,15 +160,16 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[1.3D] Double Kick": 16,
         "[1.3D] No Expander": 32,
         "Fix Tripbombs On Slopes": 64,
-        "[DOS] Map Start Bugs": 128,
+        "[DOS] Classic Map Start Behaviors": 128,
         "[DOS] FFire excludes self": 256,
         "[DOS] Can Respawn Drowning": 512,
-        "[DOS] Can Respawn Shrunked": 1024,
+        "[DOS] Invalid Shrink States": 1024,
         "[DOS] Bad Shrinker Hit Detection": 2048,
         "[DOS] Bad Expander Radius Owner": 4096,
-        "[DOS] Alt-Weapon Switching Bugs": 8192,
+        "[DOS] Weapon Switching Bugs": 8192,
         "[DOS] Dead player swaping Bugs": 16384,
-        "[DOS] Useless Nightvision": 32768
+        "[DOS] Useless Nightvision": 32768,
+        "[DOS] Bad Hit Detection on Auto-aimed RPGs": 65536
     };
 
     // weapflags definition
@@ -263,6 +264,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         ORIGBHV_WEAPON_SWITCHING_BUGS:       1 << 13, // 8192
         ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:    1 << 14, // 16384
         ORIGBHV_BAD_NIGHTVISION_GLOW:        1 << 15, // 32768
+        ORIGBHV_BAD_AA_RPG_HIT_DETECTION:    1 << 16, // 65536
     };
 
     // weapflags definitions
@@ -663,8 +665,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.name = "proDuke";
     gamedefs.games.duke3d.executables.produke.files.main.path = "produke.exe";
     gamedefs.games.duke3d.executables.produke.networking = {
-        modes: ['p2p', 'cs'], 
-        ipv6:true
+        modes: ['p2p'], 
+        ipv6: true
     };
 
     // remove arguments that have been moved to netflags
@@ -860,21 +862,21 @@ module.exports = function({deepClone, utils}, gamedefs) {
     };
 
     // master/slave
-    // gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
-    //     modeSupport: ["multiplayer"],
-    //     type: "boolean",
-    //     label: "Master/Slave mode (/i0)",
-    //     optional: false,
-    //     value: "/i0",
-    //     for: "host-only-private"
-    // };
     gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
         modeSupport: ["multiplayer"],
-        type: "static",
-        addIf: c => c.GameRoom?.Net?.Mode == 'cs',        
-        value: c => ["-net", "-p" + c?.GameRoom?.MyPort, ...utils.sortedPlayersIpsAndPorts(c, '-n1')],
-        for:"private"
+        type: "boolean",
+        label: "Master/Slave mode (/i0 + -master)",
+        optional: false,
+        value: "/i0",
+        for: "host-only-private"
     };
+    // gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
+    //     modeSupport: ["multiplayer"],
+    //     type: "static",
+    //     addIf: c => c.GameRoom?.Net?.Mode == 'cs',        
+    //     value: c => ["-net", "-p" + c?.GameRoom?.MyPort, ...utils.sortedPlayersIpsAndPorts(c, '-n1')],
+    //     for:"private"
+    // };
 
     // netflags presets input
     gamedefs.games.duke3d.executables.produke.parameters.presets = {

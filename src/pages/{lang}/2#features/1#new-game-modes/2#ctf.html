@@ -1,0 +1,120 @@
+<title lang="en">Catch The Flag (CTF)</title>
+<title lang="pt">Capture A Bandeira (CTF)</title>
+
+<span lang="en">In this mode, the team will score a point when one of its players brings to their base the captured enemy flag. The place to deliver a captured flag is the initial spawn position of your team's flag. If your flag is not in its initial position (it was captured), it won't be possible to "deliver" the enemy flag to score a point. In that case, it's necessary to recover your team's flag first. Killing other players does not add or subtract points from the team.</span>
+<span lang="pt">Neste modo, o time ganhará um ponto quando um jogador desse time trazer para a base dele a bandeira do inimigo capturada. O local de entrega da bandeira capturada é a posição inicial de nascimento da bandeira do seu time. Se a sua bandeira não estiver na posição inicial (foi capturada), não será possível "entregar" a bandeira do inimigo para marcar um ponto. Nesse caso, será necessário recuperar a bandeira do seu time primeiro. Matar outros jogadores não soma nem subtrai pontos do time.</span>
+
+<span lang="en">Each team has it's own flag:</span>
+<span lang="pt">Cada time tem sua própria bandeira:</span>
+
+<div class="flex-columns flex-gap-32 flex-justify-content-center">
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/flag-team-1.png" alt="blue team - num 1 - pal 9" title="blue team - num 1 - pal 9">
+        <label class="badge">
+            <span lang="en">BLUE FLAG</span>
+            <span lang="pt">BANDEIRA AZUL</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/flag-team-2.png" alt="red team - num 2 - pal 10" title="red team - num 2 - pal 10">
+        <label class="badge">
+            <span lang="en">RED FLAG</span>
+            <span lang="pt">BANDEIRA VERMELHA</span>
+        </label>                                
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/flag-team-3.png" alt="green team - num 3 - pal 11" title="green team - num 3 - pal 11">
+        <label class="badge">
+            <span lang="en">GREEN FLAG</span>
+            <span lang="pt">BANDEIRA VERDE</span>
+        </label>     
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/flag-team-4.png" alt="brown team - num 4 - pal 15" title="brown team - num 4 - pal 15">
+        <label class="badge">
+            <span lang="en">BROWN FLAG</span>
+            <span lang="pt">BANDEIRA MARROM</span>
+        </label>                                
+    </div>
+</div>
+
+<span lang="en">Arrows pointing to each flag are displayed in the bottom right corner of the screen.</span>
+<span lang="pt">Setas que apontam para cada bandeira são exibidas no canto inferior direito da tela.</span>
+
+<img class="screenshot" src="{$common}/res/screenshots/flag-arrows.png" alt="flag arrows">
+
+<span lang="en">If the netflag <pre>Outline on Flag</pre> is enabled, the game will display arrows at the corners of the screen pointing to the flag when it gets out of view. This can be disabled individually at the menu <pre>Options > Game Options > Offscreen Markers</pre>.</span>
+<span lang="pt">Se a netflag <pre>Outline on Flag</pre> estiver ativada, o jogo exibirá setas nos cantos da tela apontando para a bandeira quando ela sair de vista. Isso pode ser desabilitado individualmente no menu <pre>Opções > Opções do Jogo > Marcadores Fora da Tela</pre>.</span>
+<img class="screenshot" src="{$common}/res/screenshots/offscreen-markers.png" alt="offscreen markers">
+
+<span lang="en">If the flag is being carried by someone that isn't yourself, a hand icon with that player's color will be displayed on top of the flag icon.</span>
+<span lang="pt">Se a bandeira estiver sendo carregada por alguém que não seja você, um ícone de mão com a cor desse jogador será exibido em cima do ícone da bandeira.</span>
+
+<div class="flex-columns flex-gap-32 flex-justify-content-center">
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/hand-team-1.png" alt="taken by blue team - pal 1" title="taken by blue team - pal 1">
+        <label class="badge">
+            <span lang="en">TAKEN BY BLUE TEAM</span>
+            <span lang="pt">PEGA PELO TIME AZUL</span>
+        </label>
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/hand-team-2.png" alt="taken by red team - pal 2" title="taken by red team - pal 2">
+        <label class="badge">
+            <span lang="en">TAKEN BY RED TEAM</span>
+            <span lang="pt">PEGA PELO TIME VERMELHO</span>
+        </label>                                
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/hand-team-3.png" alt="taken by green team - pal 8" title="taken by green team - pal 8">
+        <label class="badge">
+            <span lang="en">TAKEN BY GREEN TEAM</span>
+            <span lang="pt">PEGA PELO TIME VERDE</span>
+        </label>     
+    </div>
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/hand-team-4.png" alt="taken by brown team - pal 5" title="taken by brown team - pal 5">
+        <label class="badge">
+            <span lang="en">TAKEN BY BROWN TEAM</span>
+            <span lang="pt">PEGA PELO TIME MARROM</span>
+        </label>                                
+    </div>
+</div>
+
+<span lang="en">If the flag is being carried by yourself, a duke face icon will be displayed.</span>
+<span lang="pt">Se a bandeira estiver sendo carregada por você mesmo, um ícone do rosto do duke será exibido.</span>
+
+<div class="flex-columns flex-gap-32 flex-justify-content-center">
+    <div class="flex-rows flex-gap-16 flex-align-items-center">
+        <img style="width: 40px;" class="sprite" src="{$common}/res/sprites/duke-face-icon.png" alt="duke face icon"> 
+        <label class="badge">
+            <span lang="en">TAKEN BY YOURSELF</span>
+            <span lang="pt">PEGA POR VOCÊ MESMO</span>
+        </label>
+    </div>
+</div>
+
+<span lang="en">The flag is dropped on the floor when the player carrying it dies or if the player is shrinked. By default, the flag returns to its original position when an allied player touches it or when it stays dropped on the ground for 30 seconds. If the flag is dropped on a damaging floor (lava/acid/rail/purple lava), the period is reduced to a mere 5 seconds. That timer will be displayed on top of the flag icon.</span>
+<span lang="pt">A bandeira é derrubada no chão quando o jogador que a estava a carregando morrer ou for encolhido. Por padrão, a bandeira retornará para a posição inicial quando um jogador aliado encostar nela ou quando permanecer derrubada no chão por 30 segundos. Se a bandeira for derrubada em um chão que causa dano (lava/ácido/trilhos/lava roxa), esse tempo é reduzido para meros 5 segundos. Esse tempo será exibido em cima do ícone da bandeira.</span>
+
+<img class="screenshot" src="{$common}/res/screenshots/flag-counter.png" alt="flag counter">
+
+<span lang="en">Optionally, by enabling the netflag <pre>Netplay Options > NetFlags > [CTF] Flag Returns Instantly</pre> the flag will return instantly after being dropped.</span>
+<span lang="pt">Opcionalmente, ao habilitar a netflag <pre>Netplay Options > NetFlags > [CTF] Flag Returns Instantly</pre> a bandeira retornará instantaneamente ao ser derrubada.</span>
+
+<span lang="en">It's also possible to set the flag to auto detonate after 30 seconds of being carried (which will kill the carrying player, forcing the flag to be dropped), just like in Shadow Warrior. To do that, enable the netflag <pre>Netplay Options > NetFlags > [CTF] Flag Detonation Timer</pre>.</span>
+<span lang="pt">Também é possível setar a bandeira para se auto destruir após estar sendo carregada por 30 segundos (matando o jogador que está carregando-a, forçando a bandeira a ser derrubada), assim como no Shadow Warrior. Para fazer isso, basta habilitar a netflag <pre>Netplay Options > NetFlags > [CTF] Flag Detonation Timer</pre>.</span>
+
+<span lang="en">Deppending on the map balance, it may also be interesting to restrict the usage of steroids and/or jetpack by the player carrying the flag. You can set these options by enabling the netflags <pre>Netplay Options > NetFlags > [CTF] No Steroids if with Flag</pre> and <pre>Netplay Options > NetFlags > [CTF] No Jetpack if with Flag</pre>, respectively.</span>
+<span lang="pt">A depender do balanceamento do mapa, também pode ser interessante restringir o uso de steroids e/ou jetpack pelo jogador carregando a bandeira. Você pode setar essas opções habilitando as netflags <pre>Netplay Options > NetFlags > [CTF] No Steroids if with Flag</pre> e <pre>Netplay Options > NetFlags > [CTF] No Jetpack if with Flag</pre>, respectivamente.</span>
+
+<!-- 
+<span lang="en">When a player picks/drops/returns or delivers a flag, a sound is played and a message is displayed for everyone.</span>
+<span lang="pt">Quando um jogador pega/derruba/retorna ou entrega uma bandeira, um som é tocado e uma mensagem é exibida para todos.</span>
+
+<img class="screenshot" src="res/screenshots/flag-taken.png" alt="flag taken">
+<img class="screenshot" src="res/screenshots/flag-dropped.png" alt="flag dropped">
+<img class="screenshot" src="res/screenshots/flag-returned.png" alt="flag returned">
+<img class="screenshot" src="res/screenshots/flag-returned-automatically.png" alt="flag returned automatically">
+<img class="screenshot" src="res/screenshots/flag-delivered.png" alt="flag delivered">
+-->

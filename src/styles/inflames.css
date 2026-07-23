@@ -1,30 +1,23 @@
 button#toggle-inflames {
-    background-color: transparent;
+    background: transparent;
     border: none;
     width: 64px;
     height: 64px;
-    transition: all 1s ease-in-out;
+    cursor: pointer;
+
     & > img {
-        transition: all 0.2s ease-in-out;   
-        opacity: 0;
         display: none;
     }
 }
 
-canvas#inflames:hover ~ div > button#toggle-inflames[data-inflames="true"] > img#pause-icon,
-canvas#inflames ~ div:hover > button#toggle-inflames[data-inflames="true"] > img#pause-icon,
-canvas#inflames ~ div > button#toggle-inflames[data-inflames="true"]:hover > img#pause-icon,
-canvas#inflames ~ div > button#toggle-inflames[data-inflames="true"] > img#pause-icon:hover
-{
-    opacity: 1;
+#inflames:hover ~ #inflames-controls > #toggle-inflames[data-inflames="true"] > #pause-icon,
+#site-header:hover ~ #inflames-controls > #toggle-inflames[data-inflames="true"] > #pause-icon,
+#inflames-controls:hover > #toggle-inflames[data-inflames="true"] > #pause-icon {
     display: block;
 }
 
-canvas#inflames:hover ~ div > button#toggle-inflames[data-inflames="false"] > img#play-icon,
-canvas#inflames ~ div:hover > button#toggle-inflames[data-inflames="false"] > img#play-icon,
-canvas#inflames ~ div > button#toggle-inflames[data-inflames="false"]:hover > img#play-icon,
-canvas#inflames ~ div > button#toggle-inflames[data-inflames="false"] > img#play-icon:hover
-{
-    opacity: 1;
+#inflames:hover ~ #inflames-controls > #toggle-inflames[data-inflames="false"] > #play-icon,
+#site-header:hover ~ #inflames-controls > #toggle-inflames[data-inflames="false"] > #play-icon,
+#inflames-controls:hover > #toggle-inflames[data-inflames="false"] > #play-icon {
     display: block;
 }

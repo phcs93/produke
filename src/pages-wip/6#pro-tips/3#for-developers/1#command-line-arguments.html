@@ -1,0 +1,300 @@
+<title lang="en">Command Line Arguments</title>
+<title lang="pt">Argumentos de Linha de Comando</title>
+
+<div class="arg" data-arg="/c#">
+    <span lang="en">
+        sets the game mode, where # is the game mode<br>
+        1 = Dukematch (DM)<br>
+        2 = COOP<br>
+        3 = Team Dukematch (TDM)<br>
+        4 = Catch The Flag (CTF)<br>
+        5 = 1-Flag CTF (1FCTF)<br>
+        6 = ATK/DEF CTF (ADCTF)<br>
+        7 = Survival<br>
+        8 = Last Man Standing (LMS)<br>
+        9 = Team Last Man Standing (TLMS)<br>
+        10 = Terminator<br>
+    </span>
+    <span lang="pt">
+        define o modo de jogo, onde # é o modo de jogo<br>
+        1 = Dukematch (DM)<br>
+        2 = COOP<br>
+        3 = Team Dukematch (TDM)<br>
+        4 = Catch The Flag (CTF)<br>
+        5 = 1-Flag CTF (1FCTF)<br>
+        6 = ATK/DEF CTF (ADCTF)<br>
+        7 = Survival<br>
+        8 = Last Man Standing (LMS)<br>
+        9 = Team Last Man Standing (TLMS)<br>
+        10 = Terminator<br>
+    </span>
+</div>
+<div class="arg" data-arg="/y##">
+    <span lang="en">sets the score limit, where ## is the score ammount [1-99]</span>
+    <span lang="pt">define o limite de pontuação, onde ## é o numero de pontos [1-99]</span>
+</div>
+<div class="arg" data-arg="/k###">
+    <span lang="en">sets the time limit, where ### is a number in minutes, max of 240 (4 hours)</span>
+    <span lang="pt">define o limite de tempo, onde ### é um numero em minutos, maximo de 240 (4 horas)</span>
+</div>
+<div class="arg" data-arg="/e#">
+    <span lang="en">sets the extra lives, where # is the extra lives ammount [0-9]</span>
+    <span lang="pt">define a quantidade de vidas extras, onde # é o número de vidas extras [0-9]</span>
+</div>
+<div class="arg" data-arg="/netflagsA#">
+    <span>
+        <span lang="en">enables and disables various games features, where # is a bitfield, each bit corresponds to a specific feature, you have to sum each bit to combine them:</span>
+        <span lang="pt">habilita e desabilita varios recursos do jogo, onde # é um bitfield, cada bit corresponde a um recurso, você precisa somar os valores para combina-los:</span><br>
+        <br>
+        1 = <span lang="en">Weapons Pickable Once</span><span lang="pt">Armas Pegáveis Apenas Uma Vez</span><br>
+        2 = <span lang="en">Respawn Monsters</span><span lang="pt">Monstros Renascem</span><br>
+        4 = <span lang="en">Respawn Items</span><span lang="pt">Itens Reaparecem</span><br>
+        8 = <span lang="en">Respawn Inventory</span><span lang="pt">Inventário Reaparece</span><br>
+        16 = <span lang="en">Markers</span><span lang="pt">Marcadores</span><br>
+        32 = <span lang="en">Don't Spawn Monsters</span><span lang="pt">Sem Monstros no Mapa</span><br>
+        64 = <span lang="en">Don't Spawn Keycards</span><span lang="pt">Sem Cartões no Mapa</span><br>
+        128 = <span lang="en">Spawn MP Only Switches</span><span lang="pt">Habilitar Switches Exclusivos de MP</span><br>
+        256 = <span lang="en">Spawn MP Only Items</span><span lang="pt">Habilitar Itens Exclusivos de MP</span><br>
+        512 = <span lang="en">[COOP/TEAMS] Friendly Fire</span><span lang="pt">[COOP/TEAMS] Fogo Amigo</span><br>        
+        1024 = <span lang="en">[COOP/TEAMS] Autoaim On Allies</span><span lang="pt">[COOP/TEAMS] Mira Automática nos Aliados</span><br>
+        2048 = <span lang="en">[COOP/TEAMS] Global Ally Sounds</span><span lang="pt">[COOP/TEAMS] Sons Globais de Aliados</span><br>
+        4096 = <span lang="en">[COOP/TEAMS] Disable Spycam/Mapview</span><span lang="pt">[COOP/TEAMS] Desativar Spycam/Visão de mapa</span><br>
+        8192 = <span lang="en">Revealed Automap</span><span lang="pt">Mapa Revelado</span><br>
+        16384 = <span lang="en">No Map Exit</span><span lang="pt">Sem Saída do Mapa</span><br>
+        32768 = <span lang="en">No Target Names</span><span lang="pt">Sem Nomes de Alvos</span><br>
+        65536 = <span lang="en">Weapon Always Drops On Kill</span><span lang="pt">Sempre Derrubar Arma ao Morrer</span><br>
+        131072 = <span lang="en">Force Respawn</span><span lang="pt">Forçar Renascimento</span><br>
+        262144 = <span lang="en">[PVP] Respawn Farthest</span><span lang="pt">[PVP] Renascer Mais Distante</span><br>
+        524288 = <span lang="en">[TEAMS] Mixed Team Spawn Points</span><span lang="pt">[TEAMS] Pontos de Renascimento de Time Misturados</span><br>
+        1048576 = <span lang="en">Damage Numbers</span><span lang="pt">Números de Dano</span><br>
+        2097152 = <span lang="en">[COOP/TEAMS/TERM] Overhead Info</span><span lang="pt">[COOP/TEAMS/TERM] Informações Sobre a Cabeça</span><br>
+        4194304 = <span lang="en">[COOP/TEAMS/TERM] Outlines</span><span lang="pt">[COOP/TEAMS/TERM] Contornos</span><br>
+        8388608 = <span lang="en">[CTF] Outline On Flags</span><span lang="pt">[CTF] Contorno nas Bandeiras</span><br>
+        16777216 = <span lang="en">[CTF] Flag Return Instantly</span><span lang="pt">[CTF] Bandeira Retorna Instantaneamente</span><br>
+        33554432 = <span lang="en">[CTF] Flag Auto Detonate</span><span lang="pt">[CTF] Bandeira se Autodestrói</span><br>
+        67108864 = <span lang="en">[T/LMS] Restricted Spycam</span><span lang="pt">[T/LMS] Spycam Restrita</span><br>
+        134217728 = <span lang="en">[T/LMS] Restricted Chat</span><span lang="pt">[T/LMS] Chat Restrito</span><br>
+        268435456 = <span lang="en">[COOP] Keycards Are Shared</span><span lang="pt">[COOP] Cartões Compartilhados</span><br>
+        536870912 = <span lang="en">[SURV/TLMS] Lives Are Shared</span><span lang="pt">[SURV/TLMS] Vidas Compartilhadas</span><br>
+        <br>
+        <span lang="en">for example: if you want to play with "No Map Exit" and "Force Respawn", you use the argument -netflagsA24576 (8192 + 16384)</span>
+        <span lang="pt">por exemplo: se você quiser jogar com "Sem Saída Do Mapa" e "Forçar Renascimento", você deve utilizar o argumento -netflagsA24576 (8192 + 16384)</span>
+    </span>
+</div>
+<div class="arg" data-arg="/netflagsB#">
+    <span>
+        <span lang="en">enables and disables various games features, where # is a bitfield, each bit corresponds to a specific feature, you have to sum each bit to combine them:</span>
+        <span lang="pt">habilita e desabilita varios recursos do jogo, onde # é um bitfield, cada bit corresponde a um recurso, você precisa somar os valores para combina-los:</span><br>
+        <br>
+        1 = <span lang="en">[TEAMS] Colored Tripbombs</span><span lang="pt">[TEAMS] Tripbombs Coloridas</span><br>
+        2 = <span lang="en">[CTF] No Steroids If With Flag</span><span lang="pt">[CTF] Sem Steroids Com Bandeira</span><br>
+        4 = <span lang="en">[CTF] No Jetpack If With Flag</span><span lang="pt">[CTF] Sem Jetpack Com Bandeira</span><br>
+        8 = <span lang="en">[TERM] No Infinite Jetpack</span><span lang="pt">[TERM] Sem Jetpack Infinito</span><br>
+        16 = <span lang="en">[TERM] No Shrinker Immunity</span><span lang="pt">[TERM] Sem Imunidade à Shrinker</span><br>
+        32 = <span lang="en">[TERM] No Freezer Weakness</span><span lang="pt">[TERM] Sem Fraqueza à Freezer</span><br>
+        <br>
+        <span lang="en">for example: if you want to play with "[TEAMS] Colored Tripbombs" and "[TERM] No Infinite Jetpack", you use the argument -netflagsB9 (1 + 8)</span>
+        <span lang="pt">por exemplo: se você quiser jogar com "[TEAMS] Tripbombs Coloridas" e "[TERM] Sem Jetpack Infinito", você deve utilizar o argumento -netflagsB9 (1 + 8)</span>
+    </span>
+</div>
+<div class="arg" data-arg="/netflagsC#">
+    <span>
+        <span lang="en">enables and disables various games features, where # is a bitfield, each bit corresponds to a specific feature, you have to sum each bit to combine them:</span>
+        <span lang="pt">habilita e desabilita varios recursos do jogo, onde # é um bitfield, cada bit corresponde a um recurso, você precisa somar os valores para combina-los:</span><br>
+        <br>
+        1 = <span lang="en">Arsenal Rebalance</span><span lang="pt">Rebalanceamento Do Arsenal</span><br>
+        2 = <span lang="en">Laser Invisible W/O Nightvision</span><span lang="pt">Laser Invisivel Sem Nightvision</span><br>
+        4 = <span lang="en">Freezer Can't Hurt Owner</span><span lang="pt">Freezer Não Danifica O Dono</span><br>
+        8 = <span lang="en">Destructable Cameras</span><span lang="pt">Cameras Destrutíveis</span><br>
+        16 = <span lang="en">[1.3D] Double Kick</span><span lang="pt">[1.3D] Chute Duplo</span><br>
+        32 = <span lang="en">[1.3D] No Expander</span><span lang="pt">[1.3D] Sem Expander</span><br>
+        64 = <span lang="en">Fix Tripbombs On Slopes</span><span lang="pt">Corrigir Tripbombs Em Rampas</span><br>
+        128 = <span lang="en">[DOS] ORIGINAL MAP START BEHAVIORS</span><span lang="pt">[DOS] Bugs de Início de Mapa</span><br>
+        256 = <span lang="en">[DOS] FFire excludes self</span><span lang="pt">[DOS] Fogo Amigo desconsidera a si mesmo</span><br>
+        512 = <span lang="en">[DOS] Can Respawn Drowning</span><span lang="pt">[DOS] Pode Renascer Afogado</span><br>
+        1024 = <span lang="en">[DOS] Invalid Shrink States</span><span lang="pt">[DOS] Estados Inválidos de Encolhimento</span><br>
+        2048 = <span lang="en">[DOS] Bad Shrinker Hit Detection</span><span lang="pt">[DOS] Detecção de Hit da Shrinker com Erro</span><br>
+        4096 = <span lang="en">[DOS] Bad Grow Explosion Owner</span><span lang="pt">[DOS] Explosao da Expander com Erro no Dono</span><br>
+        8192 = <span lang="en">[DOS] Weapon Switching Bugs</span><span lang="pt">[DOS] Bugs de Troca de Arma</span><br>
+        16384 = <span lang="en">[DOS] Dead player swaping bugs</span><span lang="pt">[DOS] Bugs de Troca de Player Morto</span><br>
+        32768 = <span lang="en">[DOS] Useless Nightvision</span><span lang="pt">[DOS] Nightvision Inútil</span><br>
+        65536 = <span lang="en">[DOS] Bad Hit Detection on Auto-aimed RPGs</span><span lang="pt">[DOS] Detecção Bugada de RPGs Automiradas</span><br>
+        <br>
+        <span lang="en">for example: if you want to play with "Laser Invisible W/O Nightvision" and "[1.3D] Double Kick", you use the argument -netflagsC18 (2 + 16)</span>
+        <span lang="pt">por exemplo: se você quiser jogar com "Laser Invisivel Sem Nightvision" e "[1.3D] Chute Duplo", você deve utilizar o argumento -netflagsC18 (2 + 16)</span>
+    </span>
+</div>
+<div class="arg" data-arg="/weapflags####">
+    <span>
+        <span lang="en">starts the match with selected weapons, where #### is a bitfield, each bit corresponds to a weapon, you have to sum each bit to combine them:</span>
+        <span lang="pt">inicia a partida com as armas selecionadas, onde #### é um bitfield, cada bit corresponde a uma arma, você deve somar cada bit para combina-los:</span><br>
+        <br>
+        1 = Pistol<br>
+        2 = Shotgun<br>
+        4 = Chaingun<br>
+        8 = RPG<br>
+        16 = Pipebomb<br>
+        32 = Shrinker<br>
+        64 = Devastator<br>
+        128 = Tripbomb<br>
+        256 = Freezer<br>
+        512 = + Full Ammo<br>
+        1024 = Expander<br>
+        <br>
+        <span lang="en">for example: if you want to start with Shotgun and RPG, you use the argument -weapflags10 (2 + 8)</span>
+        <span lang="pt">por exemplo: se você quiser iniciar com a Shotgun e com a RPG, use o argumento -weapflags10 (2 + 8)</span>
+    </span>
+</div>
+<div class="arg" data-arg="/invflags####">
+    <span>
+        <span lang="en">starts the match with selected items, where #### is a bitfield, each bit corresponds to an item, you have to sum each bit to combine them:</span>
+        <span lang="pt">inicia a partida com os items selecionadas, onde #### é um bitfield, cada bit corresponde a um item, você deve somar cada bit para combina-los:</span><br>
+        <br>
+        1 = Key Cards<br>
+        2 = Medkit<br>
+        4 = Steroids<br>
+        8 = Holoduke<br>
+        16 = Jetpack<br>
+        32 = Nightvision<br>
+        64 = Scuba Gear<br>
+        128 = Boots<br>
+        256 = Armor<br>
+        512 = Atomic Health 1<br>
+        1024 = Atomic Health 2<br>
+        <br>
+        <span lang="en">for example: if you want to start with Steroids and 150 health, you use the argument -invflags516 (4 + 512)</span>
+        <span lang="pt">por exemplo: se você quiser iniciar com Steroids e com 150 de vida, use o argumento -invflags516 (4 + 512)</span>
+    </span>
+</div>
+<div class="arg" data-arg="/teampicker">
+    <span lang="en">Displays a team picker in the terminal before the game starts.</span>
+    <span lang="pt">Exibe um seletor de times no terminal antes do jogo começar.</span>
+</div>
+<div class="arg" data-arg="/lockoptions">
+    <span lang="en">Lock players from changing the netplay options. Only one player can have this argument set.</span>
+    <span lang="pt">Trava os jogadores de trocaram as netplay options. Apenas um jogador pode utilizar esse argumento.</span>
+</div>
+<div class="arg" data-arg="/lockplayers">
+    <span lang="en">Lock players from changing their name, color and team. Only one player can have this argument set.</span>
+    <span lang="pt">Trava os jogadores de trocarem seus nomes, cor e time. Apenas um jogador pode utilizar esse argumento.</span>
+</div>
+<div class="arg" data-arg="/disableautoaim">
+    <span lang="en">Disables the autoaim, all players need to vote yes for the game to start.</span>
+    <span lang="pt">Desabilita o autoaim, todos os jogadores precisam votar sim para o jogo iniciar.</span>
+</div>
+<div class="arg" data-arg="/exploitmode">
+    <span lang="en">Enables the exploit mode, all players need to vote yes for the game to start.</span>
+    <span lang="pt">Habilita o pato mode, todos os jogadores precisam votar sim para o jogo iniciar.</span>
+</div>
+<div class="arg" data-arg="/allowmods">
+    <span lang="en">Enables the modding mode, all players need to vote yes for the game to start.</span>
+    <span lang="pt">Habilita o modo de modificações, todos os jogadores precisam votar sim para o jogo iniciar.</span>
+</div>
+<div class="arg" data-arg="-color #">
+    <span lang="en">Sets your color, where # is a color index [1-16]</span>
+    <span lang="pt">Define sua cor, onde # é o indice de uma cor [1-16]</span>
+</div>
+<div class="arg" data-arg="-team #">
+    <span lang="en">Sets your team, where # is team index [1-4]</span>
+    <span lang="pt">Define seu time, onde # é o indice de um time [1-4]</span>
+</div>
+<div class="arg" data-arg="-master">
+    <span lang="en">Forces player to be player 0 (usefull for /i0)</span>
+    <span lang="pt">Força o jogador ser o jogador 0 (usefull for /i0)</span>
+</div>
+<div class="arg" data-arg="-video # -demo # -camera #">
+    <span lang="en">Records a vídeo of the selected demo.</span>
+    <span lang="pt">Grava um vídeo da demo selecionada.</span>
+</div>
+<h3>
+    <span lang="en">Default game arguments</span>
+    <span lang="pt">Argumentos padrão do jogo</span>
+</h3>
+<div class="arg" data-arg="/?">
+    <span lang="en">Shows the help message.</span>
+    <span lang="pt">Exibe a mensagem de ajuda.</span>
+</div>
+<div class="arg" data-arg="/a">
+    <span lang="en">Enable BOT AI.</span>
+    <span lang="pt">Habilita a IA dos BOTs.</span>
+</div>
+<div class="arg" data-arg="/dFILE">
+    <span lang="en">Start to play demo, where FILE is a <pre>.dmo</pre> file path.</span>
+    <span lang="pt">Inicia a reprodução de uma demo, onde FILE é o caminho de um arquivo <pre>.dmo</pre>.</span>
+</div>
+<div class="arg" data-arg="/f#">
+    <span lang="en">Send fewer packets (1, 2, 4) (multiplayer only)</span>
+    <span lang="pt">Envia menos pacotes (1, 2, 4) (apenas multiplayer)</span>
+</div>
+<div class="arg" data-arg="/gFILE">
+    <span lang="en">Use multiple group files (must be last on command line), where FILE is a <pre>.grp</pre> file path.</span>
+    <span lang="pt">Utiliza multiplos arquivos group (precisa ser o ultimo na command line), onde FILE é o caminho de um arquivo <pre>.grp</pre>.</span>
+</div>
+<div class="arg" data-arg="/i#">
+    <span lang="en">Network mode (1/0) (multiplayer only) (default == 1) (use -master to force the host player)</span>
+    <span lang="pt">Network mode (1/0) (multiplayer only) (default == 1) (use -master para forçar o jogador host)</span>
+</div>
+<div class="arg" data-arg="/l##">
+    <span lang="en">Episode level, where ## is [1-11]</span>
+    <span lang="pt">Mapa do episodeo, onde ## é [1-11]</span>
+</div>
+<div class="arg" data-arg="/m">
+    <span lang="en">No monsters.</span>
+    <span lang="pt">Sem monstros.</span>
+</div>
+<div class="arg" data-arg="/n#">
+    <span lang="en">No sound if # = s. No music if # = m. Removes both if # = x</span>
+    <span lang="pt">Sem som se # = s. Sem musica se # = m. Removes ambos se # = x</span>
+</div>
+<div class="arg" data-arg="/q#">
+    <span lang="en">Number of bots, where # is the total number os players in the match [1-8].</span>
+    <span lang="pt">Quantidade de bots, onde # é o numero total de jogadores na partida [1-8].</span>
+</div>
+<div class="arg" data-arg="/r">
+    <span lang="en">Record demo.</span>
+    <span lang="pt">Grava demo.</span>
+</div>
+<div class="arg" data-arg="/s#">
+    <span lang="en">Skill, where # is [1-4]</span>
+    <span lang="pt">Dificuldade, onde # é [1-4]</span>
+</div>
+<div class="arg" data-arg="/t#">
+    <span lang="en">Respawn, 1 = Monsters, 2 = Items, 3 = Inventory, x = All</span>
+    <span lang="pt">Respawn, 1 = Monstros, 2 = Items, 3 = Inventario, x = Tudo</span>
+</div>
+<div class="arg" data-arg="/u#########">
+    <span lang="en">User's favorite weapon order (default: 3425689071).</span>
+    <span lang="pt">Ordem favorita de armas do usuário (padrão: 3425689071).</span>
+</div>
+<div class="arg" data-arg="/v#">
+    <span lang="en">Episode, where # is [1-4].</span>
+    <span lang="pt">Episodeo, onde # é [1-4].</span>
+</div>
+<div class="arg" data-arg="/w">
+    <span lang="en">Coords on.</span>
+    <span lang="pt">Coordenadas ligadas.</span>
+</div>
+<div class="arg" data-arg="/xFILE">
+    <span lang="en">Compile FILE (default GAME.CON)</span>
+    <span lang="pt">Compile FILE (default GAME.CON)</span>
+</div>
+<div class="arg" data-arg="/z">
+    <span lang="en">Skip memory check.</span>
+    <span lang="pt">Pula checagem de memoria.</span>
+</div>
+<div class="arg" data-arg="/#">
+    <span lang="en">Load and run a game (slot 0-9).</span>
+    <span lang="pt">Carrega um jogo salvo (slot 0-9).</span>
+</div>
+<div class="arg" data-arg="-map FILE">
+    <span lang="en">Load a usermap, where FILE is a <pre>.map</pre> file path.</span>
+    <span lang="pt">Carrega um usermap, onde FILE é o caminho de um arquivo <pre>.map</pre>.</span>
+</div>
+<div class="arg" data-arg="-name NAME">
+    <span lang="en">Sets your name.</span>
+    <span lang="pt">Define seu nome.</span>
+</div>
+<div class="arg" data-arg="-net">
+    <span lang="en">Net mode game.</span>
+    <span lang="pt">Net mode game.</span>
+</div>
