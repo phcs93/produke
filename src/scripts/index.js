@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (langBox) {
 
+        // shows a tooltip suggesting the user to change the language
+        function suggestLanguage(lang) {
+            langBox.parentElement.dataset.suggestion = langSuggestions[lang];
+        }
+
         // if user is using a supported language
         if (supportedLangs.includes(browserLang)) {
 
@@ -48,11 +53,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const href = document.querySelector(selector).href
             window.location.href = href;
         };
-
-        // shows a tooltip suggesting the user to change the language
-        function suggestLanguage(lang) {
-            langBox.parentElement.dataset.suggestion = langSuggestions[lang];
-        }
 
     }
 
