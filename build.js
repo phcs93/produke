@@ -170,6 +170,10 @@ function CreateBinFolder() {
 
 }
 
+function copyCNAME() {
+    fs.cpSync("CNAME", "bin/CNAME");
+}
+
 function CopyCommonFiles() {
 
     // copy lib, res and src folders to bin/$common folder
@@ -505,6 +509,7 @@ function ReplaceCommonPath() {
 }
 
 CreateBinFolder();
+copyCNAME();
 CopyCommonFiles();
 CopyPagesToLangFolders();
 RenameHtmlFilesToIndex();
