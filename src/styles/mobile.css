@@ -1,0 +1,11 @@
+@media (pointer: coarse) and (hover: none) {
+
+    div#container > div {
+        flex-direction: column;
+    }
+
+    button#back-to-top {
+        display: none;
+    }
+
+}
