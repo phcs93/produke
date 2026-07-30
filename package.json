@@ -4,7 +4,7 @@
   "description": "proDuke website",
   "main": "build.js",
   "scripts": {
-    "start": "node build.js http://127.0.0.1:3000/bin"
+    "start": "node build.js http://127.0.0.1:3001/bin"
   },
   "author": "phcs93",
   "license": "ISC"

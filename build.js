@@ -329,8 +329,12 @@ function BuildNavbar() {
                 .normalize("NFD")
                 .replace(/\p{Diacritic}/gu, "")
             ;
+            // links.push(`
+            //     <a href="${domain}/${lang}/${path}" lang="${lang}">${titleTagMatch.toUpperCase()}</a>
+            // `);
+            const link = menuDictionary[folderName][lang].match(/href=["']([^"']+)["']/i)[1];
             links.push(`
-                <a href="${domain}/${lang}/${path}" lang="${lang}">${titleTagMatch.toUpperCase()}</a>
+                <a href="${link}" lang="${lang}">${titleTagMatch.toUpperCase()}</a>
             `);
         }
         html.push(links.join(""));
