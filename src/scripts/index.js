@@ -87,3 +87,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 });
+
+// make sure section anchoring works after img tags load
+window.addEventListener('load', () => {
+
+  const id = window.location.hash;
+
+  if (!id) return;
+
+  const target = document.querySelector(id);
+
+  if (target) {
+    target.scrollIntoView();
+  }
+
+});
