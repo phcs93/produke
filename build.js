@@ -512,6 +512,49 @@ function ReplaceCommonPath() {
 
 }
 
+function GenerateSitemap() {
+
+    const baseUrl = `https://${domain}`;
+
+    const urls = [];
+
+    const walk = (currentSrc, currentUrl) => {
+
+        const entries = fs.readdirSync(currentSrc, { withFileTypes: true });
+
+        // Se existe index.html nesta pasta, ela representa uma URL
+        if (entries.some(entry => entry.isFile() && entry.name === "index.html")) {
+            urls.push(currentUrl);
+        }
+
+        for (const entry of entries) {
+
+            if (!entry.isDirectory()) continue;
+
+            // $common não é uma página pública
+            if (entry.name === "$common") continue;
+
+            const nextSrc = path.join(currentSrc, entry.name);
+            const nextUrl = `${currentUrl}/${entry.name}`;
+
+            walk(nextSrc, nextUrl);
+        }
+    };
+
+    walk("bin", "");
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        ${urls
+            .map(url => `    <url><loc>${baseUrl}${url || "/"}</loc></url>`)
+            .join("\n")}
+        </urlset>
+    `;
+
+    fs.writeFileSync("bin/sitemap.xml", sitemap, "utf-8");
+
+}
+
 CreateBinFolder();
 copyCNAME();
 CopyCommonFiles();
@@ -521,3 +564,4 @@ AddCommonHtmlToPages();
 TranslateFoldersNames();
 FilterLangTags();
 ReplaceCommonPath();
+GenerateSitemap();
