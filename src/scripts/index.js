@@ -57,14 +57,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // set current navbar link
-    const links = Array.from(document.querySelectorAll('div#navbar > a')).slice(1);
-    const currentUrl = window.location.href;
-    const activeLink = links.find(link => link.href.split("/")[4] === currentUrl.split("/")[4]);
-    if (activeLink) {
-        activeLink.classList.add("active"); 
-    } else {
-        if (currentUrl !== "{domain}/") {
-            document.querySelector('div#navbar > a').classList.add("active"); 
+    if (currentUrl !== "{domain}") {
+        const links = Array.from(document.querySelectorAll('div#navbar > a')).slice(1);
+        const currentUrl = window.location.href;
+        const activeLink = links.find(link => link.href.split("/")[4] === currentUrl.split("/")[4]);
+        if (activeLink) {
+            activeLink.classList.add("active"); 
+        } else {
+            if (currentUrl !== "{domain}/") {
+                document.querySelector('div#navbar > a').classList.add("active"); 
+            }
         }
     }
 
