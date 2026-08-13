@@ -1,6 +1,4 @@
-proDuke — a Duke Nukem 3D port based on xDuke 19.7.1.
-
-Official website: produke.com.br
+proDuke — official website: produke.com.br
 
 ### to-do
 
