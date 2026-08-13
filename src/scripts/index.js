@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const currentUrl = window.location.href;
 
     // set current navbar link
-    if (currentUrl !== "{domain}") {
+    if (currentUrl !== "{domain}/") {
         const links = Array.from(document.querySelectorAll('div#navbar > a')).slice(1);        
         const activeLink = links.find(link => link.href.split("/")[4] === currentUrl.split("/")[4]);
         if (activeLink) {
