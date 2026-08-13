@@ -373,7 +373,7 @@ function AddCommonHtmlToPages() {
             // if home index.html
             if (pageId === lang) {
                 for (const l of langs) {
-                    alternatesHtml.push(`<link rel="alternate" hreflang="${l}" href="${domain}/${l}" />`);
+                    alternatesHtml.push(`<link rel="alternate" hreflang="${l}" href="${domain}/${l}/" />`);
                 }
             } else {
                 const alternateLinks = alternateLinkDictionary[pageId.split("#")[1]];
