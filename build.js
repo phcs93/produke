@@ -514,45 +514,55 @@ function ReplaceCommonPath() {
 
 function GenerateSitemap() {
 
-    const baseUrl = domain;
+    const sitemapUrls = [];
 
-    const urls = [];
+    // Home pages
+    for (const lang of langs) {
 
-    const walk = (currentSrc, currentUrl) => {
+        const alternateLinks = langs
+            .map(l => `            <xhtml:link rel="alternate" hreflang="${l}" href="${domain}/${l}/" />`)
+            .join("\n");
 
-        const entries = fs.readdirSync(currentSrc, { withFileTypes: true });
+        sitemapUrls.push(`
+    <url>
+        <loc>${domain}/${lang}/</loc>
+${alternateLinks}
+    </url>`);
+    }
 
-        // Se existe index.html nesta pasta, ela representa uma URL
-        if (entries.some(entry => entry.isFile() && entry.name === "index.html")) {
-            urls.push(currentUrl);
+    // All other pages
+    for (const pageId of Object.keys(alternateLinkDictionary)) {
+
+        const alternateLinks = alternateLinkDictionary[pageId];
+
+        for (const lang of langs) {
+
+            // Skip the page if this language does not exist
+            if (!alternateLinks[lang]) continue;
+
+            const links = langs
+                .filter(l => alternateLinks[l])
+                .map(l => `            <xhtml:link rel="alternate" hreflang="${l}" href="${alternateLinks[l]}" />`)
+                .join("\n");
+
+            sitemapUrls.push(`
+    <url>
+        <loc>${alternateLinks[lang]}</loc>
+${links}
+    </url>`);
         }
-
-        for (const entry of entries) {
-
-            if (!entry.isDirectory()) continue;
-
-            // $common não é uma página pública
-            if (entry.name === "$common") continue;
-
-            const nextSrc = path.join(currentSrc, entry.name);
-            const nextUrl = `${currentUrl}/${entry.name}`;
-
-            walk(nextSrc, nextUrl);
-        }
-    };
-
-    walk("bin", "");
+    }
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        ${urls
-            .map(url => `    <url><loc>${baseUrl}${url || "/"}/</loc></url>`)
-            .join("\n")}
-        </urlset>
-    `;
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${sitemapUrls.join("\n")}
+</urlset>
+`;
 
     fs.writeFileSync("bin/sitemap.xml", sitemap, "utf-8");
-
+    
 }
 
 CreateBinFolder();
