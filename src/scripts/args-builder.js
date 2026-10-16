@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y: { max: 99, val: 20, char: "/", side: "host" },
         k: { max: 240, val: 0, char: "/", side: "host" },
         e: { max: 9, val: 0, char: "/", side: "host" },
-        q: { max: 7, val: 0, char: "/", side: "host" },
+        q: { max: 15, val: 0, char: "/", side: "host" },
         a: { max: 1, val: 0, char: "/", side: "host" },
         teampicker: { max: 1, val: 0, char: "/", side: "host" },
         lockoptions: { max: 1, val: 0, char: "/", side: "host" },
