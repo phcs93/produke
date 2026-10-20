@@ -1,25 +1,142 @@
 // custom NukemNet support for proDuke written by LARD (phcs93)
+module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
-module.exports = function({deepClone, utils}, gamedefs) {
+    const fs = require("fs");
+    const path = require("path");
+
+    // log messages to the chat (local only)
+    const log = str => {
+
+        const [channelKey, room] = Object.entries(mainStore.joinedChannels).find(([channel]) => mainStore.isChannelGameRoom(channel)) || [];
+
+        if (channelKey && room) {
+            mainStore.addEventTo('channel', channelKey, room, {
+                type: 'notice',
+                ts: Date.now(),
+                channel: room.name || channelKey,
+                text: `${str}`
+            });
+        }
+
+    };    
 
     // custom injected css style
     const style = `
 
         <style>
 
-            select#game-param-multiplayerMode,
-            select#game-param-monstersSkill,
-            select#game-param-mapType,
-            select#game-param-episodeAndLevel,
-            select#game-param-presets
+            /* ================================================================================= */
+            /* MAIN COMPONENTS                                                                   */
+            /* ================================================================================= */
+
+            /* root div */
+            div:has(>#mode) + div {
+                display: flex; 
+                flex-direction: column; 
+                gap: 16px; 
+                margin-bottom: 16px;
+                margin-top: 16px;
+            }
+
+            div.box {
+                background-color: #17191c;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                border: 1px solid #495057;
+                border-radius: 5px;
+                padding: 16px;
+            }
+
+            div.box > span {                
+                display: inline-block;
+                padding-bottom: 16px;
+                margin-bottom: 16px;
+                font-weight: bolder;
+                border-bottom: 1px solid #495057;
+            }
+
+            div.subbox {
+                width: 470px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 32px;
+                align-self: flex-end;
+            }
+
+            div.form-switch {
+                display: inline-block !important;
+            }
+
+            /* ================================================================================= */
+            /* INPUTS                                                                            */
+            /* ================================================================================= */
+
+            .param-hidden, .param-hiden * {
+                display: none !important;
+            }
+
+            div:has(>div>select[id^="game-param"]):not(.param-hidden),
+            div:has(>div>span>input[id^="game-param"]):not(.param-hidden) {
+                height: 38px !important;
+                min-height: 38px !important;
+            }
+
+            div:has(>input) > label,
+            div:has(>div>div>input[id^="game-param"]) > div:not(:has(div>input)),
+            div:has(>div>select[id^="game-param"]) > div:not(:has(select)),
+            div:has(>div>span>input[id^="game-param"]) > div:not(:has(span>input)) {
+                display: flex;
+                flex-grow: 1;
+                user-select: none; 
+                text-wrap: nowrap;
+            }
+            
+            div:has(>div>div>input[id^="game-param"]) > div:has(div>input:not([type="checkbox"])),
+            div:has(>div>select[id^="game-param"]) > div:has(select),            
+            div:has(>div>span>input[id^="game-param"]) > div:has(span>input)            
             {
+                width: 470px !important;
+            }
+
+            input[type="plain"],
+            input[type="password"],
+            select[id^="game-param"] {
+                width: 470px;
+            }
+
+            input[type="number"] {
+                width: 60px;
+                margin-right: 16px;
+            }
+
+            input[type="range"] {
+                width: 394px;
+            }
+
+            /* ================================================================================= */
+            /* ROOM SETTINGS                                                                     */
+            /* ================================================================================= */
+
+            div:has(>input[placeholder="Room Name"]),
+            div:has(>input[placeholder="Password"]) {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            /* ================================================================================= */
+            /* MATCH SETTINGS                                                                    */
+            /* ================================================================================= */
+
+            /*
+            select[id^="game-param-"] {
                 float: right;
                 width: 480px;
             }
 
             input#game-param-map,
-            input#game-param-playDmo
-            {
+            input#game-param-playDmo {
                 width: calc(480px - 72px);
             }
 
@@ -30,29 +147,19 @@ module.exports = function({deepClone, utils}, gamedefs) {
             div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] span[style*="width: 100%"] > span[style*="display: flex"][style*="flex-direction: row"] { 
                 float: right;
             }
-
-            div:has(+div>div>input#game-param-scoreLimit),
-            div:has(+div>div>input#game-param-timeLimit),
-            div:has(+div>div>input#game-param-extraLives),
-            div:has(+div>div>input#game-param-botsNum) {
-                width: 100%;
+            
+            div:has(+div>div>input[type="range"]) {
+                width: calc(100% - 72px);
             }
 
-            input:has(+input#game-param-scoreLimit),
-            input:has(+input#game-param-timeLimit),
-            input:has(+input#game-param-extraLives),
-            input:has(+input#game-param-botsNum) {
+            input[type="number"]:has(+input[type="range"]){
                 width: 64px;
             }
 
-            input#game-param-scoreLimit,
-            input#game-param-timeLimit,
-            input#game-param-extraLives,
-            input#game-param-botsNum
-            {                
+            input[type="range"] {                
                 width: calc(480px - 72px - 4px) !important;
             }
-
+            
             div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] div[style*="width: 100%"]:nth-child(2) > div[style*="display: flex"][style*="flex-direction: row"][style*="align-items: center"] input[type="number"] { 
                 width: 72px;
             }
@@ -67,33 +174,28 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
             div#netflags {
                 margin: 16px 0px;
-            }    
+            }
+            */
 
-            div.flags {
-                border: 1px solid #495057;
-                border-radius: 5px;
-                padding: 16px;
+            div:has(> div > div > #game-param-uploadDemos) > div[style*="user-select:none"]::after {
+                content: "(produke.com.br/en/demos)";
+                font-style: italic;
+                color: #777777;
+                margin-left: 8px;
             }
 
-            div.flags > span {
-                display: inline-block;
-                margin-bottom: 16px;
-                font-weight: bolder;
+            div:has(> div > div > #game-param-exploitMode) > div[style*="user-select:none"]::after,
+            div:has(> div > div > #game-param-allowMods) > div[style*="user-select:none"]::after,
+            div:has(> div > div > #game-param-disableAutoaim) > div[style*="user-select:none"]::after {
+                content: "(voting required)";
+                font-style: italic;
+                color: #777777;
+                margin-left: 8px;
             }
 
         </style>
 
     `;
-
-    // used to change order of inputs on view
-    const reorderFields = (object, order) => {
-        return Object.fromEntries([
-            // order fields defined in order array
-            ...order.filter(key => key in object).map(key => [key, object[key]]),
-            // put remaining fields in the end
-            ...Object.keys(object).filter(key => !order.includes(key)).map(key => [key, object[key]])
-        ]);
-    };
 
     // parse netflag name
     const parseNetFlagName = s => {
@@ -107,16 +209,16 @@ module.exports = function({deepClone, utils}, gamedefs) {
         ;
     };
 
-    // netflags A definition
+    // netflags A labels
     const netFlagsADefs = {
-        "Weapons Are Pickable Only Once": 1,
+        "Weapons Pickable Once": 1,
         "Respawn Monsters": 2,
         "Respawn Items": 4,
         "Respawn Inventory": 8,
         "Markers": 16,
         "Don't Spawn Monsters": 32,
         "Don't Spawn Keycards": 64,
-        "Spawn MP Only Switches": 128,
+        "Spawn DM Only Switches": 128,
         "Spawn MP Only Items": 256,
         "[COOP/TEAMS] Friendly Fire": 512,
         "[COOP/TEAMS] Autoaim On Allies": 1024,
@@ -141,7 +243,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[SURV/TLMS] Lives Are Shared": 536870912
     };
 
-    // netflags B definition
+    // netflags B labels
     const netFlagsBDefs = {
         "[TEAMS] Colored Tripbombs": 1,
         "[CTF] No Steroids If With Flag": 2,
@@ -151,7 +253,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[TERM] No Freezer Weakness": 32
     };
 
-    // netflags C definition
+    // netflags C labels
     const netFlagsCDefs = {
         "Arsenal Rebalance": 1,
         "Laser Invisible W/O Nightvision": 2,
@@ -161,18 +263,18 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "[1.3D] No Expander": 32,
         "Fix Tripbombs On Slopes": 64,
         "[DOS] Classic Map Start Behaviors": 128,
-        "[DOS] FFire excludes self": 256,
+        "[DOS] FFire Excludes Self": 256,
         "[DOS] Can Respawn Drowning": 512,
         "[DOS] Invalid Shrink States": 1024,
         "[DOS] Bad Shrinker Hit Detection": 2048,
-        "[DOS] Bad Expander Radius Owner": 4096,
+        "[DOS] Bad Grow Explosion Owner": 4096,
         "[DOS] Weapon Switching Bugs": 8192,
-        "[DOS] Dead player swaping Bugs": 16384,
+        "[DOS] Dead Player Swapping Bugs": 16384,
         "[DOS] Useless Nightvision": 32768,
-        "[DOS] Bad Hit Detection on Auto-aimed RPGs": 65536
+        "[DOS] Auto-aimed RPGs Bugs": 65536
     };
 
-    // weapflags definition
+    // weapflags labels
     const weapFlagsDefs = {
         "Pistol": 1,
         "Shotgun": 2,
@@ -187,7 +289,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "Expander": 1024
     };
 
-    // invflags definition
+    // invflags labels
     const invFlagsDefs = {
         "Key Cards": 1,
         "Medkit": 2,
@@ -202,7 +304,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         "Atomic Health 2": 1024
     };
 
-    // netflagsA definition
+    // netflagsA definition (only used for presets)
     const NetFlagsA = {
         GETWEAPONCE:                  1 << 0,   // 1
         RESPAWN_MONSTERS:             1 << 1,   // 2
@@ -218,15 +320,15 @@ module.exports = function({deepClone, utils}, gamedefs) {
         COOPTEAM__GLOBAL_ALLY_SOUNDS: 1 << 11,  // 2048
         COOPTEAM__NO_SPYCAM_MAPVIEW:  1 << 12,  // 4096
         REVEALED_AUTOMAP:             1 << 13,  // 8192
-        DISABLE_MAP_EXIT:             1 << 14,  // 16384
-        DISABLE_TARGET_NAMES:         1 << 15,  // 32768
+        NO_MAP_EXIT:                  1 << 14,  // 16384
+        NO_TARGET_NAMES:              1 << 15,  // 32768
         WEAPON_ALWAYS_DROP:           1 << 16,  // 65536
         FORCE_RESPAWN:                1 << 17,  // 131072
         RESPAWN_FARTHEST:             1 << 18,  // 262144
         TEAM__MIXED_TEAM_SPAWNS:      1 << 19,  // 524288        
         DAMAGENUMS:                   1 << 20,  // 1048576
-        TERMCOOPTEAM__OVERHEAD:        1 << 21,  // 2097152
-        TERMCOOPTEAM__OUTLINES:        1 << 22,  // 4194304
+        TRMCOOPTEAM__OVERHEAD:        1 << 21,  // 2097152
+        TRMCOOPTEAM__OUTLINES:        1 << 22,  // 4194304
         CTF__FLAG_OUTLINE:            1 << 23,  // 8388608
         CTF__FLAG_INSTANT_RETURN:     1 << 24,  // 16777216
         CTF__FLAG_AUTODETONATE:       1 << 25,  // 33554432
@@ -236,154 +338,137 @@ module.exports = function({deepClone, utils}, gamedefs) {
         SURVTLMS__SHARED_LIVES:       1 << 29,  // 536870912
     };
 
-    // netflagsB definition
+    // netflagsB definition (only used for presets)
     const NetFlagsB = {
-        TEAM__LASER_COLORS:           1 << 0,   // 1
-        CTF__NO_ROIDS:                1 << 1,   // 2
-        CTF__NO_JETPACK:              1 << 2,   // 4
-        TERM__NO_INFINITE_JPACK:       1 << 3,   // 8
-        TERM__NO_SHRINKER_IMMUNITY:    1 << 4,   // 16
-        TERM__NO_FREEZER_WEAKNESS:     1 << 5,   // 32
+        TEAM__LASER_COLORS:        1 << 0,   // 1
+        CTF__NO_ROIDS:             1 << 1,   // 2
+        CTF__NO_JETPACK:           1 << 2,   // 4
+        TRM__NO_INFINITE_JETPACK:  1 << 3,   // 8
+        TRM__NO_SHRINKER_IMMUNITY: 1 << 4,   // 16
+        TRM__NO_FREEZER_WEAKNESS:  1 << 5,   // 32
     };
 
-    // netflagsC definition
+    // netflagsC definition (only used for presets)
     const NetFlagsC = {
-        ARSENAL_REBALANCE:                   1 << 0,  // 1
-        LASERMODE_HEAT:                      1 << 1,  // 2
-        FREEZER_CANT_HURT_OWNER:             1 << 2,  // 4
-        DESTRUCTABLE_CAMERAS:                1 << 3,  // 8
-        _13D_ENABLE_DOUBLE_KICK:             1 << 4,  // 16
-        _13D_DISABLE_EXPANDER:               1 << 5,  // 32
-        FIX_TRIPBOMB_ON_SLOPES:              1 << 6,  // 64
-        ORIGBHV_MAP_START_BUGS:              1 << 7,  // 128
-        ORIGBHV_FFIRE_EXCLUDES_SELF:         1 << 8,  // 256
-        ORIGBHV_DROWNING_RESPAWN:            1 << 9,  // 512
-        ORIGBHV_SHRUNK_RESPAWN:              1 << 10, // 1024
-        ORIGBHV_SHRINKER_HIT_DETECT:         1 << 11, // 2048
-        ORIGBHV_EXPANDER_RADIUS:             1 << 12, // 4096
-        ORIGBHV_WEAPON_SWITCHING_BUGS:       1 << 13, // 8192
-        ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:    1 << 14, // 16384
-        ORIGBHV_BAD_NIGHTVISION_GLOW:        1 << 15, // 32768
-        ORIGBHV_BAD_AA_RPG_HIT_DETECTION:    1 << 16, // 65536
+        ARSENAL_REBALANCE:                  1 << 0,  // 1
+        LASERMODE_HEAT:                     1 << 1,  // 2
+        FREEZER_CANT_HURT_OWNER:            1 << 2,  // 4
+        DESTRUCTABLE_CAMERAS:               1 << 3,  // 8
+        _13D_ENABLE_DOUBLE_KICK:            1 << 4,  // 16
+        _13D_DISABLE_EXPANDER:              1 << 5,  // 32
+        FIX_TRIPBOMB_ON_SLOPES:             1 << 6,  // 64
+        ORIGBHV_CLASSIC_MAP_START_BEHAVIOR: 1 << 7,  // 128
+        ORIGBHV_FFIRE_EXCLUDES_SELF:        1 << 8,  // 256
+        ORIGBHV_DROWNING_RESPAWN:           1 << 9,  // 512
+        ORIGBHV_INVALID_SHRINK_STATES:      1 << 10, // 1024
+        ORIGBHV_BAD_SHRINKER_HIT_DETECTION: 1 << 11, // 2048
+        ORIGBHV_BAD_EXPANDER_RADIUS:        1 << 12, // 4096
+        ORIGBHV_WEAPON_SWITCHING_BUGS:      1 << 13, // 8192
+        ORIGBHV_DEAD_PLAYER_SWAPING_BUGS:   1 << 14, // 16384
+        ORIGBHV_BAD_NIGHTVISION_GLOW:       1 << 15, // 32768
+        ORIGBHV_BAD_AUTO_RPG_HIT_DETECTION: 1 << 16, // 65536
     };
 
-    // weapflags definitions
+    // weapflags definition (only used for presets)
     const StartingWeapon = {
-        PISTOL:       1 << 0,   // 1   
-        SHOTGUN:      1 << 1,   // 2   
-        CHAINGUN:     1 << 2,   // 4   
-        RPG:          1 << 3,   // 8   
-        HANDBOMB:     1 << 4,   // 16  
-        SHRINKER:     1 << 5,   // 32  
-        DEVISTATOR:   1 << 6,   // 64  
-        TRIPBOMB:     1 << 7,   // 128 
-        FREEZE:       1 << 8,   // 256 
-        FULL_AMMO:    1 << 9,   // 512 
-        GROW:         1 << 10,  // 1024
+        PISTOL:     1 << 0,   // 1   
+        SHOTGUN:    1 << 1,   // 2   
+        CHAINGUN:   1 << 2,   // 4   
+        RPG:        1 << 3,   // 8   
+        HANDBOMB:   1 << 4,   // 16  
+        SHRINKER:   1 << 5,   // 32  
+        DEVISTATOR: 1 << 6,   // 64  
+        TRIPBOMB:   1 << 7,   // 128 
+        FREEZE:     1 << 8,   // 256 
+        FULL_AMMO:  1 << 9,   // 512 
+        GROW:       1 << 10,  // 1024
     };
 
-    // invflags definitions
+    // invflags definition (only used for presets)
     const StartingInventory = {
-        ACCESS:    1 << 0,  // 1     
-        FIRSTAID:  1 << 1,  // 2     
-        STEROIDS:  1 << 2,  // 4
-        HOLODUKE:  1 << 3,  // 8
-        JETPACK:   1 << 4,  // 16
-        HEAT:      1 << 5,  // 32    
-        AIRTANK:   1 << 6,  // 64    
-        BOOTS:     1 << 7,  // 128
-        ARMOR:     1 << 8,  // 256
-        ATOMIC1:   1 << 9,  // 512   
-        ATOMIC2:   1 << 10, // 1024  
+        ACCESS:   1 << 0,  // 1     
+        FIRSTAID: 1 << 1,  // 2     
+        STEROIDS: 1 << 2,  // 4
+        HOLODUKE: 1 << 3,  // 8
+        JETPACK:  1 << 4,  // 16
+        HEAT:     1 << 5,  // 32    
+        AIRTANK:  1 << 6,  // 64    
+        BOOTS:    1 << 7,  // 128
+        ARMOR:    1 << 8,  // 256
+        ATOMIC1:  1 << 9,  // 512   
+        ATOMIC2:  1 << 10, // 1024  
     };
 
-    // default netflags presets per game mode category
-    const DEFAULT_NETFLAGS_SP         = 0;
-    const DEFAULT_NETFLAGS_PVP_SPWN   = 0 | NetFlagsA.MARKERS | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
-    const DEFAULT_NETFLAGS_PVP_NOSPWN = NetFlagsA.GETWEAPONCE | 0 | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
-    const DEFAULT_NETFLAGS_COOP       = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
-
-    // base netflags presets
-    const BASE_TDM_TLMS           = NetFlagsA.TEAM__MIXED_TEAM_SPAWNS | NetFlagsA.T_LMS__RESTRICTED_SPYCAM | NetFlagsA.T_LMS__RESTRICTED_CHAT;
-    const BASE_LMS                = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST;
-    const BASE_MODERN             = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.DISABLE_MAP_EXIT | NetFlagsA.DAMAGENUMS;
-    const BASE_HARDCORE           = NetFlagsA.DISABLE_TARGET_NAMES;
-    const BASE_CLASSIC_TEAMPLAY   = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | 0 | 0;
-    const BASE_ALT_TEAMPLAY       = 0 | NetFlagsA.TERMCOOPTEAM__OVERHEAD | 0 | 0 | 0;
-    const BASE_MODERN_TEAMPLAY    = 0 | NetFlagsA.TERMCOOPTEAM__OVERHEAD | NetFlagsA.TERMCOOPTEAM__OUTLINES | 0 | 0;
-    const BASE_HARDCORE_TEAMPLAY  = NetFlagsA.DISABLE_TARGET_NAMES | 0 | 0 | NetFlagsA.COOPTEAM__NO_SPYCAM_MAPVIEW | NetFlagsA.COOPTEAM__AUTOAIM_ON_ALLIES;
-
-    // netflagsA preset combinations
-    const PRESET_NETFLAGS_CLASSIC_COOP  = DEFAULT_NETFLAGS_COOP | NetFlagsA.COOPTEAM__GLOBAL_ALLY_SOUNDS | BASE_CLASSIC_TEAMPLAY;
-    const PRESET_NETFLAGS_ALT_COOP      = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURVTLMS__SHARED_LIVES | BASE_ALT_TEAMPLAY;
-    const PRESET_NETFLAGS_MODERN_COOP   = NetFlagsA.GETWEAPONCE | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | 0 | 0 | NetFlagsA.MPITEMS | 0 | BASE_MODERN_TEAMPLAY;
-    const PRESET_NETFLAGS_HARDCORE_COOP = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURVTLMS__SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
-
-    const PRESET_NETFLAGS_CLASSIC_SURV  = PRESET_NETFLAGS_CLASSIC_COOP | NetFlagsA.COOP__SHARED_ACCESS;
-    const PRESET_NETFLAGS_ALT_SURV      = PRESET_NETFLAGS_ALT_COOP | NetFlagsA.COOP__SHARED_ACCESS;
-    const PRESET_NETFLAGS_MODERN_SURV   = PRESET_NETFLAGS_MODERN_COOP | NetFlagsA.COOP__SHARED_ACCESS;
-    const PRESET_NETFLAGS_HARDCORE_SURV = PRESET_NETFLAGS_HARDCORE_COOP | NetFlagsA.COOP__SHARED_ACCESS;
-
-    const PRESET_NETFLAGS_CLASSIC_FFA   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0;
-    const PRESET_NETFLAGS_ALT_FFA       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
-    const PRESET_NETFLAGS_MODERN_FFA    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN;
-    const PRESET_NETFLAGS_HARDCORE_FFA  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE;
-
-    const PRESET_NETFLAGS_CLASSIC_TEAM  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_ALT_TEAM      = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_MODERN_TEAM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_HARDCORE_TEAM = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURVTLMS__SHARED_LIVES;
-
-    const PRESET_NETFLAGS_CLASSIC_CTF   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_ALT_CTF       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN;
-    const PRESET_NETFLAGS_MODERN_CTF    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY | NetFlagsA.CTF__FLAG_OUTLINE;
-    const PRESET_NETFLAGS_HARDCORE_CTF  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN | NetFlagsA.CTF__FLAG_AUTODETONATE;
-
-    const PRESET_NETFLAGS_CLASSIC_LMS   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | 0;
-    const PRESET_NETFLAGS_ALT_LMS       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
-    const PRESET_NETFLAGS_MODERN_LMS    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_MODERN;
-    const PRESET_NETFLAGS_HARDCORE_LMS  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_HARDCORE;
-
-    const PRESET_NETFLAGS_CLASSIC_TERM  = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY;
-    const PRESET_NETFLAGS_ALT_TERM      = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY;
-    const PRESET_NETFLAGS_MODERN_TERM   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY;
-    const PRESET_NETFLAGS_HARDCORE_TERM = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY;
-
-    // netflagsB preset combinations
-    const PRESET_NETFLAGSB_CLASSIC        = 0;
-    const PRESET_NETFLAGSB_ALT            = NetFlagsB.TEAM__LASER_COLORS;
-    const PRESET_NETFLAGSB_MODERN         = NetFlagsB.TEAM__LASER_COLORS;
-    const PRESET_NETFLAGSB_HARDCORE       = 0;
-
-    const PRESET_NETFLAGSB_CLASSIC_TERM   = PRESET_NETFLAGSB_CLASSIC | 0 | 0;
-    const PRESET_NETFLAGSB_ALT_TERM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TERM__NO_SHRINKER_IMMUNITY;
-    const PRESET_NETFLAGSB_MODERN_TERM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TERM__NO_INFINITE_JPACK | 0;
-    const PRESET_NETFLAGSB_HARDCORE_TERM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TERM__NO_INFINITE_JPACK | NetFlagsB.TERM__NO_SHRINKER_IMMUNITY;
-
-    // weapflags presets
+    // netflags presets per game mode category
+    const DEFAULT_NETFLAGS_SP            = 0;
+    const DEFAULT_NETFLAGS_PVP_SPWN      = 0 | NetFlagsA.MARKERS | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_PVP_NOSPWN    = NetFlagsA.GETWEAPONCE | 0 | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
+    const DEFAULT_NETFLAGS_COOP          = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
+    const BASE_TDM_TLMS                  = NetFlagsA.TEAM__MIXED_TEAM_SPAWNS | NetFlagsA.T_LMS__RESTRICTED_SPYCAM | NetFlagsA.T_LMS__RESTRICTED_CHAT;
+    const BASE_LMS                       = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST;
+    const BASE_MODERN                    = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.NO_MAP_EXIT | NetFlagsA.DAMAGENUMS;
+    const BASE_HARDCORE                  = NetFlagsA.NO_TARGET_NAMES;
+    const BASE_CLASSIC_TEAMPLAY          = NetFlagsA.NO_TARGET_NAMES | 0 | 0 | 0 | 0;
+    const BASE_ALT_TEAMPLAY              = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | 0 | 0 | 0;
+    const BASE_MODERN_TEAMPLAY           = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | NetFlagsA.TRMCOOPTEAM__OUTLINES | 0 | 0;
+    const BASE_HARDCORE_TEAMPLAY         = NetFlagsA.NO_TARGET_NAMES | 0 | 0 | NetFlagsA.COOPTEAM__NO_SPYCAM_MAPVIEW | NetFlagsA.COOPTEAM__AUTOAIM_ON_ALLIES;
+    const PRESET_NETFLAGS_CLASSIC_COOP   = DEFAULT_NETFLAGS_COOP | NetFlagsA.COOPTEAM__GLOBAL_ALLY_SOUNDS | BASE_CLASSIC_TEAMPLAY;
+    const PRESET_NETFLAGS_ALT_COOP       = 0 | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS | NetFlagsA.SURVTLMS__SHARED_LIVES | BASE_ALT_TEAMPLAY;
+    const PRESET_NETFLAGS_MODERN_COOP    = NetFlagsA.GETWEAPONCE | NetFlagsA.MARKERS | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | 0 | 0 | NetFlagsA.MPITEMS | 0 | BASE_MODERN_TEAMPLAY;
+    const PRESET_NETFLAGS_HARDCORE_COOP  = 0 | 0 | 0 | 0 | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | 0 | NetFlagsA.SURVTLMS__SHARED_LIVES | BASE_HARDCORE_TEAMPLAY;
+    const PRESET_NETFLAGS_CLASSIC_SURV   = PRESET_NETFLAGS_CLASSIC_COOP | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_ALT_SURV       = PRESET_NETFLAGS_ALT_COOP | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_MODERN_SURV    = PRESET_NETFLAGS_MODERN_COOP | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_HARDCORE_SURV  = PRESET_NETFLAGS_HARDCORE_COOP | NetFlagsA.COOP__SHARED_ACCESS;
+    const PRESET_NETFLAGS_CLASSIC_FFA    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0;
+    const PRESET_NETFLAGS_ALT_FFA        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
+    const PRESET_NETFLAGS_MODERN_FFA     = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN;
+    const PRESET_NETFLAGS_HARDCORE_FFA   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE;
+    const PRESET_NETFLAGS_CLASSIC_TEAM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_ALT_TEAM       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_MODERN_TEAM    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_HARDCORE_TEAM  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURVTLMS__SHARED_LIVES;
+    const PRESET_NETFLAGS_CLASSIC_CTF    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_ALT_CTF        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN;
+    const PRESET_NETFLAGS_MODERN_CTF     = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY | NetFlagsA.CTF__FLAG_OUTLINE;
+    const PRESET_NETFLAGS_HARDCORE_CTF   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN | NetFlagsA.CTF__FLAG_AUTODETONATE;
+    const PRESET_NETFLAGS_CLASSIC_LMS    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | 0;
+    const PRESET_NETFLAGS_ALT_LMS        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
+    const PRESET_NETFLAGS_MODERN_LMS     = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_MODERN;
+    const PRESET_NETFLAGS_HARDCORE_LMS   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_HARDCORE;
+    const PRESET_NETFLAGS_CLASSIC_TRM    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY;
+    const PRESET_NETFLAGS_ALT_TRM        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY;
+    const PRESET_NETFLAGS_MODERN_TRM     = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY;
+    const PRESET_NETFLAGS_HARDCORE_TRM   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY;
+    const PRESET_NETFLAGSB_CLASSIC       = 0;
+    const PRESET_NETFLAGSB_ALT           = NetFlagsB.TEAM__LASER_COLORS;
+    const PRESET_NETFLAGSB_MODERN        = NetFlagsB.TEAM__LASER_COLORS;
+    const PRESET_NETFLAGSB_HARDCORE      = 0;
+    const PRESET_NETFLAGSB_CLASSIC_TRM   = PRESET_NETFLAGSB_CLASSIC | 0 | 0;
+    const PRESET_NETFLAGSB_ALT_TRM       = PRESET_NETFLAGSB_ALT | 0 | NetFlagsB.TRM__NO_SHRINKER_IMMUNITY;
+    const PRESET_NETFLAGSB_MODERN_TRM    = PRESET_NETFLAGSB_MODERN | NetFlagsB.TRM__NO_INFINITE_JETPACK | 0;
+    const PRESET_NETFLAGSB_HARDCORE_TRM  = PRESET_NETFLAGSB_HARDCORE | NetFlagsB.TRM__NO_INFINITE_JETPACK | NetFlagsB.TRM__NO_SHRINKER_IMMUNITY;
     const DEFAULT_WEAPFLAGS              = StartingWeapon.PISTOL;
     const PRESET_WEAPFLAGS_HARDCORE_TERM = StartingWeapon.PISTOL | StartingWeapon.FREEZE;
-
-    // invflags presets
-    const DEFAULT_INVFLAGS   = 0;
-    const DEFAULT_INVFLAGS_PVP = StartingInventory.ACCESS;
-
-    // gametype enum for easier handling
-    const GameType = {
-        DM:     1,  // Dukematch (DM)
-        COOP:   2,  // Cooperative
-        TDM:    3,  // Team Dukematch
-        CTF:    4,  // Capture The Flag
-        F1CTF:  5,  // 1-Flag CTF
-        ADCTF:  6,  // Attack/Defend CTF
-        SURV:   7,  // Survival
-        LMS:    8,  // Last Man Standing
-        TLMS:   9,  // Team Last Man Standing
-        TERM:   10, // Terminator
-    };
+    const DEFAULT_INVFLAGS               = 0;
+    const DEFAULT_INVFLAGS_PVP           = StartingInventory.ACCESS;
 
     // get flags corresponding to selected gamemode and preset
     const getFlags = (gametype, preset) => {
+
+        // gametype enum for easier reading
+        const GameType = {
+            DM: 1,
+            COOP: 2,
+            TDM: 3,
+            CTF: 4,
+            F1CTF: 5,
+            ADCTF: 6,
+            SURV: 7,
+            LMS: 8,
+            TLMS: 9,
+            TERM: 10
+        };
 
         let netflagsA = 0;
         let netflagsB = 0;
@@ -437,8 +522,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
                         break;
                     }
                     case GameType.TERM: {
-                        netflagsA = PRESET_NETFLAGS_CLASSIC_TERM;
-                        netflagsB = PRESET_NETFLAGSB_CLASSIC_TERM;
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_TRM;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC_TRM;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
@@ -491,8 +576,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
                         break;
                     }
                     case GameType.TERM: {
-                        netflagsA = PRESET_NETFLAGS_ALT_TERM;
-                        netflagsB = PRESET_NETFLAGSB_ALT_TERM;
+                        netflagsA = PRESET_NETFLAGS_ALT_TRM;
+                        netflagsB = PRESET_NETFLAGSB_ALT_TRM;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
@@ -545,8 +630,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
                         break;
                     }
                     case GameType.TERM: {
-                        netflagsA = PRESET_NETFLAGS_MODERN_TERM;
-                        netflagsB = PRESET_NETFLAGSB_MODERN_TERM;
+                        netflagsA = PRESET_NETFLAGS_MODERN_TRM;
+                        netflagsB = PRESET_NETFLAGSB_MODERN_TRM;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
@@ -599,8 +684,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
                         break;
                     }
                     case GameType.TERM: {
-                        netflagsA = PRESET_NETFLAGS_HARDCORE_TERM;
-                        netflagsB = PRESET_NETFLAGSB_HARDCORE_TERM;
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_TRM;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE_TRM;
                         weapflags = PRESET_WEAPFLAGS_HARDCORE_TERM;
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
@@ -620,6 +705,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     };
 
+    // set flags in the UI based on preset
     const setFlags = preset => {
         for (const nf of Object.keys(netFlagsADefs)) {
             if ((preset.netflagsA & netFlagsADefs[nf]) !== 0) {                            
@@ -661,14 +747,6 @@ module.exports = function({deepClone, utils}, gamedefs) {
     // clone xduke definitions as base
     gamedefs.games.duke3d.executables.produke = deepClone(gamedefs.games.duke3d.executables.xduke);
 
-    // change to produke name and executable
-    gamedefs.games.duke3d.executables.produke.name = "proDuke";
-    gamedefs.games.duke3d.executables.produke.files.main.path = "produke.exe";
-    gamedefs.games.duke3d.executables.produke.networking = {
-        modes: ['p2p'], 
-        ipv6: true
-    };
-
     // remove arguments that have been moved to netflags
     delete gamedefs.games.duke3d.executables.produke.parameters.noMonsters;
     delete gamedefs.games.duke3d.executables.produke.parameters.respawn;
@@ -676,6 +754,97 @@ module.exports = function({deepClone, utils}, gamedefs) {
     // remove irrelevant fields
     delete gamedefs.games.duke3d.executables.produke.parameters.con;
     delete gamedefs.games.duke3d.executables.produke.parameters.grp;
+
+    // change xduke to produke name and executable
+    gamedefs.games.duke3d.executables.produke.name = "proDuke";
+    gamedefs.games.duke3d.executables.produke.files.main.path = "produke.exe";
+    gamedefs.games.duke3d.executables.produke.networking = { modes: ['p2p'], ipv6: true };
+
+    // here we override how NN writes netlist.txt
+    // we use the user's detected external ip instead of using a virtual interface (0.0.0.0 or [::])
+    // this is "allegedly" a better approach for P2P networking
+    gamedefs.games.duke3d.executables.produke.runnables.multiplayer.beforeRun = [{"cmd":"function", async run(ctx) {
+
+        const ipv4 = mainStore.myExternalIpV4;
+        const ipv6 = mainStore.myExternalIpV6;
+        const port = ctx.GameRoom.MyPort;
+
+        const netlistFileName = "netlist.txt";
+        const nickToIpDetails = ctx.GameRoom.PlayersIpAndPorts;
+        const othersIpDetails = Object.values(nickToIpDetails);
+
+        let netlistText = "mode peer\r\n";
+        let foundIpv6 = false;
+
+        for (const ipd of othersIpDetails) {
+
+            const entryIp = (() => {
+
+                if (ipd.ip.includes(":")) {
+                    foundIpv6 = true;
+                    return `[${ipd.ip}]`;
+                }
+
+                return ipd.ip;
+
+            })();
+
+            netlistText += `allow ${entryIp}:${ipd.port}\r\n`
+
+        }
+
+        netlistText = `interface ${foundIpv6 ? `[${ipv6}]:${port}` : `${ipv4}:${port}`}\r\n` + netlistText; 
+        
+        fs.writeFileSync(path.resolve(ctx.GameDir, netlistFileName), netlistText);
+
+    }}];
+
+    // here we handle the .dmo upload
+    gamedefs.games.duke3d.executables.produke.procStarted = async (ctx, proc) => {
+
+        if (ctx.GameRoom.Params.uploadDemos?.[0] === "yes") {
+
+            const dmoDir = path.join(ctx.GameDir, "dmos");
+            const start = new Date();
+
+            proc.on("exit", () => {
+
+                const end = new Date();
+                const files = fs.readdirSync(dmoDir);
+
+                const dmoFiles = files.filter(fileName => {
+
+                    if (!fileName.toLocaleLowerCase().endsWith(".dmo")) return false;
+
+                    const filePath = path.join(dmoDir, fileName);
+                    const stats = fs.statSync(filePath);
+
+                    return stats.birthtime >= start && stats.birthtime <= end;
+
+                });
+
+                log(`Uploading [${dmoFiles.length}] demos...`);
+
+                for (const dmoFile of dmoFiles) {
+                    log(`Uploading "${dmoFile}"...`);
+                }
+
+            });
+
+        }
+
+    };
+
+    // upload demo input checkbox
+    gamedefs.games.duke3d.executables.produke.parameters.uploadDemos = {
+        modeSupport: ["multiplayer"],
+        type: "boolean",
+        label: "Upload Demos",
+        optional: false,
+        syncOnly: true,
+        value: "yes",
+        for: "host-only-private"
+    };
 
     // game mode
     gamedefs.games.duke3d.executables.produke.parameters.multiplayerMode.label = "Game Mode";
@@ -807,9 +976,73 @@ module.exports = function({deepClone, utils}, gamedefs) {
 
     // record demo
     gamedefs.games.duke3d.executables.produke.parameters.recordDmo.label = "Record DEMO";
+    gamedefs.games.duke3d.executables.produke.parameters.recordDmo.for = "private";
 
     // play demo
     gamedefs.games.duke3d.executables.produke.parameters.playDmo.label = "Play DEMO";
+
+    // color
+    gamedefs.games.duke3d.executables.produke.parameters.color = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "choice",
+        label: "Color",
+        optional: false,
+        for: "private",
+        value: c => '-color ' + c.value,
+        choices: [
+            {label: "Auto", value: "0"},
+            {label: "Blue", value: "1"},
+            {label: "Red", value: "2"},
+            {label: "Green", value: "3"},
+            {label: "Gray", value: "4"},
+            {label: "Dark Gray", value: "5"},
+            {label: "Dark Green", value: "6"},
+            {label: "Brown", value: "7"},
+            {label: "Dark Blue", value: "8"},
+            {label: "Bright Red", value: "9"},
+            {label: "Dark Brown", value: "10"},
+            {label: "Cement", value: "11"},
+            {label: "Black", value: "12"},
+            {label: "Off White", value: "13"},
+            {label: "Orange", value: "14"},
+            {label: "Yellow", value: "15"},
+            {label: "Purple", value: "16"}
+        ],
+        dependsOn: {
+            params: "multiplayerMode", 
+            show: c => c?.ParamEl?.multiplayerMode && ![3,4,5,6,9].includes(c.ParamEl.multiplayerMode)
+        }
+    };
+
+    // team
+    gamedefs.games.duke3d.executables.produke.parameters.team = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "choice",
+        label: "Team",
+        optional: false,
+        for: "private",
+        value: c => '-team ' + c.value,
+        choices: [
+            {label: "Blue", value: "1"},
+            {label: "Red", value: "2"},
+            {label: "Green", value: "3"},
+            {label: "Brown", value: "4"}
+        ],
+        dependsOn: {
+            params: "multiplayerMode", 
+            show: c => c?.ParamEl?.multiplayerMode && [3,4,5,6,9].includes(c.ParamEl.multiplayerMode)
+        }
+    };
+
+    // spectator
+    gamedefs.games.duke3d.executables.produke.parameters.spec = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "boolean",
+        label: "Spectator",
+        optional: false,
+        value: "-spec",
+        for: "private"
+    };
 
     // lock options
     gamedefs.games.duke3d.executables.produke.parameters.lockOptions = {
@@ -831,6 +1064,16 @@ module.exports = function({deepClone, utils}, gamedefs) {
         for: "host-only-private"
     };
 
+    // lock specs
+    gamedefs.games.duke3d.executables.produke.parameters.lockSpecs = {
+        modeSupport: ["multiplayer"],
+        type: "boolean",
+        label: "Lock Spectators",
+        optional: false,
+        value: "/lockspecs",
+        for: "host-only-private"
+    };
+
     // disable autoaim
     gamedefs.games.duke3d.executables.produke.parameters.disableAutoaim = {
         modeSupport: ["multiplayer", "singleplayer"],
@@ -845,7 +1088,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.exploitMode = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "boolean",
-        label: "Exploit Mode (tiles + visiblity)",
+        label: "Exploit Mode",
         optional: false,
         value: "/exploitmode",
         for: "private"
@@ -855,7 +1098,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.allowMods = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "boolean",
-        label: "Allow Mods (con / art / dat / etc)",
+        label: "Allow Mods",
         optional: false,
         value: "/allowmods",
         for: "private"
@@ -865,24 +1108,17 @@ module.exports = function({deepClone, utils}, gamedefs) {
     gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
         modeSupport: ["multiplayer"],
         type: "boolean",
-        label: "Master/Slave mode (/i0 + -master)",
+        label: "Master/Slave",
         optional: false,
         value: "/i0",
         for: "host-only-private"
     };
-    // gamedefs.games.duke3d.executables.produke.parameters.masterSlave = {
-    //     modeSupport: ["multiplayer"],
-    //     type: "static",
-    //     addIf: c => c.GameRoom?.Net?.Mode == 'cs',        
-    //     value: c => ["-net", "-p" + c?.GameRoom?.MyPort, ...utils.sortedPlayersIpsAndPorts(c, '-n1')],
-    //     for:"private"
-    // };
 
     // netflags presets input
     gamedefs.games.duke3d.executables.produke.parameters.presets = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "choice",
-        label: "NetFlags Presets",
+        label: "NetFlags Preset",
         optional: false,
         syncOnly: true,
         choices: [
@@ -1061,7 +1297,7 @@ module.exports = function({deepClone, utils}, gamedefs) {
         value: "/teampicker",
         addIf: c => {
             return [3,4,5,6,9].includes(parseInt(c.GameRoom.Params.multiplayerMode[0].replace("/c", "")));
-        }        
+        }
     };
 
     // send -master automatically if /lockoption or /lockplayers or /i0 is set
@@ -1076,34 +1312,8 @@ module.exports = function({deepClone, utils}, gamedefs) {
         }        
     };
 
-    // reorder fields
-    gamedefs.games.duke3d.executables.produke.parameters = reorderFields(
-        gamedefs.games.duke3d.executables.produke.parameters, 
-        [
-            "multiplayerMode",
-            "monstersSkill",
-            "mapType",
-            "episodeAndLevel",
-            "map",
-            "scoreLimit",
-            "timeLimit",
-            "extraLives",
-            "botsNum",
-            "botsAi",            
-            "disableAutoaim",
-            "exploitMode",
-            "allowMods",            
-            "recordDmo",
-            "playDmo",
-            "lockOptions",
-            "lockPlayers",
-            "masterSlave",
-            "presets"
-        ]
-    );
-
-    // small hack to manipulate the html
-    gamedefs.games.duke3d.executables.produke.parameters.html = {
+    // inject css
+    gamedefs.games.duke3d.executables.produke.parameters.htmlcss = {
         modeSupport: ["multiplayer", "singleplayer"],
         type: "choice",
         label: "",
@@ -1112,8 +1322,26 @@ module.exports = function({deepClone, utils}, gamedefs) {
         choices: [ {label: "", value: ""} ],
         for: "private",
         dependsOn: {
-            params: "html",
-            show: () => {
+            params: "htmlcss",
+            show: () => { 
+                document.body.insertAdjacentHTML("afterbegin", style);
+                return false;
+            }
+        }
+    };
+
+    // small hack to manipulate the html (netflags boxes)
+    gamedefs.games.duke3d.executables.produke.parameters.htmlnetflags = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "choice",
+        label: "",
+        optional: false,
+        syncOnly: true,
+        choices: [ {label: "", value: ""} ],
+        for: "private",
+        dependsOn: {
+            params: "htmlnetflags",
+            show: () => {                
 
                 // get reference element
                 const reference = document.getElementById("game-param-presets");
@@ -1153,11 +1381,11 @@ module.exports = function({deepClone, utils}, gamedefs) {
                     });
 
                     return;
+
                 }
 
                 // add main flex boxes
                 reference.parentNode.parentNode.insertAdjacentHTML("afterend", `
-                    ${style}
                     <div id="netflags" style="display: flex; flex-direction: column; gap: 16px;">
                         <div style="display: flex; flex-direction: row; gap: 16px;">
                             <div style="flex: 1; min-width: 0;">
@@ -1200,9 +1428,194 @@ module.exports = function({deepClone, utils}, gamedefs) {
                 });
                 document.querySelectorAll(`[id^="game-param-invFlag"]`).forEach(e => {
                     document.getElementById("invFlags").appendChild(e.parentNode.parentNode.parentNode);
-                });
+                });               
 
-                return false;
+                return;
+
+            }
+        }
+    };
+
+    // manipulate the html
+    gamedefs.games.duke3d.executables.produke.parameters.html = {
+        modeSupport: ["multiplayer", "singleplayer"],
+        type: "choice",
+        label: "",
+        optional: false,
+        syncOnly: true,
+        choices: [ {label: "", value: ""} ],
+        for: "private",
+        dependsOn: {
+            params: "html",
+            show: () => {
+                                
+                const root = document.getElementById("mode")?.parentNode?.nextSibling;
+                if (!root || document.querySelectorAll(`[id^="game-param"]`).length === 0) return;
+
+                // =================================================================================
+                // HELPERS
+                // =================================================================================
+                
+                // creates a box div
+                const CreateBox = (title, elements) => {
+
+                    // filter undefined entries
+                    elements = elements.filter(Boolean);
+
+                    // determine id based on title
+                    const id = title.replace(" ", "-").toLocaleLowerCase();
+
+                    // try to get box element
+                    let box = document.getElementById(id);
+
+                    // create box element if it doesn't exist 
+                    if (!box) {
+                        box = document.createElement("div");
+                        box.id = id;
+                        box.className = "box";
+                        const span = document.createElement("span");
+                        span.textContent = title;
+                        box.appendChild(span);
+                    }
+
+                    // move box to the correct spot
+                    root.insertAdjacentElement("afterbegin", box);
+
+                    // move elements from the document to inside the box
+                    box.append(...elements);
+
+                    // if box has switches
+                    if (elements.some(e => e.innerHTML.indexOf("form-switch") >= 0)) {
+
+                        // try to get subbox element
+                        let subbox = box.querySelector("div.subbox");
+
+                        // create subbox element if it doesn't exist 
+                        if (!subbox) {
+                            subbox = document.createElement("div");
+                            subbox.className = "subbox";
+                        }
+
+                        // move switches to subbox inside box element
+                        subbox.append(...(elements.filter(e => e.innerHTML.indexOf("form-switch") >= 0)));
+
+                        // attach subbox to main box
+                        box.append(subbox);
+
+                    }
+
+                    // return reference to box element (why not?)
+                    return box;
+
+                };
+
+                // converts a checkbox input to a switch style
+                const CheckBoxToSwitch = id => {
+
+                    const input = document.getElementById(id);
+                    const oldContainer = input?.closest('div[style*="display:flex"]');
+                    const title = oldContainer.querySelector('[title]')?.title || '';
+                    const label = oldContainer.querySelector('[style*="user-select:none"]')?.textContent.trim() || '';
+                    const newContainer = document.createElement('div');
+                    newContainer.innerHTML = `
+                        <div>
+                            <div>
+                                <div class="form-check form-switch" title="${title}">
+                                    <input id="${input.id}" type="checkbox" data-type="boolean" class="form-check-input">
+                                    <label class="form-check-label" for="${input.id}">${label}</label>    
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    const newInput = newContainer.querySelector('input');
+                    newInput.checked = input.checked;
+                    newInput.disabled = input.disabled;
+                    oldContainer.replaceWith(newContainer.firstElementChild);
+
+                };
+
+                // creates a dummy switch element just to use as placeholder
+                const CreateDummySwitch = () => {
+                    const div = document.createElement("div");
+                    const dummy = document.createElement("div");
+                    dummy.className= "form-switch";
+                    div.append(dummy);
+                    return div;
+                };
+
+                // transform checkboxes into switches
+                CheckBoxToSwitch("game-param-_nn_ipv6");
+                CheckBoxToSwitch("game-param-masterSlave");
+                CheckBoxToSwitch("game-param-uploadDemos");
+                CheckBoxToSwitch("game-param-lockOptions");
+                CheckBoxToSwitch("game-param-lockPlayers");
+                CheckBoxToSwitch("game-param-lockSpecs");
+                CheckBoxToSwitch("game-param-botsAi");
+                CheckBoxToSwitch("game-param-recordDmo");
+                CheckBoxToSwitch("game-param-spec");
+                CheckBoxToSwitch("game-param-exploitMode");
+                CheckBoxToSwitch("game-param-allowMods");
+                CheckBoxToSwitch("game-param-disableAutoaim");
+
+                // inject room name label
+                document.querySelector("[placeholder='Room Name']").parentNode.insertAdjacentHTML("afterbegin", `
+                    <label>Room Name</label>
+                `);
+
+                // inject password label
+                document.getElementById("password").parentNode.insertAdjacentHTML("afterbegin", `
+                    <label>Password</label>
+                `);
+
+                // =================================================================================
+                // the boxes have to be created in the inverse order (for now)
+                // =================================================================================
+
+                // user settings
+                CreateBox("USER SETTINGS", [
+                    document.getElementById("game-param-color").parentNode.parentNode,
+                    document.getElementById("game-param-team").parentNode.parentNode,
+                    document.getElementById("game-param-recordDmo").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-spec").parentNode.parentNode.parentNode,
+                    CreateDummySwitch(), // empty placeholder for switch alignment
+                    document.getElementById("game-param-exploitMode").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-allowMods").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-disableAutoaim").parentNode.parentNode.parentNode,
+                ]);
+
+                // match settings
+                CreateBox("MATCH SETTINGS", [
+                    document.getElementById("game-param-multiplayerMode").parentNode.parentNode,
+                    document.getElementById("game-param-monstersSkill").parentNode.parentNode,
+                    document.getElementById("game-param-mapType").parentNode.parentNode,
+                    document.getElementById("game-param-episodeAndLevel").parentNode.parentNode,
+                    document.getElementById("game-param-map").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-scoreLimit").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-timeLimit").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-extraLives").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-botsNum").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-botsAi").parentNode.parentNode.parentNode
+                ]);                
+
+                // room settings
+                CreateBox("ROOM SETTINGS", [
+                    document.querySelector("[placeholder='Room Name']").parentNode,
+                    document.getElementById("password").parentNode,
+                    document.getElementById("max-players").parentNode,
+                    document.getElementById("game-param-_nn_ipv6").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-masterSlave").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-uploadDemos").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-lockOptions").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-lockPlayers").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-lockSpecs").parentNode.parentNode.parentNode,
+                    // "hide room" checkbox
+                    // adding last so it stays in the third line
+                    // since it disappears once the room is created
+                    document.querySelector(`div.form-switch:has(label[title=""])`)?.parentNode
+                ]);
+
+                return;
+                
             }
         }
     };
