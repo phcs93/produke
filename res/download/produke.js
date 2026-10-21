@@ -1138,184 +1138,46 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
     // manipulate the html
     gamedefs.games.duke3d.executables.produke.parameters.html = {
         modeSupport: ["multiplayer", "singleplayer"],
-        type: "choice",
+        type: "boolean",
         label: "",
         optional: false,
         syncOnly: true,
-        choices: [ {label: "", value: ""} ],
         for: "private",
         dependsOn: {
             params: "html",
             show: () => {
-                                
+
+                console.log(`produkeCSSInjected = ${window.produkeCSSInjected}`);
+
+                // =================================================================================
+                // HELPER VARIABLES
+                // =================================================================================
+
+                console.log("HELPER VARIABLES...");
+
                 const root = document.getElementById("mode")?.parentNode?.nextSibling;
-                if (!root || document.querySelectorAll(`[id^="game-param"]`).length === 0) return;
-
-                // =================================================================================
-                // CSS
-                // =================================================================================
-
-                // check if css is already injected
-                if (!window.produkeCSSInjected) {
-
-                    // flag as injected
-                    window.produkeCSSInjected = true;                                    
-
-                    // inject css
-                    document.body.insertAdjacentHTML("afterbegin", `
-
-                        <style>
-
-                            /* ================================================================================= */
-                            /* MAIN COMPONENTS                                                                   */
-                            /* ================================================================================= */
-
-                            /* root div */
-                            div:has(>#mode) + div {
-                                display: flex; 
-                                flex-direction: column; 
-                                gap: 16px; 
-                                margin-bottom: 0px;
-                                margin-top: 16px;
-                            }
-
-                            div:has(>div>div>#game-param-html) {
-                                display: none;
-                            }
-
-                            div.box {
-                                background-color: #17191c;
-                                display: flex;
-                                flex-direction: column;
-                                gap: 8px;
-                                border: 1px solid #495057;
-                                border-radius: 5px;
-                                padding: 16px;
-                            }
-
-                            div.box > span {                
-                                display: inline-block;
-                                padding-bottom: 16px;
-                                margin-bottom: 16px;
-                                font-weight: bolder;
-                                border-bottom: 1px solid #495057;
-                            }
-
-                            div.subbox {
-                                width: 470px;
-                                display: grid;
-                                grid-template-columns: repeat(3, 1fr);
-                                grid-auto-rows: 32px;
-                                align-self: flex-end;
-                            }
-
-                            div#netflags-box {
-                                margin-top: 16px;
-                            }
-
-                            div.flags > span {
-                                display: block;
-                                font-family: "Candara";
-                                font-size: 14px;
-                                font-weight: bold;
-                                padding-bottom: 8px;
-                                border-bottom: 1px solid #495057;
-                                margin-bottom: 8px;
-                            }
-
-                            /* ================================================================================= */
-                            /* INPUTS                                                                            */
-                            /* ================================================================================= */
-
-                            .param-hidden, .param-hiden * {
-                                display: none !important;
-                            }
-
-                            div:has(>div>select[id^="game-param"]):not(.param-hidden),
-                            div:has(>div>span>input[id^="game-param"]):not(.param-hidden) {
-                                height: 38px !important;
-                                min-height: 38px !important;
-                            }
-
-                            div:has(>input) > label,
-                            div:has(>div>div>input[id^="game-param"]) > div:not(:has(div>input)),
-                            div:has(>div>select[id^="game-param"]) > div:not(:has(select)),
-                            div:has(>div>span>input[id^="game-param"]) > div:not(:has(span>input)) {
-                                display: flex;
-                                flex-grow: 1;
-                                user-select: none; 
-                                text-wrap: nowrap;
-                            }
-                            
-                            div:has(>div>div>input[id^="game-param"]) > div:has(div>input:not([type="checkbox"])),
-                            div:has(>div>select[id^="game-param"]) > div:has(select),            
-                            div:has(>div>span>input[id^="game-param"]) > div:has(span>input)            
-                            {
-                                width: 470px !important;
-                            }
-
-                            input[type="plain"],
-                            input[type="password"],
-                            select[id^="game-param"] {
-                                width: 470px;
-                            }
-
-                            input[type="number"] {
-                                width: 60px;
-                                margin-right: 16px;
-                            }
-
-                            input[type="range"] {
-                                width: 394px;
-                            }
-
-                            div.form-switch {
-                                display: inline-block !important;
-                            }
-
-                            /* ================================================================================= */
-                            /* ROOM SETTINGS                                                                     */
-                            /* ================================================================================= */
-
-                            div:has(>input[placeholder="Room Name"]),
-                            div:has(>input[placeholder="Password"]) {
-                                display: flex;
-                                flex-direction: row;
-                                align-items: center;
-                            }
-
-                            /* ================================================================================= */
-                            /* GRAY INFO TEXT (unused for now)                                                   */
-                            /* ================================================================================= */
-
-                            /*
-                            div:has(> div > div > #game-param-uploadDemos) > div[style*="user-select:none"]::after {
-                                content: "(produke.com.br/en/demos)";
-                                font-style: italic;
-                                color: #777777;
-                                margin-left: 8px;
-                            }
-
-                            div:has(> div > div > #game-param-exploitMode) > div[style*="user-select:none"]::after,
-                            div:has(> div > div > #game-param-allowMods) > div[style*="user-select:none"]::after,
-                            div:has(> div > div > #game-param-disableAutoaim) > div[style*="user-select:none"]::after {
-                                content: "(voting required)";
-                                font-style: italic;
-                                color: #777777;
-                                margin-left: 8px;
-                            }
-                            */
-
-                        </style>
-
-                    `);
-
-                }
-
-                // =================================================================================
-                // HELPERS
-                // =================================================================================
+                const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;
+                const isProduke = document.getElementById("exec").value === "produke";
+                const isMultiplayer = document.getElementById("mode").value === "multiplayer";
+                const isHost = true;
+               
+                // dont run if current game is not produke
+                if (!isProduke) return;
                 
+                // dont run if root is not present
+                if (!root) return;
+
+                // dont run if game params are not present yet
+                if (!isReady) return;
+
+                console.log("HELPER VARIABLES // OK");
+
+                // =================================================================================
+                // HELPER FUNCTIONS
+                // =================================================================================
+
+                console.log("HELPER FUNCTIONS...");
+
                 // creates a box div
                 const CreateBox = (title, elements) => {
 
@@ -1339,7 +1201,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     }
 
                     // move box to the correct spot
-                    root.insertAdjacentElement("afterbegin", box);
+                    root.insertAdjacentElement("beforeend", box);
 
                     // move elements from the document to inside the box
                     box.append(...elements);
@@ -1371,27 +1233,12 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                 // converts a checkbox input to a switch style
                 const CheckBoxToSwitch = id => {
-
                     const input = document.getElementById(id);
-                    const oldContainer = input?.closest('div[style*="display:flex"]');
-                    const title = oldContainer.querySelector('[title]')?.title || '';
-                    const label = oldContainer.querySelector('[style*="user-select:none"]')?.textContent.trim() || '';
-                    const newContainer = document.createElement('div');
-                    newContainer.innerHTML = `
-                        <div>
-                            <div>
-                                <div class="form-check form-switch" title="${title}">
-                                    <input id="${input.id}" type="checkbox" data-type="boolean" class="form-check-input">
-                                    <label class="form-check-label" for="${input.id}">${label}</label>    
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    const newInput = newContainer.querySelector('input');
-                    newInput.checked = input.checked;
-                    newInput.disabled = input.disabled;
-                    oldContainer.replaceWith(newContainer.firstElementChild);
-
+                    if (!input) return;
+                    if (input.closest("div.form-switch")) return;
+                    input.parentNode.classList.add("form-check", "form-switch");
+                    input.classList.add("form-check-input");
+                    input.insertAdjacentElement("afterend", input.parentNode.parentNode.nextElementSibling);
                 };
 
                 // creates a dummy switch element just to use as placeholder
@@ -1403,8 +1250,195 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     return div;
                 };
 
-                // transform checkboxes into switches
-                CheckBoxToSwitch("game-param-_nn_ipv6");
+                console.log("HELPER FUNCTIONS // OK");
+
+                // =================================================================================
+                // INJECT CSS
+                // =================================================================================
+
+                console.log("INJECT CSS...");
+
+                // check if css is already injected
+                if (!window.produkeCSSInjected) {
+
+                    // flag as injected
+                    window.produkeCSSInjected = true;                                    
+
+                    // inject css
+                    document.body.insertAdjacentHTML("afterbegin", `
+
+                        <style>
+
+                            /* prevent style from applying to other ports */
+                            div.modal-body:has(select#exec > optgroup > option[value="produke"]:checked) {
+
+                                /* ================================================================================= */
+                                /* MAIN COMPONENTS                                                                   */
+                                /* ================================================================================= */
+
+                                /* root div */
+                                div:has(>#mode) + div {
+                                    display: flex; 
+                                    flex-direction: column; 
+                                    gap: 16px; 
+                                    margin-bottom: 0px;
+                                    margin-top: 16px;
+                                }
+
+                                div:has(>div>#game-param-html) {
+                                    display: none;
+                                }
+
+                                div.box {
+                                    background-color: #17191c;
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 8px;
+                                    border: 1px solid #495057;
+                                    border-radius: 5px;
+                                    padding: 16px;
+                                }
+
+                                div.box > span {                
+                                    display: inline-block;
+                                    padding-bottom: 16px;
+                                    margin-bottom: 16px;
+                                    font-weight: bolder;
+                                    border-bottom: 1px solid #495057;
+                                }
+
+                                div.subbox {
+                                    width: 470px;
+                                    display: grid;
+                                    grid-template-columns: repeat(3, 1fr);
+                                    grid-auto-rows: 32px;
+                                    align-self: flex-end;
+                                }
+
+                                div#netflags-box {
+                                    margin-top: 16px;
+                                }
+
+                                div.flags > span {
+                                    display: block;
+                                    font-family: "Candara";
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    padding-bottom: 8px;
+                                    border-bottom: 1px solid #495057;
+                                    margin-bottom: 8px;
+                                }
+
+                                /* ================================================================================= */
+                                /* INPUTS                                                                            */
+                                /* ================================================================================= */
+
+                                .param-hidden, .param-hiden * {
+                                    display: none !important;
+                                }
+
+                                div:has(>div>select[id^="game-param"]):not(.param-hidden),
+                                div:has(>div>span>input[id^="game-param"]):not(.param-hidden) {
+                                    height: 38px !important;
+                                    min-height: 38px !important;
+                                }
+
+                                div:has(>input) > label,
+                                div:has(>div>div>input[id^="game-param"]) > div:not(:has(div>input)),
+                                div:has(>div>select[id^="game-param"]) > div:not(:has(select)),
+                                div:has(>div>span>input[id^="game-param"]) > div:not(:has(span>input)) {
+                                    display: flex;
+                                    flex-grow: 1;
+                                    user-select: none; 
+                                    text-wrap: nowrap;
+                                }
+                                
+                                div:has(>div>div>input[id^="game-param"]) > div:has(div>input:not([type="checkbox"])),
+                                div:has(>div>select[id^="game-param"]) > div:has(select),            
+                                div:has(>div>span>input[id^="game-param"]) > div:has(span>input)            
+                                {
+                                    width: 470px !important;
+                                }
+
+                                input[type="plain"],
+                                input[type="password"],
+                                select[id^="game-param"] {
+                                    width: 470px;
+                                }
+
+                                input[type="number"] {
+                                    width: 60px;
+                                    margin-right: 16px;
+                                }
+
+                                input[type="range"] {
+                                    width: 394px;
+                                }
+
+                                div.form-switch {
+                                    display: inline-block !important;
+                                }
+
+                                /* ================================================================================= */
+                                /* ROOM SETTINGS                                                                     */
+                                /* ================================================================================= */
+
+                                div:has(>input[placeholder="Room Name"]),
+                                div:has(>input[placeholder="Password"]) {
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
+                                }
+
+                                /* ================================================================================= */
+                                /* GRAY INFO TEXT (unused for now)                                                   */
+                                /* ================================================================================= */
+
+                                /*
+                                div:has(> div > div > #game-param-uploadDemos) > div[style*="user-select:none"]::after {
+                                    content: "(produke.com.br/en/demos)";
+                                    font-style: italic;
+                                    color: #777777;
+                                    margin-left: 8px;
+                                }
+
+                                div:has(> div > div > #game-param-exploitMode) > div[style*="user-select:none"]::after,
+                                div:has(> div > div > #game-param-allowMods) > div[style*="user-select:none"]::after,
+                                div:has(> div > div > #game-param-disableAutoaim) > div[style*="user-select:none"]::after {
+                                    content: "(voting required)";
+                                    font-style: italic;
+                                    color: #777777;
+                                    margin-left: 8px;
+                                }
+                                */
+
+                            }
+
+                        </style>
+
+                    `);
+
+                }
+
+                console.log("INJECT CSS // OK");
+
+                // =================================================================================
+                // RESTYLE SOME ELEMENTS
+                // =================================================================================
+
+                console.log("RESTYLE SOME ELEMENTS...");
+
+                // inject room name label
+                document.querySelector("[placeholder='Room Name']")?.insertAdjacentHTML("beforebegin", `
+                    <label>Room Name</label>
+                `);
+
+                // inject password label
+                document.getElementById("password")?.insertAdjacentHTML("beforebegin", `
+                    <label>Password</label>
+                `);
+                
+                // transform some checkboxes into switches                                
                 CheckBoxToSwitch("game-param-masterSlave");
                 CheckBoxToSwitch("game-param-uploadDemos");
                 CheckBoxToSwitch("game-param-lockOptions");
@@ -1416,24 +1450,83 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 CheckBoxToSwitch("game-param-exploitMode");
                 CheckBoxToSwitch("game-param-allowMods");
                 CheckBoxToSwitch("game-param-disableAutoaim");
+                CheckBoxToSwitch("game-param-_nn_ipv6");
 
-                // inject room name label
-                document.querySelector("[placeholder='Room Name']").parentNode.insertAdjacentHTML("afterbegin", `
-                    <label>Room Name</label>
-                `);
-
-                // inject password label
-                document.getElementById("password").parentNode.insertAdjacentHTML("afterbegin", `
-                    <label>Password</label>
-                `);
+                console.log("RESTYLE SOME ELEMENTS // OK");
 
                 // =================================================================================
-                // the boxes have to be created in the inverse order (for now)
+                // ROOM SETTINGS
                 // =================================================================================
+
+                console.log("ROOM SETTINGS...");
+
+                if (isMultiplayer) {
+                    CreateBox("ROOM SETTINGS", [
+                        document.querySelector("[placeholder='Room Name']").parentNode,
+                        document.getElementById("password").parentNode,
+                        document.getElementById("max-players").parentNode,
+                        document.getElementById("game-param-_nn_ipv6").parentNode.parentNode.parentNode,
+                        document.getElementById("game-param-uploadDemos").parentNode.parentNode.parentNode,
+                        document.getElementById("game-param-masterSlave").parentNode.parentNode.parentNode,                    
+                        document.getElementById("game-param-lockOptions").parentNode.parentNode.parentNode,
+                        document.getElementById("game-param-lockPlayers").parentNode.parentNode.parentNode,
+                        document.getElementById("game-param-lockSpecs").parentNode.parentNode.parentNode,
+                        // "hide room" checkbox
+                        // adding last so it stays in the third line
+                        // since it disappears once the room is created
+                        //document.querySelector(`div.form-switch:has(label[title=""])`)?.parentNode
+                    ]);
+                }
+
+                console.log("ROOM SETTINGS // OK");
+                
+                
+
+                // =================================================================================
+                // MATCH SETTINGS
+                // =================================================================================
+
+                console.log("MATCH SETTINGS...");
+
+                CreateBox("MATCH SETTINGS", [
+                    document.getElementById("game-param-multiplayerMode").parentNode.parentNode,
+                    document.getElementById("game-param-monstersSkill").parentNode.parentNode,
+                    document.getElementById("game-param-mapType").parentNode.parentNode,
+                    document.getElementById("game-param-episodeAndLevel").parentNode.parentNode,
+                    document.getElementById("game-param-map").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-scoreLimit").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-timeLimit").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-extraLives").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-botsNum").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-botsAi").parentNode.parentNode.parentNode
+                ]);    
+
+                console.log("MATCH SETTINGS // OK");
+
+                // =================================================================================
+                // USER SETTINGS
+                // =================================================================================
+
+                console.log("USER SETTINGS...");
+
+                CreateBox("USER SETTINGS", [
+                    document.getElementById("game-param-color").parentNode.parentNode,
+                    document.getElementById("game-param-team").parentNode.parentNode,
+                    document.getElementById("game-param-recordDmo").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-spec").parentNode.parentNode.parentNode,
+                    CreateDummySwitch(), // empty placeholder for switch alignment
+                    document.getElementById("game-param-exploitMode").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-allowMods").parentNode.parentNode.parentNode,
+                    document.getElementById("game-param-disableAutoaim").parentNode.parentNode.parentNode,
+                ]);
+
+                console.log("USER SETTINGS // OK");
 
                 // =================================================================================
                 // NETFLAGS
                 // =================================================================================
+
+                console.log("NETFLAGS...");
 
                 // first we need to create the subboxes for each netflag group
                 root.insertAdjacentHTML("afterbegin", `
@@ -1481,55 +1574,21 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     document.getElementById("invFlags").appendChild(e.parentNode.parentNode.parentNode);
                 });   
 
+                // now we can finally create the main netflags box
                 CreateBox("NETFLAGS", [
                     document.getElementById("game-param-presets").parentNode.parentNode,
                     // now we can reference the subboxes as a concrete element
                     document.getElementById("netflags-box")
                 ]);
 
-                // user settings
-                CreateBox("USER SETTINGS", [
-                    document.getElementById("game-param-color").parentNode.parentNode,
-                    document.getElementById("game-param-team").parentNode.parentNode,
-                    document.getElementById("game-param-recordDmo").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-spec").parentNode.parentNode.parentNode,
-                    CreateDummySwitch(), // empty placeholder for switch alignment
-                    document.getElementById("game-param-exploitMode").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-allowMods").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-disableAutoaim").parentNode.parentNode.parentNode,
-                ]);
+                console.log("NETFLAGS // OK");                
+                
+                // move extra args back to end of modal body
+                console.log("MOVE EXTRA ARGS...");
+                root.append(document.getElementById("manual-param-controls").parentNode);
+                console.log("MOVE EXTRA ARGS // OK");
 
-                // match settings
-                CreateBox("MATCH SETTINGS", [
-                    document.getElementById("game-param-multiplayerMode").parentNode.parentNode,
-                    document.getElementById("game-param-monstersSkill").parentNode.parentNode,
-                    document.getElementById("game-param-mapType").parentNode.parentNode,
-                    document.getElementById("game-param-episodeAndLevel").parentNode.parentNode,
-                    document.getElementById("game-param-map").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-scoreLimit").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-timeLimit").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-extraLives").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-botsNum").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-botsAi").parentNode.parentNode.parentNode
-                ]);                
-
-                // room settings
-                CreateBox("ROOM SETTINGS", [
-                    document.querySelector("[placeholder='Room Name']").parentNode,
-                    document.getElementById("password").parentNode,
-                    document.getElementById("max-players").parentNode,
-                    document.getElementById("game-param-_nn_ipv6").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-uploadDemos").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-masterSlave").parentNode.parentNode.parentNode,                    
-                    document.getElementById("game-param-lockOptions").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-lockPlayers").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-lockSpecs").parentNode.parentNode.parentNode,
-                    // "hide room" checkbox
-                    // adding last so it stays in the third line
-                    // since it disappears once the room is created
-                    document.querySelector(`div.form-switch:has(label[title=""])`)?.parentNode
-                ]);
-
+                // return false so the dummy control doesn't show
                 return;
                 
             }
