@@ -1147,36 +1147,91 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
             params: "html",
             show: () => {
 
-                console.log(`produkeCSSInjected = ${window.produkeCSSInjected}`);
-
                 // =================================================================================
                 // HELPER VARIABLES
                 // =================================================================================
 
-                console.log("HELPER VARIABLES...");
+                // console.log("HELPER VARIABLES...");
 
                 const root = document.getElementById("mode")?.parentNode?.nextSibling;
                 const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;
                 const isProduke = document.getElementById("exec").value === "produke";
                 const isMultiplayer = document.getElementById("mode").value === "multiplayer";
                 const isHost = true;
+
+                // =================================================================================
+                // CLEAN ROOT WHEN SWITCHING OUT OF PRODUKE
+                // =================================================================================
+
+                // check if listener is not already attached
+                if (!window.listenerAttached) {
+
+                    // get inputs
+                    const gameInput = document.getElementById("game");
+                    const execInput = document.getElementById("exec");
+
+                    // if input exists
+                    if (gameInput && execInput) {
+
+                        // flag as attached
+                        window.listenerAttached = true;                    
+
+                        // first we need to set dataset
+                        execInput.dataset.currentExec = "produke";
+
+                        // attach listener to game
+                        gameInput.addEventListener("input", e => {
+                            
+                            // if changing from produke to other port
+                            if (execInput.dataset.currentExec === "produke") {
+
+                                // clean tree
+                                root.innerHTML = null;
+
+                            }
+
+                        });
+
+                        // attach listener to exec
+                        execInput.addEventListener("input", e => {
+                            
+                            // if changing from produke to other port
+                            if (e.target.dataset.currentExec === "produke") {
+
+                                // clean tree
+                                root.innerHTML = null;
+
+                            }
+
+                            // update self dataset
+                            e.target.dataset.currentExec = e.target.value;
+
+                        });
+
+                    }
+
+                } 
+
+                // =================================================================================
+                // EARLY RETURNS
+                // =================================================================================
+
+                // dont run if root is not present
+                if (!root) return;
                
                 // dont run if current game is not produke
                 if (!isProduke) return;
-                
-                // dont run if root is not present
-                if (!root) return;
 
                 // dont run if game params are not present yet
                 if (!isReady) return;
 
-                console.log("HELPER VARIABLES // OK");
+                // console.log("HELPER VARIABLES // OK");
 
                 // =================================================================================
                 // HELPER FUNCTIONS
                 // =================================================================================
 
-                console.log("HELPER FUNCTIONS...");
+                // console.log("HELPER FUNCTIONS...");
 
                 // creates a box div
                 const CreateBox = (title, elements) => {
@@ -1231,6 +1286,40 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                 };
 
+                // creates a box div
+                const CreateSpan = (title, elements) => {
+
+                    // filter undefined entries
+                    elements = elements.filter(Boolean);
+
+                    // determine id based on title
+                    const id = title.replace(" ", "-").toLocaleLowerCase();
+
+                    // try to get span element
+                    let span = document.getElementById(id);
+
+                    // create span element if it doesn't exist 
+                    if (!span) {
+                        console.log("CREATE SPAN");
+                        span = document.createElement("span");
+                        span.id = id;
+                        span.classList.add("separator");
+                        span.textContent = title;
+                    }
+
+                    // move span to the correct spot
+                    root.insertAdjacentElement("afterbegin", span);
+
+                    // move elements from the document to bellow the span
+                    for (const element of elements) {
+                        span.insertAdjacentElement("afterend", element);
+                    }
+
+                    // return reference to span element (why not?)
+                    return span;
+
+                };
+
                 // converts a checkbox input to a switch style
                 const CheckBoxToSwitch = id => {
                     const input = document.getElementById(id);
@@ -1250,13 +1339,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     return div;
                 };
 
-                console.log("HELPER FUNCTIONS // OK");
+                // console.log("HELPER FUNCTIONS // OK");
 
                 // =================================================================================
                 // INJECT CSS
                 // =================================================================================
 
-                console.log("INJECT CSS...");
+                // console.log("INJECT CSS...");
 
                 // check if css is already injected
                 if (!window.produkeCSSInjected) {
@@ -1299,7 +1388,8 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                     padding: 16px;
                                 }
 
-                                div.box > span {                
+                                div.box > span,
+                                span.separator {                
                                     display: inline-block;
                                     padding-bottom: 16px;
                                     margin-bottom: 16px;
@@ -1420,13 +1510,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                 }
 
-                console.log("INJECT CSS // OK");
+                // console.log("INJECT CSS // OK");
 
                 // =================================================================================
                 // RESTYLE SOME ELEMENTS
                 // =================================================================================
 
-                console.log("RESTYLE SOME ELEMENTS...");
+                // console.log("RESTYLE SOME ELEMENTS...");
 
                 // inject room name label
                 document.querySelector("[placeholder='Room Name']")?.insertAdjacentHTML("beforebegin", `
@@ -1452,41 +1542,39 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 CheckBoxToSwitch("game-param-disableAutoaim");
                 CheckBoxToSwitch("game-param-_nn_ipv6");
 
-                console.log("RESTYLE SOME ELEMENTS // OK");
+                //console.log("RESTYLE SOME ELEMENTS // OK");                
 
                 // =================================================================================
                 // ROOM SETTINGS
                 // =================================================================================
 
-                console.log("ROOM SETTINGS...");
+                // console.log("ROOM SETTINGS...");
 
-                if (isMultiplayer) {
-                    CreateBox("ROOM SETTINGS", [
-                        document.querySelector("[placeholder='Room Name']").parentNode,
-                        document.getElementById("password").parentNode,
-                        document.getElementById("max-players").parentNode,
-                        document.getElementById("game-param-_nn_ipv6").parentNode.parentNode.parentNode,
-                        document.getElementById("game-param-uploadDemos").parentNode.parentNode.parentNode,
-                        document.getElementById("game-param-masterSlave").parentNode.parentNode.parentNode,                    
-                        document.getElementById("game-param-lockOptions").parentNode.parentNode.parentNode,
-                        document.getElementById("game-param-lockPlayers").parentNode.parentNode.parentNode,
-                        document.getElementById("game-param-lockSpecs").parentNode.parentNode.parentNode,
-                        // "hide room" checkbox
-                        // adding last so it stays in the third line
-                        // since it disappears once the room is created
-                        //document.querySelector(`div.form-switch:has(label[title=""])`)?.parentNode
-                    ]);
-                }
+                // if (isMultiplayer) {
+                //     CreateBox("ROOM SETTINGS", [
+                //         document.querySelector("[placeholder='Room Name']")?.parentNode,
+                //         document.getElementById("password")?.parentNode,
+                //         document.getElementById("max-players")?.parentNode,
+                //         document.getElementById("game-param-_nn_ipv6")?.parentNode.parentNode.parentNode,
+                //         document.getElementById("game-param-uploadDemos")?.parentNode.parentNode.parentNode,
+                //         document.getElementById("game-param-masterSlave")?.parentNode.parentNode.parentNode,                    
+                //         document.getElementById("game-param-lockOptions")?.parentNode.parentNode.parentNode,
+                //         document.getElementById("game-param-lockPlayers")?.parentNode.parentNode.parentNode,
+                //         document.getElementById("game-param-lockSpecs")?.parentNode.parentNode.parentNode,
+                //         // "hide room" checkbox
+                //         // adding last so it stays in the third line
+                //         // since it disappears once the room is created
+                //         document.querySelector(`div.form-switch:has(label[title=""])`)?.parentNode
+                //     ]);
+                // }
 
-                console.log("ROOM SETTINGS // OK");
-                
-                
+                // console.log("ROOM SETTINGS // OK");
 
                 // =================================================================================
                 // MATCH SETTINGS
                 // =================================================================================
 
-                console.log("MATCH SETTINGS...");
+                // console.log("MATCH SETTINGS...");
 
                 CreateBox("MATCH SETTINGS", [
                     document.getElementById("game-param-multiplayerMode").parentNode.parentNode,
@@ -1501,13 +1589,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     document.getElementById("game-param-botsAi").parentNode.parentNode.parentNode
                 ]);    
 
-                console.log("MATCH SETTINGS // OK");
+                // console.log("MATCH SETTINGS // OK");
 
                 // =================================================================================
                 // USER SETTINGS
                 // =================================================================================
 
-                console.log("USER SETTINGS...");
+                // console.log("USER SETTINGS...");
 
                 CreateBox("USER SETTINGS", [
                     document.getElementById("game-param-color").parentNode.parentNode,
@@ -1520,13 +1608,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     document.getElementById("game-param-disableAutoaim").parentNode.parentNode.parentNode,
                 ]);
 
-                console.log("USER SETTINGS // OK");
+                // console.log("USER SETTINGS // OK");
 
                 // =================================================================================
                 // NETFLAGS
                 // =================================================================================
 
-                console.log("NETFLAGS...");
+                // console.log("NETFLAGS...");
 
                 // first we need to create the subboxes for each netflag group
                 root.insertAdjacentHTML("afterbegin", `
@@ -1581,12 +1669,10 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     document.getElementById("netflags-box")
                 ]);
 
-                console.log("NETFLAGS // OK");                
+                // console.log("NETFLAGS // OK");                
                 
                 // move extra args back to end of modal body
-                console.log("MOVE EXTRA ARGS...");
                 root.append(document.getElementById("manual-param-controls").parentNode);
-                console.log("MOVE EXTRA ARGS // OK");
 
                 // return false so the dummy control doesn't show
                 return;
