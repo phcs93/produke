@@ -1155,7 +1155,9 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 // =================================================================================
 
                 const root = document.getElementById("mode")?.parentNode?.nextSibling?.querySelector("div");
-                const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;                                
+                const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;         
+                const gameRoom = mainStore.getGameRoom();
+                const isHost = gameRoom ? mainStore.imHostInChannel(gameRoom.chan) : true;
 
                 // =================================================================================
                 // EARLY RETURNS
@@ -1172,13 +1174,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 // =================================================================================
 
                 // converts a checkbox input to a switch style
-                const CheckBoxToSwitch = id => {
+                const CheckBoxToSwitch = (id, title) => {
                     const input = document.getElementById(id);
                     if (!input) return;
-                    //if (input.closest("div.form-switch")) return;
                     if (input.dataset.converted) return;
                     input.dataset.converted = true;
                     input.parentNode.classList.add("form-check", "form-switch");
+                    input.parentNode.title = title;
                     input.classList.add("form-check-input");
                     input.insertAdjacentElement("afterend", input.parentNode.parentNode.nextElementSibling);
                 };
@@ -1191,7 +1193,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 if (!window.produkeCSSInjected) {
 
                     // flag as injected
-                    window.produkeCSSInjected = true;                                    
+                    window.produkeCSSInjected = true;
 
                     // inject css
                     document.body.insertAdjacentHTML("afterbegin", `
@@ -1244,6 +1246,30 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 /* hide hack element */
                                 div:has(>div>#game-param-html) {
                                     display: none;
+                                }
+
+                                /* title label separator */
+                                div.title-label {
+                                    font-family: "Candara";
+                                    background-color: #17191c;
+                                    border: 1px solid #495057;
+                                    border-left: none;
+                                    border-right: none;
+                                    font-weight: bold;
+                                    padding: 8px 16px;
+                                    margin-top: 16px;
+                                    margin-bottom: 16px;
+                                    text-align: center;
+                                }
+
+                                /* flags separator */
+                                div.flag {
+                                    background-color: transparent;
+                                    border-radius: 0px;
+                                    border: none;
+                                    border-bottom: 1px solid #495057;
+                                    text-align: left;
+                                    padding-left: 0px;
                                 }
 
                                 /* ================================================================================= */
@@ -1347,24 +1373,24 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 div:has(>div>div>input#game-param-netFlagBTERMNoFreezerWeakness)   { grid-row: 31 !important; grid-column: 3 / span 2 !important; }
 
                                 /* netflags C */
-                                div#netflagsC { grid-row: 32; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCArsenalRebalance)            { grid-row: 33 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCLaserInvisibleWONightvision) { grid-row: 34 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCFreezerCantHurtOwner)        { grid-row: 35 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDestructableCameras)         { grid-row: 36 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagC13DDoubleKick)               { grid-row: 37 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagC13DNoExpander)               { grid-row: 38 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCFixTripbombsOnSlopes)        { grid-row: 39 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSClassicMapStartBehaviors) { grid-row: 40 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSFFireExcludesSelf)        { grid-row: 41 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSCanRespawnDrowning)       { grid-row: 42 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSInvalidShrinkStates)      { grid-row: 43 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSBadShrinkerHitDetection)  { grid-row: 44 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSBadGrowExplosionOwner)    { grid-row: 45 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSWeaponSwitchingBugs)      { grid-row: 46 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSDeadPlayerSwappingBugs)   { grid-row: 47 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSUselessNightvision)       { grid-row: 48 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSAutoaimedRPGsBugs)        { grid-row: 49 !important; grid-column: 3 / span 2 !important; }
+                                div#netflagsC { grid-row: 32 / span 3; grid-column: 3 / span 2 !important; height: 41.91px; }
+                                div:has(>div>div>input#game-param-netFlagCArsenalRebalance)            { grid-row: 35 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCLaserInvisibleWONightvision) { grid-row: 36 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCFreezerCantHurtOwner)        { grid-row: 37 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDestructableCameras)         { grid-row: 38 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagC13DDoubleKick)               { grid-row: 39 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagC13DNoExpander)               { grid-row: 40 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCFixTripbombsOnSlopes)        { grid-row: 41 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSClassicMapStartBehaviors) { grid-row: 42 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSFFireExcludesSelf)        { grid-row: 43 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSCanRespawnDrowning)       { grid-row: 44 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSInvalidShrinkStates)      { grid-row: 45 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSBadShrinkerHitDetection)  { grid-row: 46 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSBadGrowExplosionOwner)    { grid-row: 47 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSWeaponSwitchingBugs)      { grid-row: 48 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSDeadPlayerSwappingBugs)   { grid-row: 49 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSUselessNightvision)       { grid-row: 50 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSAutoaimedRPGsBugs)        { grid-row: 51 !important; grid-column: 3 / span 2 !important; }
 
                                 /* weapflags */
                                 div#weapflags { grid-row: 56; grid-column: 1 / span 2 !important; }
@@ -1393,24 +1419,6 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 div:has(>div>div>input#game-param-invFlagArmor)         { grid-row: 65 !important; grid-column: 3 / span 2 !important; }
                                 div:has(>div>div>input#game-param-invFlagAtomicHealth1) { grid-row: 66 !important; grid-column: 3 / span 2 !important; }
                                 div:has(>div>div>input#game-param-invFlagAtomicHealth2) { grid-row: 67 !important; grid-column: 3 / span 2 !important; }
-
-                                span.separator {                
-                                    display: inline-block;
-                                    padding-bottom: 16px;
-                                    margin-bottom: 16px;
-                                    font-weight: bolder;
-                                    border-bottom: 1px solid #495057;
-                                }
-
-                                div.flags > span {
-                                    display: block;
-                                    font-family: "Candara";
-                                    font-size: 14px;
-                                    font-weight: bold;
-                                    padding-bottom: 8px;
-                                    border-bottom: 1px solid #495057;
-                                    margin-bottom: 8px;
-                                }
 
                                 /* ================================================================================= */
                                 /* INPUTS                                                                            */
@@ -1464,28 +1472,6 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                     display: inline-block !important;
                                 }
 
-                                /* ================================================================================= */
-                                /* GRAY INFO TEXT (unused for now)                                                   */
-                                /* ================================================================================= */
-
-                                /*
-                                div:has(> div > div > #game-param-uploadDemos) > div[style*="user-select:none"]::after {
-                                    content: "(produke.com.br/en/demos)";
-                                    font-style: italic;
-                                    color: #777777;
-                                    margin-left: 8px;
-                                }
-
-                                div:has(> div > div > #game-param-exploitMode) > div[style*="user-select:none"]::after,
-                                div:has(> div > div > #game-param-allowMods) > div[style*="user-select:none"]::after,
-                                div:has(> div > div > #game-param-disableAutoaim) > div[style*="user-select:none"]::after {
-                                    content: "(voting required)";
-                                    font-style: italic;
-                                    color: #777777;
-                                    margin-left: 8px;
-                                }
-                                */
-
                             }
 
                         </style>
@@ -1509,81 +1495,81 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 `);
 
                 // inject room settings label
-                if (!document.getElementById("room-settings")) {
+                if (!document.getElementById("room-settings") && isHost) {
                     root.insertAdjacentHTML("afterend", `
-                        <div id="room-settings">ROOM SETTINGS</div>
+                        <div id="room-settings" class="title-label">ROOM SETTINGS</div>
                     `);
                 }
 
                 // inject match settings label
-                if (!document.getElementById("match-settings")) {
+                if (!document.getElementById("match-settings") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="match-settings">MATCH SETTINGS</div>
+                        <div id="match-settings" class="title-label">MATCH SETTINGS</div>
                     `);
                 }
 
                 // inject user settings label
                 if (!document.getElementById("user-settings")) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="user-settings">USER SETTINGS</div>
+                        <div id="user-settings" class="title-label">USER SETTINGS</div>
                     `);
                 }
 
                 // inject netflags label
-                if (!document.getElementById("netflags")) {
+                if (!document.getElementById("netflags") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="netflags">NETFLAGS</div>
+                        <div id="netflags" class="title-label">NETFLAGS</div>
                     `);
                 }
 
                 // inject netflags A label
-                if (!document.getElementById("netflagsA")) {
+                if (!document.getElementById("netflagsA") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="netflagsA">NETFLAGS A</div>
+                        <div id="netflagsA" class="title-label flag">NETFLAGS A</div>
                     `);
                 }
 
                 // inject netflags B label
-                if (!document.getElementById("netflagsB")) {
+                if (!document.getElementById("netflagsB") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="netflagsB">NETFLAGS B</div>
+                        <div id="netflagsB" class="title-label flag">NETFLAGS B</div>
                     `);
                 }
 
                 // inject netflagsC label
-                if (!document.getElementById("netflagsC")) {
+                if (!document.getElementById("netflagsC") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="netflagsC">NETFLAGSC</div>
+                        <div id="netflagsC" class="title-label flag">NETFLAGSC</div>
                     `);
                 }
 
                 // inject weapflags label
-                if (!document.getElementById("weapflags")) {
+                if (!document.getElementById("weapflags") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="weapflags">STARTING WEAPONS</div>
+                        <div id="weapflags" class="title-label flag">STARTING WEAPONS</div>
                     `);
                 }
 
                 // inject invflags label
-                if (!document.getElementById("invflags")) {
+                if (!document.getElementById("invflags") && isHost) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="invflags">STARTING INVENTORY</div>
+                        <div id="invflags" class="title-label flag">STARTING INVENTORY</div>
                     `);
                 }
                 
                 // transform some checkboxes into switches                                
-                CheckBoxToSwitch("game-param-masterSlave");
-                CheckBoxToSwitch("game-param-uploadDemos");
-                CheckBoxToSwitch("game-param-lockOptions");
-                CheckBoxToSwitch("game-param-lockPlayers");
-                CheckBoxToSwitch("game-param-lockSpecs");
-                CheckBoxToSwitch("game-param-botsAi");
-                CheckBoxToSwitch("game-param-recordDmo");
-                CheckBoxToSwitch("game-param-spec");
-                CheckBoxToSwitch("game-param-exploitMode");
-                CheckBoxToSwitch("game-param-allowMods");
-                CheckBoxToSwitch("game-param-disableAutoaim");
-                CheckBoxToSwitch("game-param-_nn_ipv6");
+                CheckBoxToSwitch("game-param-masterSlave", "-master and /i0");
+                CheckBoxToSwitch("game-param-uploadDemos", "Upload match demos to produke.com.br");
+                CheckBoxToSwitch("game-param-lockOptions", "Prevent players from changing match settings and netflags");
+                CheckBoxToSwitch("game-param-lockPlayers", "Prevent players from changing their color, team and nicknames");
+                CheckBoxToSwitch("game-param-lockSpecs", "Prevent players from becoming spectator and vice versa in current match");
+                CheckBoxToSwitch("game-param-botsAi", "Enable BOT AI");
+                CheckBoxToSwitch("game-param-recordDmo", "Record match");
+                CheckBoxToSwitch("game-param-spec", "Join as spectator");
+                CheckBoxToSwitch("game-param-exploitMode", "Ask for tiles and visibility (requires voting)");
+                CheckBoxToSwitch("game-param-allowMods", "Ask for all external files (requires voting)");
+                CheckBoxToSwitch("game-param-disableAutoaim", "Ask for disabled autoaim (requires voting)");
+                CheckBoxToSwitch("game-param-_nn_ipv6", "Use Direct IPv6 address between peers instead of Relay/STUN tunnels");
 
                 // return nothing so the component doesn't show
                 return;
