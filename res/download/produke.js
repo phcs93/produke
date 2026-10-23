@@ -27,6 +27,8 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
             .replace("]", "")
             .replace(/\//g, "")
             .replace(/\'/g, "")
+            .replace(/\./g, "")
+            .replace(/-/g, "")
             .split(" ")
             .join("")
         ;
@@ -803,6 +805,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
     // play demo
     gamedefs.games.duke3d.executables.produke.parameters.playDmo.label = "Play Demo";
+    gamedefs.games.duke3d.executables.produke.parameters.playDmo.optional = false;
 
     // color
     gamedefs.games.duke3d.executables.produke.parameters.color = {
@@ -1148,69 +1151,11 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
             show: () => {
 
                 // =================================================================================
-                // HELPER VARIABLES
+                // VARIABLES
                 // =================================================================================
 
-                // console.log("HELPER VARIABLES...");
-
-                const root = document.getElementById("mode")?.parentNode?.nextSibling;
-                const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;
-                const isProduke = document.getElementById("exec").value === "produke";
-                const isMultiplayer = document.getElementById("mode").value === "multiplayer";
-                const isHost = true;
-
-                // =================================================================================
-                // CLEAN ROOT WHEN SWITCHING OUT OF PRODUKE
-                // =================================================================================
-
-                // check if listener is not already attached
-                if (!window.listenerAttached) {
-
-                    // get inputs
-                    const gameInput = document.getElementById("game");
-                    const execInput = document.getElementById("exec");
-
-                    // if input exists
-                    if (gameInput && execInput) {
-
-                        // flag as attached
-                        window.listenerAttached = true;                    
-
-                        // first we need to set dataset
-                        execInput.dataset.currentExec = "produke";
-
-                        // attach listener to game
-                        gameInput.addEventListener("input", e => {
-                            
-                            // if changing from produke to other port
-                            if (execInput.dataset.currentExec === "produke") {
-
-                                // clean tree
-                                root.innerHTML = null;
-
-                            }
-
-                        });
-
-                        // attach listener to exec
-                        execInput.addEventListener("input", e => {
-                            
-                            // if changing from produke to other port
-                            if (e.target.dataset.currentExec === "produke") {
-
-                                // clean tree
-                                root.innerHTML = null;
-
-                            }
-
-                            // update self dataset
-                            e.target.dataset.currentExec = e.target.value;
-
-                        });
-
-                    }
-
-                } 
+                const root = document.getElementById("mode")?.parentNode?.nextSibling?.querySelector("div");
+                const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;                                
 
                 // =================================================================================
                 // EARLY RETURNS
@@ -1219,133 +1164,28 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 // dont run if root is not present
                 if (!root) return;
                
-                // dont run if current game is not produke
-                if (!isProduke) return;
-
                 // dont run if game params are not present yet
                 if (!isReady) return;
-
-                // console.log("HELPER VARIABLES // OK");
 
                 // =================================================================================
                 // HELPER FUNCTIONS
                 // =================================================================================
 
-                // console.log("HELPER FUNCTIONS...");
-
-                // creates a box div
-                const CreateBox = (title, elements) => {
-
-                    // filter undefined entries
-                    elements = elements.filter(Boolean);
-
-                    // determine id based on title
-                    const id = title.replace(" ", "-").toLocaleLowerCase();
-
-                    // try to get box element
-                    let box = document.getElementById(id);
-
-                    // create box element if it doesn't exist 
-                    if (!box) {
-                        box = document.createElement("div");
-                        box.id = id;
-                        box.className = "box";
-                        const span = document.createElement("span");
-                        span.textContent = title;
-                        box.appendChild(span);
-                    }
-
-                    // move box to the correct spot
-                    root.insertAdjacentElement("beforeend", box);
-
-                    // move elements from the document to inside the box
-                    box.append(...elements);
-
-                    // if box has switches
-                    if (elements.some(e => e.innerHTML.indexOf("form-switch") >= 0)) {
-
-                        // try to get subbox element
-                        let subbox = box.querySelector("div.subbox");
-
-                        // create subbox element if it doesn't exist 
-                        if (!subbox) {
-                            subbox = document.createElement("div");
-                            subbox.className = "subbox";
-                        }
-
-                        // move switches to subbox inside box element
-                        subbox.append(...(elements.filter(e => e.innerHTML.indexOf("form-switch") >= 0)));
-
-                        // attach subbox to main box
-                        box.append(subbox);
-
-                    }
-
-                    // return reference to box element (why not?)
-                    return box;
-
-                };
-
-                // creates a box div
-                const CreateSpan = (title, elements) => {
-
-                    // filter undefined entries
-                    elements = elements.filter(Boolean);
-
-                    // determine id based on title
-                    const id = title.replace(" ", "-").toLocaleLowerCase();
-
-                    // try to get span element
-                    let span = document.getElementById(id);
-
-                    // create span element if it doesn't exist 
-                    if (!span) {
-                        console.log("CREATE SPAN");
-                        span = document.createElement("span");
-                        span.id = id;
-                        span.classList.add("separator");
-                        span.textContent = title;
-                    }
-
-                    // move span to the correct spot
-                    root.insertAdjacentElement("afterbegin", span);
-
-                    // move elements from the document to bellow the span
-                    for (const element of elements) {
-                        span.insertAdjacentElement("afterend", element);
-                    }
-
-                    // return reference to span element (why not?)
-                    return span;
-
-                };
-
                 // converts a checkbox input to a switch style
                 const CheckBoxToSwitch = id => {
                     const input = document.getElementById(id);
                     if (!input) return;
-                    if (input.closest("div.form-switch")) return;
+                    //if (input.closest("div.form-switch")) return;
+                    if (input.dataset.converted) return;
+                    input.dataset.converted = true;
                     input.parentNode.classList.add("form-check", "form-switch");
                     input.classList.add("form-check-input");
                     input.insertAdjacentElement("afterend", input.parentNode.parentNode.nextElementSibling);
                 };
 
-                // creates a dummy switch element just to use as placeholder
-                const CreateDummySwitch = () => {
-                    const div = document.createElement("div");
-                    const dummy = document.createElement("div");
-                    dummy.className= "form-switch";
-                    div.append(dummy);
-                    return div;
-                };
-
-                // console.log("HELPER FUNCTIONS // OK");
-
                 // =================================================================================
                 // INJECT CSS
                 // =================================================================================
-
-                // console.log("INJECT CSS...");
 
                 // check if css is already injected
                 if (!window.produkeCSSInjected) {
@@ -1358,55 +1198,208 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                         <style>
 
+                            div.modal-body:has(select#mode > option[value="singleplayer"]:checked) div#room-settings {
+                                display: none !important;
+                            }
+
                             /* prevent style from applying to other ports */
                             div.modal-body:has(select#exec > optgroup > option[value="produke"]:checked) {
-
+                            
                                 /* ================================================================================= */
-                                /* MAIN COMPONENTS                                                                   */
+                                /* GRID HACK                                                                         */
                                 /* ================================================================================= */
 
-                                /* root div */
+                                /* outter div */
                                 div:has(>#mode) + div {
-                                    display: flex; 
-                                    flex-direction: column; 
-                                    gap: 16px; 
-                                    margin-bottom: 0px;
-                                    margin-top: 16px;
+                                    display: grid;
+                                    grid-template-columns: 120px repeat(4, 1fr);
+                                    gap: 8px;
+                                    grid-auto-rows: auto;
                                 }
 
+                                /* force all children to use 1 full row */
+                                div:has(>#mode) + div > * { 
+                                    grid-column: 1 / -1;
+                                }
+
+                                /* inner div */
+                                div:has(>#mode) + div>div:first-child {
+                                    display: grid;
+                                    grid-template-columns: 120px repeat(4, 1fr);
+                                    gap: 8px;
+                                    order: 0;
+                                    grid-auto-rows: auto;
+                                }
+                                
+                                /* force all children to use 1 full row */
+                                div:has(>#mode) + div>div:first-child > * { 
+                                    grid-column: 1 / -1;
+                                }
+
+                                /* make param hidden actually hidden */
+                                .param-hidden, .param-hiden * {
+                                    display: none !important;
+                                }
+
+                                /* hide hack element */
                                 div:has(>div>#game-param-html) {
                                     display: none;
                                 }
 
-                                div.box {
-                                    background-color: #17191c;
-                                    display: flex;
-                                    flex-direction: column;
-                                    gap: 8px;
-                                    border: 1px solid #495057;
-                                    border-radius: 5px;
-                                    padding: 16px;
-                                }
+                                /* ================================================================================= */
+                                /* ROOM SETTINGS                                                                     */
+                                /* ================================================================================= */
 
-                                div.box > span,
+                                div#room-settings { order: -5; }
+                                div:has(>input[placeholder="Room Name"]) { order: -4; }
+                                div:has(>input[placeholder="Password"]) { order: -3; }
+                                div:has(>input#max-players) { order: -2; }
+                                div:has(div.form-switch > label[title=""]) { order: -1; grid-area: 4 / 2 !important; }
+
+                                div:has(>div>div>input#game-param-_nn_ipv6)    { grid-area: 1 / 2 !important; }
+                                div:has(>div>div>input#game-param-uploadDemos) { grid-area: 1 / 3 !important; }
+                                div:has(>div>div>input#game-param-masterSlave) { grid-area: 1 / 4 !important; }
+                                div:has(>div>div>input#game-param-lockOptions) { grid-area: 2 / 2 !important; }
+                                div:has(>div>div>input#game-param-lockPlayers) { grid-area: 2 / 3 !important; }
+                                div:has(>div>div>input#game-param-lockSpecs)   { grid-area: 2 / 4 !important; }
+
+                                /* ================================================================================= */
+                                /* MATCH SETTINGS                                                                    */
+                                /* ================================================================================= */
+
+                                div#match-settings                              { grid-row: 3; }
+                                div:has(>div>select#game-param-multiplayerMode) { grid-row: 4; }
+                                div:has(>div>select#game-param-monstersSkill)   { grid-row: 5; }
+                                div:has(>div>select#game-param-mapType)         { grid-row: 6; }
+                                div:has(>div>select#game-param-episodeAndLevel) { grid-row: 7; }
+                                div:has(>div>span>input#game-param-map)         { grid-row: 8; }
+                                div:has(>div>div>input#game-param-scoreLimit)   { grid-row: 9; }
+                                div:has(>div>div>input#game-param-timeLimit)    { grid-row: 10; }
+                                div:has(>div>div>input#game-param-extraLives)   { grid-row: 11; }
+                                div:has(>div>div>input#game-param-botsNum)      { grid-row: 12; }
+                                div:has(>div>div>input#game-param-botsAi)       { grid-area: 13 / 2 !important; }
+
+                                /* ================================================================================= */
+                                /* USERS SETTINGS                                                                    */
+                                /* ================================================================================= */
+
+                                div#user-settings { grid-row: 14; }
+                                div:has(>div>span>input#game-param-playDmo)       { grid-row: 15; }
+                                div:has(>div>select#game-param-color)             { grid-row: 16; }
+                                div:has(>div>select#game-param-team)              { grid-row: 17; }
+                                div:has(>div>div>input#game-param-recordDmo)      { grid-area: 18 / 2 !important; }
+                                div:has(>div>div>input#game-param-spec)           { grid-area: 18 / 3 !important; }
+                                div:has(>div>div>input#game-param-exploitMode)    { grid-area: 19 / 2 !important; }
+                                div:has(>div>div>input#game-param-allowMods)      { grid-area: 19 / 3 !important; }
+                                div:has(>div>div>input#game-param-disableAutoaim) { grid-area: 19 / 4 !important; }
+
+                                /* ================================================================================= */
+                                /* last row was 19 and Ive started at 23, i'll leave this gap here because i'm lazy  */
+                                /* ================================================================================= */
+
+                                /* ================================================================================= */
+                                /* NETFLAGS                                                                          */
+                                /* ================================================================================= */
+
+                                div#netflags { grid-row: 23; }
+                                div:has(>div>select#game-param-presets) { grid-row: 24; }
+
+                                /* netflags A */
+                                div#netflagsA { grid-row: 25; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagAWeaponsPickableOnce)       { grid-row: 26 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagARespawnMonsters)           { grid-row: 27 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagARespawnItems)              { grid-row: 28 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagARespawnInventory)          { grid-row: 29 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagAMarkers)                   { grid-row: 30 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagADontSpawnMonsters)         { grid-row: 31 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagADontSpawnKeycards)         { grid-row: 32 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagASpawnDMOnlySwitches)       { grid-row: 33 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagASpawnMPOnlyItems)          { grid-row: 34 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSFriendlyFire)     { grid-row: 35 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSAutoaimOnAllies)  { grid-row: 36 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSGlobalAllySounds) { grid-row: 37 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSNoSpycamMapview)  { grid-row: 38 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagARevealedAutomap)           { grid-row: 39 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagANoMapExit)                 { grid-row: 40 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagANoTargetNames)             { grid-row: 41 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagAWeaponAlwaysDropsOnKill)   { grid-row: 42 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagAForceRespawn)              { grid-row: 43 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagAPVPRespawnFarthest)        { grid-row: 44 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagATEAMSMixedTeamSpawnPoints) { grid-row: 45 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagADamageNumbers)             { grid-row: 46 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSTERMOverheadInfo) { grid-row: 47 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSTERMOutlines)     { grid-row: 48 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACTFOutlineOnFlags)         { grid-row: 49 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACTFFlagReturnInstantly)    { grid-row: 50 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACTFFlagAutoDetonate)       { grid-row: 51 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagATLMSRestrictedSpycam)      { grid-row: 52 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagATLMSRestrictedChat)        { grid-row: 53 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPKeyCardsAreShared)     { grid-row: 54 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagASURVTLMSLivesAreShared)    { grid-row: 55 !important; grid-column: 1 / span 2 !important; }
+                                
+                                /* netflags B */
+                                div#netflagsB { grid-row: 25; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagBTEAMSColoredTripbombs)   { grid-row: 26 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagBCTFNoSteroidsIfWithFlag) { grid-row: 27 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagBCTFNoJetpackIfWithFlag)  { grid-row: 28 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagBTERMNoInfiniteJetpack)   { grid-row: 29 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagBTERMNoShrinkerImmunity)  { grid-row: 30 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagBTERMNoFreezerWeakness)   { grid-row: 31 !important; grid-column: 3 / span 2 !important; }
+
+                                /* netflags C */
+                                div#netflagsC { grid-row: 32; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCArsenalRebalance)            { grid-row: 33 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCLaserInvisibleWONightvision) { grid-row: 34 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCFreezerCantHurtOwner)        { grid-row: 35 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDestructableCameras)         { grid-row: 36 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagC13DDoubleKick)               { grid-row: 37 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagC13DNoExpander)               { grid-row: 38 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCFixTripbombsOnSlopes)        { grid-row: 39 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSClassicMapStartBehaviors) { grid-row: 40 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSFFireExcludesSelf)        { grid-row: 41 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSCanRespawnDrowning)       { grid-row: 42 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSInvalidShrinkStates)      { grid-row: 43 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSBadShrinkerHitDetection)  { grid-row: 44 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSBadGrowExplosionOwner)    { grid-row: 45 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSWeaponSwitchingBugs)      { grid-row: 46 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSDeadPlayerSwappingBugs)   { grid-row: 47 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSUselessNightvision)       { grid-row: 48 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSAutoaimedRPGsBugs)        { grid-row: 49 !important; grid-column: 3 / span 2 !important; }
+
+                                /* weapflags */
+                                div#weapflags { grid-row: 56; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagPistol)     { grid-row: 57 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagShotgun)    { grid-row: 58 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagChaingun)   { grid-row: 59 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagRPG)        { grid-row: 60 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagPipebomb)   { grid-row: 61 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagShrinker)   { grid-row: 62 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagDevastator) { grid-row: 63 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagTripbomb)   { grid-row: 64 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagFreezer)    { grid-row: 65 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagFullAmmo)   { grid-row: 66 !important; grid-column: 1 / span 2 !important; }
+                                div:has(>div>div>input#game-param-weapFlagExpander)   { grid-row: 67 !important; grid-column: 1 / span 2 !important; }
+
+                                /* invflags */
+                                div#invflags { grid-row: 56; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagKeyCards)      { grid-row: 57 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagMedkit)        { grid-row: 58 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagSteroids)      { grid-row: 59 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagHoloduke)      { grid-row: 60 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagJetpack)       { grid-row: 61 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagNightvision)   { grid-row: 62 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagScubaGear)     { grid-row: 63 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagBoots)         { grid-row: 64 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagArmor)         { grid-row: 65 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagAtomicHealth1) { grid-row: 66 !important; grid-column: 3 / span 2 !important; }
+                                div:has(>div>div>input#game-param-invFlagAtomicHealth2) { grid-row: 67 !important; grid-column: 3 / span 2 !important; }
+
                                 span.separator {                
                                     display: inline-block;
                                     padding-bottom: 16px;
                                     margin-bottom: 16px;
                                     font-weight: bolder;
                                     border-bottom: 1px solid #495057;
-                                }
-
-                                div.subbox {
-                                    width: 470px;
-                                    display: grid;
-                                    grid-template-columns: repeat(3, 1fr);
-                                    grid-auto-rows: 32px;
-                                    align-self: flex-end;
-                                }
-
-                                div#netflags-box {
-                                    margin-top: 16px;
                                 }
 
                                 div.flags > span {
@@ -1423,14 +1416,17 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 /* INPUTS                                                                            */
                                 /* ================================================================================= */
 
-                                .param-hidden, .param-hiden * {
-                                    display: none !important;
-                                }
-
                                 div:has(>div>select[id^="game-param"]):not(.param-hidden),
                                 div:has(>div>span>input[id^="game-param"]):not(.param-hidden) {
                                     height: 38px !important;
                                     min-height: 38px !important;
+                                }
+
+                                div:has(>input[placeholder="Room Name"]),
+                                div:has(>input[placeholder="Password"]) {
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
                                 }
 
                                 div:has(>input) > label,
@@ -1445,8 +1441,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 
                                 div:has(>div>div>input[id^="game-param"]) > div:has(div>input:not([type="checkbox"])),
                                 div:has(>div>select[id^="game-param"]) > div:has(select),            
-                                div:has(>div>span>input[id^="game-param"]) > div:has(span>input)            
-                                {
+                                div:has(>div>span>input[id^="game-param"]) > div:has(span>input) {
                                     width: 470px !important;
                                 }
 
@@ -1467,17 +1462,6 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                                 div.form-switch {
                                     display: inline-block !important;
-                                }
-
-                                /* ================================================================================= */
-                                /* ROOM SETTINGS                                                                     */
-                                /* ================================================================================= */
-
-                                div:has(>input[placeholder="Room Name"]),
-                                div:has(>input[placeholder="Password"]) {
-                                    display: flex;
-                                    flex-direction: row;
-                                    align-items: center;
                                 }
 
                                 /* ================================================================================= */
@@ -1510,13 +1494,9 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                 }
 
-                // console.log("INJECT CSS // OK");
-
                 // =================================================================================
-                // RESTYLE SOME ELEMENTS
+                // INJECT SOME LABELS
                 // =================================================================================
-
-                // console.log("RESTYLE SOME ELEMENTS...");
 
                 // inject room name label
                 document.querySelector("[placeholder='Room Name']")?.insertAdjacentHTML("beforebegin", `
@@ -1527,6 +1507,69 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 document.getElementById("password")?.insertAdjacentHTML("beforebegin", `
                     <label>Password</label>
                 `);
+
+                // inject room settings label
+                if (!document.getElementById("room-settings")) {
+                    root.insertAdjacentHTML("afterend", `
+                        <div id="room-settings">ROOM SETTINGS</div>
+                    `);
+                }
+
+                // inject match settings label
+                if (!document.getElementById("match-settings")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="match-settings">MATCH SETTINGS</div>
+                    `);
+                }
+
+                // inject user settings label
+                if (!document.getElementById("user-settings")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="user-settings">USER SETTINGS</div>
+                    `);
+                }
+
+                // inject netflags label
+                if (!document.getElementById("netflags")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflags">NETFLAGS</div>
+                    `);
+                }
+
+                // inject netflags A label
+                if (!document.getElementById("netflagsA")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflagsA">NETFLAGS A</div>
+                    `);
+                }
+
+                // inject netflags B label
+                if (!document.getElementById("netflagsB")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflagsB">NETFLAGS B</div>
+                    `);
+                }
+
+                // inject netflagsC label
+                if (!document.getElementById("netflagsC")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflagsC">NETFLAGSC</div>
+                    `);
+                }
+
+                // inject weapflags label
+                if (!document.getElementById("weapflags")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="weapflags">STARTING WEAPONS</div>
+                    `);
+                }
+
+                // inject invflags label
+                if (!document.getElementById("invflags")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="invflags">STARTING INVENTORY</div>
+                    `);
+                }
                 
                 // transform some checkboxes into switches                                
                 CheckBoxToSwitch("game-param-masterSlave");
@@ -1542,139 +1585,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 CheckBoxToSwitch("game-param-disableAutoaim");
                 CheckBoxToSwitch("game-param-_nn_ipv6");
 
-                //console.log("RESTYLE SOME ELEMENTS // OK");                
-
-                // =================================================================================
-                // ROOM SETTINGS
-                // =================================================================================
-
-                // console.log("ROOM SETTINGS...");
-
-                // if (isMultiplayer) {
-                //     CreateBox("ROOM SETTINGS", [
-                //         document.querySelector("[placeholder='Room Name']")?.parentNode,
-                //         document.getElementById("password")?.parentNode,
-                //         document.getElementById("max-players")?.parentNode,
-                //         document.getElementById("game-param-_nn_ipv6")?.parentNode.parentNode.parentNode,
-                //         document.getElementById("game-param-uploadDemos")?.parentNode.parentNode.parentNode,
-                //         document.getElementById("game-param-masterSlave")?.parentNode.parentNode.parentNode,                    
-                //         document.getElementById("game-param-lockOptions")?.parentNode.parentNode.parentNode,
-                //         document.getElementById("game-param-lockPlayers")?.parentNode.parentNode.parentNode,
-                //         document.getElementById("game-param-lockSpecs")?.parentNode.parentNode.parentNode,
-                //         // "hide room" checkbox
-                //         // adding last so it stays in the third line
-                //         // since it disappears once the room is created
-                //         document.querySelector(`div.form-switch:has(label[title=""])`)?.parentNode
-                //     ]);
-                // }
-
-                // console.log("ROOM SETTINGS // OK");
-
-                // =================================================================================
-                // MATCH SETTINGS
-                // =================================================================================
-
-                // console.log("MATCH SETTINGS...");
-
-                CreateBox("MATCH SETTINGS", [
-                    document.getElementById("game-param-multiplayerMode").parentNode.parentNode,
-                    document.getElementById("game-param-monstersSkill").parentNode.parentNode,
-                    document.getElementById("game-param-mapType").parentNode.parentNode,
-                    document.getElementById("game-param-episodeAndLevel").parentNode.parentNode,
-                    document.getElementById("game-param-map").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-scoreLimit").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-timeLimit").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-extraLives").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-botsNum").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-botsAi").parentNode.parentNode.parentNode
-                ]);    
-
-                // console.log("MATCH SETTINGS // OK");
-
-                // =================================================================================
-                // USER SETTINGS
-                // =================================================================================
-
-                // console.log("USER SETTINGS...");
-
-                CreateBox("USER SETTINGS", [
-                    document.getElementById("game-param-color").parentNode.parentNode,
-                    document.getElementById("game-param-team").parentNode.parentNode,
-                    document.getElementById("game-param-recordDmo").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-spec").parentNode.parentNode.parentNode,
-                    CreateDummySwitch(), // empty placeholder for switch alignment
-                    document.getElementById("game-param-exploitMode").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-allowMods").parentNode.parentNode.parentNode,
-                    document.getElementById("game-param-disableAutoaim").parentNode.parentNode.parentNode,
-                ]);
-
-                // console.log("USER SETTINGS // OK");
-
-                // =================================================================================
-                // NETFLAGS
-                // =================================================================================
-
-                // console.log("NETFLAGS...");
-
-                // first we need to create the subboxes for each netflag group
-                root.insertAdjacentHTML("afterbegin", `
-                    <div id="netflags-box" style="display: flex; flex-direction: column; gap: 16px;">
-                        <div style="display: flex; flex-direction: row; gap: 16px;">
-                            <div style="flex: 1; min-width: 0;">
-                                <div id="netflagsA" class="flags">
-                                    <span>NETFLAGS A</span>
-                                </div>
-                            </div>
-                            <div style="display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 16px;">
-                                <div id="netflagsB" class="flags">
-                                    <span>NETFLAGS B</span>
-                                </div>
-                                <div id="netflagsC" class="flags"">
-                                    <span>NETFLAGS C</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; flex-direction: row; gap: 16px;">
-                            <div id="weapFlags" style="flex: 1; min-width: 0;" class="flags">
-                                <span>STARTING WEAPONS</span>
-                            </div>
-                            <div id="invFlags" style="flex: 1; min-width: 0;" class="flags">
-                                <span>STARTING INVENTORY</span>
-                            </div>
-                        </div>
-                    </div>    
-                `);
-
-                // now we move each netflag checkbox to its corresponding subbox
-                document.querySelectorAll(`[id^="game-param-netFlagA"]`).forEach(e => {
-                    document.getElementById("netflagsA").appendChild(e.parentNode.parentNode.parentNode);
-                });
-                document.querySelectorAll(`[id^="game-param-netFlagB"]`).forEach(e => {
-                    document.getElementById("netflagsB").appendChild(e.parentNode.parentNode.parentNode);
-                });
-                document.querySelectorAll(`[id^="game-param-netFlagC"]`).forEach(e => {
-                    document.getElementById("netflagsC").appendChild(e.parentNode.parentNode.parentNode);
-                });
-                document.querySelectorAll(`[id^="game-param-weapFlag"]`).forEach(e => {
-                    document.getElementById("weapFlags").appendChild(e.parentNode.parentNode.parentNode);
-                });
-                document.querySelectorAll(`[id^="game-param-invFlag"]`).forEach(e => {
-                    document.getElementById("invFlags").appendChild(e.parentNode.parentNode.parentNode);
-                });   
-
-                // now we can finally create the main netflags box
-                CreateBox("NETFLAGS", [
-                    document.getElementById("game-param-presets").parentNode.parentNode,
-                    // now we can reference the subboxes as a concrete element
-                    document.getElementById("netflags-box")
-                ]);
-
-                // console.log("NETFLAGS // OK");                
-                
-                // move extra args back to end of modal body
-                root.append(document.getElementById("manual-param-controls").parentNode);
-
-                // return false so the dummy control doesn't show
+                // return nothing so the component doesn't show
                 return;
                 
             }
