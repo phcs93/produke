@@ -1156,14 +1156,12 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                 const root = document.getElementById("mode")?.parentNode?.nextSibling?.querySelector("div");
                 const isReady = document.querySelectorAll(`[id^="game-param"]`).length > 0;         
-                const gameRoom = mainStore.getGameRoom();
-                const isHost = gameRoom ? mainStore.imHostInChannel(gameRoom.chan) : true;
 
                 // =================================================================================
                 // EARLY RETURNS
                 // =================================================================================
 
-                // dont run if root is not present
+                // dont run if root is not present (this will also never run for clients since #mode iis not defined)
                 if (!root) return;
                
                 // dont run if game params are not present yet
@@ -1495,14 +1493,14 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 `);
 
                 // inject room settings label
-                if (!document.getElementById("room-settings") && isHost) {
+                if (!document.getElementById("room-settings")) {
                     root.insertAdjacentHTML("afterend", `
                         <div id="room-settings" class="title-label">ROOM SETTINGS</div>
                     `);
                 }
 
                 // inject match settings label
-                if (!document.getElementById("match-settings") && isHost) {
+                if (!document.getElementById("match-settings")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="match-settings" class="title-label">MATCH SETTINGS</div>
                     `);
@@ -1516,42 +1514,42 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 }
 
                 // inject netflags label
-                if (!document.getElementById("netflags") && isHost) {
+                if (!document.getElementById("netflags")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="netflags" class="title-label">NETFLAGS</div>
                     `);
                 }
 
                 // inject netflags A label
-                if (!document.getElementById("netflagsA") && isHost) {
+                if (!document.getElementById("netflagsA")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="netflagsA" class="title-label flag">NETFLAGS A</div>
                     `);
                 }
 
                 // inject netflags B label
-                if (!document.getElementById("netflagsB") && isHost) {
+                if (!document.getElementById("netflagsB")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="netflagsB" class="title-label flag">NETFLAGS B</div>
                     `);
                 }
 
                 // inject netflagsC label
-                if (!document.getElementById("netflagsC") && isHost) {
+                if (!document.getElementById("netflagsC")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="netflagsC" class="title-label flag">NETFLAGSC</div>
                     `);
                 }
 
                 // inject weapflags label
-                if (!document.getElementById("weapflags") && isHost) {
+                if (!document.getElementById("weapflags")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="weapflags" class="title-label flag">STARTING WEAPONS</div>
                     `);
                 }
 
                 // inject invflags label
-                if (!document.getElementById("invflags") && isHost) {
+                if (!document.getElementById("invflags")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="invflags" class="title-label flag">STARTING INVENTORY</div>
                     `);
