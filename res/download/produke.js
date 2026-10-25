@@ -1150,6 +1150,32 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
             params: "html",
             show: () => {
 
+                // converts a checkbox input to a switch style
+                const CheckBoxToSwitch = (id, title) => {
+                    const input = document.getElementById(id);
+                    if (!input) return;
+                    if (input.dataset.converted) return;
+                    input.dataset.converted = true;
+                    input.parentNode.classList.add("form-check", "form-switch");
+                    input.parentNode.title = title;
+                    input.classList.add("form-check-input");
+                    input.insertAdjacentElement("afterend", input.parentNode.parentNode.nextElementSibling);
+                };
+
+                // transform some checkboxes into switches
+                CheckBoxToSwitch("game-param-masterSlave", "-master and /i0");
+                CheckBoxToSwitch("game-param-uploadDemos", "Upload demos to produke.com.br");
+                CheckBoxToSwitch("game-param-lockOptions", "Prevent players from changing match settings and netflags");
+                CheckBoxToSwitch("game-param-lockPlayers", "Prevent players from changing their color, team and nicknames");
+                CheckBoxToSwitch("game-param-lockSpecs", "Prevent players from becoming spectator and vice versa in current match");
+                CheckBoxToSwitch("game-param-botsAi", "Enable BOT AI");
+                CheckBoxToSwitch("game-param-recordDmo", "Record match");
+                CheckBoxToSwitch("game-param-spec", "Join as spectator");
+                CheckBoxToSwitch("game-param-exploitMode", "Ask for tiles and visibility (requires voting)");
+                CheckBoxToSwitch("game-param-allowMods", "Ask for all external files (requires voting)");
+                CheckBoxToSwitch("game-param-disableAutoaim", "Ask for disabled autoaim (requires voting)");
+                CheckBoxToSwitch("game-param-_nn_ipv6", "Use Direct IPv6 address between peers instead of Relay/STUN tunnels");
+
                 // =================================================================================
                 // VARIABLES
                 // =================================================================================
@@ -1168,22 +1194,6 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 if (!isReady) return;
 
                 // =================================================================================
-                // HELPER FUNCTIONS
-                // =================================================================================
-
-                // converts a checkbox input to a switch style
-                const CheckBoxToSwitch = (id, title) => {
-                    const input = document.getElementById(id);
-                    if (!input) return;
-                    if (input.dataset.converted) return;
-                    input.dataset.converted = true;
-                    input.parentNode.classList.add("form-check", "form-switch");
-                    input.parentNode.title = title;
-                    input.classList.add("form-check-input");
-                    input.insertAdjacentElement("afterend", input.parentNode.parentNode.nextElementSibling);
-                };
-
-                // =================================================================================
                 // INJECT CSS
                 // =================================================================================
 
@@ -1198,8 +1208,14 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
 
                         <style>
 
-                            div.modal-body:has(select#mode > option[value="singleplayer"]:checked) div#room-settings {
-                                display: none !important;
+                            /* hide room fake box in single player screen and other ports screens */
+                            div.modal-body:has(select#mode > option[value="singleplayer"]:checked),
+                            div.modal-body:has(select#exec > optgroup > option:not([value="produke"]):checked) {
+                                div#room-settings-label,
+                                div#room-settings-header,
+                                div#room-settings-footer {
+                                    display: none !important;
+                                }
                             }
 
                             /* prevent style from applying to other ports */
@@ -1212,9 +1228,18 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 /* outter div */
                                 div:has(>#mode) + div {
                                     display: grid;
-                                    grid-template-columns: 120px repeat(4, 1fr);
-                                    gap: 8px;
+                                    grid-template-columns: 111px repeat(3, 1fr);
+                                    /*gap: 8px;*/
                                     grid-auto-rows: auto;
+                                }
+
+                                /* fake box background on all inputs */
+                                div:has(>#mode) + div > :not(div.title-label):not(div.header):not(div.footer):not(div:first-child):not(div:has(>#manual-param-controls)) {
+                                    background-color: #17191c;
+                                    border: 1px solid #495057;
+                                    border-top: none;
+                                    border-bottom: none;
+                                    padding: 4px 16px;
                                 }
 
                                 /* force all children to use 1 full row */
@@ -1225,12 +1250,28 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 /* inner div */
                                 div:has(>#mode) + div>div:first-child {
                                     display: grid;
-                                    grid-template-columns: 120px repeat(4, 1fr);
-                                    gap: 8px;
-                                    order: 0;
+                                    grid-template-columns: 111px repeat(3, 1fr);
+                                    /*gap: 8px;*/
+                                    grid-row: 7;
                                     grid-auto-rows: auto;
                                 }
-                                
+
+                                /* fake box background on all inputs */
+                                div:has(>#mode) + div>div:first-child > :not(div.title-label):not(div.header):not(div.footer):not(div:has(>div>div.form-switch)) {
+                                    background-color: #17191c;
+                                    border: 1px solid #495057;
+                                    border-top: none;
+                                    border-bottom: none;
+                                    padding: 4px 16px !important;
+                                    box-sizing: content-box;
+                                }
+
+                                /* alternative fake box background for switches */
+                                div:has(>#mode) + div>div:first-child > div:has(>div>div.form-switch) {
+                                    background-color: #17191c;
+                                    height: 28px !important;
+                                }
+
                                 /* force all children to use 1 full row */
                                 div:has(>#mode) + div>div:first-child > * { 
                                     grid-column: 1 / -1;
@@ -1246,21 +1287,48 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                     display: none;
                                 }
 
-                                /* title label separator */
+                                 /* title label separator */
                                 div.title-label {
                                     font-family: "Candara";
-                                    background-color: #17191c;
-                                    border: 1px solid #495057;
-                                    border-left: none;
-                                    border-right: none;
                                     font-weight: bold;
-                                    padding: 8px 16px;
-                                    margin-top: 16px;
-                                    margin-bottom: 16px;
-                                    text-align: center;
+                                    padding: 8px 0px;
+                                    margin: 16px;
+                                    border-bottom: 1px solid #495057;
+                                    z-index: 99;
                                 }
 
-                                /* flags separator */
+                                /* header */
+                                div.header {
+                                    background-color: #17191c;
+                                    border: 1px solid #495057;
+                                    border-top-right-radius: 10px;
+                                    border-top-left-radius: 10px;
+                                    border-bottom: none;
+                                    margin-top: 16px;
+                                    padding-bottom: 8px;
+                                }
+
+                                /* footer */
+                                div.footer {
+                                    background-color: #17191c;
+                                    border: 1px solid #495057;
+                                    border-top: none;
+                                    border-bottom-right-radius: 10px;
+                                    border-bottom-left-radius: 10px;
+                                    height: 16px;
+                                }
+
+                                /* flags header */
+                                div.flag-header {
+                                    background-color: #17191c;
+                                    border-radius: 0px;
+                                    border: none;
+                                    padding: 0px !important;
+                                    margin: 0px !important;
+                                    height 41px;
+                                }
+
+                                /* flags label */
                                 div.flag {
                                     background-color: transparent;
                                     border-radius: 0px;
@@ -1274,149 +1342,161 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                                 /* ROOM SETTINGS                                                                     */
                                 /* ================================================================================= */
 
-                                div#room-settings { order: -5; }
-                                div:has(>input[placeholder="Room Name"]) { order: -4; }
-                                div:has(>input[placeholder="Password"]) { order: -3; }
-                                div:has(>input#max-players) { order: -2; }
-                                div:has(div.form-switch > label[title=""]) { order: -1; grid-area: 4 / 2 !important; }
+                                div#room-settings-label { grid-row: 1; }
+                                div#room-settings-header { grid-row: 1; }
+                                div:has(>input[placeholder="Room Name"]) { grid-row: 2;  }
+                                div:has(>input[placeholder="Password"]) { grid-row: 3; }
+                                div:has(>input#max-players) { grid-row: 4; }
+                                div:has(>div.form-switch > label[title=""]) { grid-row: 5 !important; grid-column: 1 / span 4 !important; padding-left: 111px !important;}
 
-                                div:has(>div>div>input#game-param-_nn_ipv6)    { grid-area: 1 / 2 !important; }
+                                div:has(>div>div>input#game-param-_nn_ipv6)    { grid-row: 1; grid-column: 1 / span 2 !important; padding-left: 111px; border-left: 1px solid #495057; }
                                 div:has(>div>div>input#game-param-uploadDemos) { grid-area: 1 / 3 !important; }
-                                div:has(>div>div>input#game-param-masterSlave) { grid-area: 1 / 4 !important; }
-                                div:has(>div>div>input#game-param-lockOptions) { grid-area: 2 / 2 !important; }
+                                div:has(>div>div>input#game-param-masterSlave) { grid-area: 1 / 4 !important; border-right: 1px solid #495057; padding-right: 16px; }
+                                div:has(>div>div>input#game-param-lockOptions) { grid-row: 2; grid-column: 1 / span 2 !important; padding-left: 111px; border-left: 1px solid #495057; }
                                 div:has(>div>div>input#game-param-lockPlayers) { grid-area: 2 / 3 !important; }
-                                div:has(>div>div>input#game-param-lockSpecs)   { grid-area: 2 / 4 !important; }
+                                div:has(>div>div>input#game-param-lockSpecs)   { grid-area: 2 / 4 !important; border-right: 1px solid #495057; padding-right: 16px; }
+                                div#room-settings-footer { grid-row: 3; }
 
                                 /* ================================================================================= */
                                 /* MATCH SETTINGS                                                                    */
                                 /* ================================================================================= */
 
-                                div#match-settings                              { grid-row: 3; }
-                                div:has(>div>select#game-param-multiplayerMode) { grid-row: 4; }
-                                div:has(>div>select#game-param-monstersSkill)   { grid-row: 5; }
-                                div:has(>div>select#game-param-mapType)         { grid-row: 6; }
-                                div:has(>div>select#game-param-episodeAndLevel) { grid-row: 7; }
-                                div:has(>div>span>input#game-param-map)         { grid-row: 8; }
-                                div:has(>div>div>input#game-param-scoreLimit)   { grid-row: 9; }
-                                div:has(>div>div>input#game-param-timeLimit)    { grid-row: 10; }
-                                div:has(>div>div>input#game-param-extraLives)   { grid-row: 11; }
-                                div:has(>div>div>input#game-param-botsNum)      { grid-row: 12; }
-                                div:has(>div>div>input#game-param-botsAi)       { grid-area: 13 / 2 !important; }
+                                div#match-settings-label                        { grid-row: 4; }
+                                div#match-settings-header                       { grid-row: 4; }
+                                div:has(>div>select#game-param-multiplayerMode) { grid-row: 5; }
+                                div:has(>div>select#game-param-monstersSkill)   { grid-row: 6; }
+                                div:has(>div>select#game-param-mapType)         { grid-row: 7; }
+                                div:has(>div>select#game-param-episodeAndLevel) { grid-row: 8; }
+                                div:has(>div>span>input#game-param-map)         { grid-row: 9; }
+                                div:has(>div>div>input#game-param-scoreLimit)   { grid-row: 10; }
+                                div:has(>div>div>input#game-param-timeLimit)    { grid-row: 11; }
+                                div:has(>div>div>input#game-param-extraLives)   { grid-row: 12; }
+                                div:has(>div>div>input#game-param-botsNum)      { grid-row: 13; }
+                                div:has(>div>div>input#game-param-botsAi)       { grid-row: 14 !important; grid-column: 1 / span 4 !important; padding-left: 111px !important; border-left: 1px solid #495057; border-right: 1px solid #495057; }
+                                div#match-settings-footer                       { grid-row: 15; }
 
                                 /* ================================================================================= */
                                 /* USERS SETTINGS                                                                    */
                                 /* ================================================================================= */
 
-                                div#user-settings { grid-row: 14; }
-                                div:has(>div>span>input#game-param-playDmo)       { grid-row: 15; }
-                                div:has(>div>select#game-param-color)             { grid-row: 16; }
-                                div:has(>div>select#game-param-team)              { grid-row: 17; }
-                                div:has(>div>div>input#game-param-recordDmo)      { grid-area: 18 / 2 !important; }
-                                div:has(>div>div>input#game-param-spec)           { grid-area: 18 / 3 !important; }
-                                div:has(>div>div>input#game-param-exploitMode)    { grid-area: 19 / 2 !important; }
-                                div:has(>div>div>input#game-param-allowMods)      { grid-area: 19 / 3 !important; }
-                                div:has(>div>div>input#game-param-disableAutoaim) { grid-area: 19 / 4 !important; }
-
-                                /* ================================================================================= */
-                                /* last row was 19 and Ive started at 23, i'll leave this gap here because i'm lazy  */
-                                /* ================================================================================= */
+                                div#user-settings-label                           { grid-row: 16; }
+                                div#user-settings-header                          { grid-row: 16; }
+                                div:has(>div>span>input#game-param-playDmo)       { grid-row: 17; }
+                                div:has(>div>select#game-param-color)             { grid-row: 18; }
+                                div:has(>div>select#game-param-team)              { grid-row: 19; }
+                                div:has(>div>div>input#game-param-recordDmo)      { grid-row: 20; grid-column: 1 / span 2 !important; padding-left: 111px; border-left: 1px solid #495057; }
+                                div:has(>div>div>input#game-param-spec)           { grid-row: 20; grid-column: 3 / span 2 !important; padding-right: 111px; border-right: 1px solid #495057; }
+                                div:has(>div>div>input#game-param-exploitMode)    { grid-row: 21; grid-column: 1 / span 2 !important; padding-left: 111px; border-left: 1px solid #495057; }
+                                div:has(>div>div>input#game-param-allowMods)      { grid-area: 21 / 3 !important; }
+                                div:has(>div>div>input#game-param-disableAutoaim) { grid-area: 21 / 4 !important; border-right: 1px solid #495057; padding-right: 16px; }
+                                div#user-settings-footer                          { grid-row: 22; }
 
                                 /* ================================================================================= */
                                 /* NETFLAGS                                                                          */
                                 /* ================================================================================= */
 
-                                div#netflags { grid-row: 23; }
+                                div#netflags-label { grid-row: 23; }
+                                div#netflags-header { grid-row: 23; }
                                 div:has(>div>select#game-param-presets) { grid-row: 24; }
 
                                 /* netflags A */
                                 div#netflagsA { grid-row: 25; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagAWeaponsPickableOnce)       { grid-row: 26 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagARespawnMonsters)           { grid-row: 27 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagARespawnItems)              { grid-row: 28 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagARespawnInventory)          { grid-row: 29 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagAMarkers)                   { grid-row: 30 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagADontSpawnMonsters)         { grid-row: 31 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagADontSpawnKeycards)         { grid-row: 32 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagASpawnDMOnlySwitches)       { grid-row: 33 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagASpawnMPOnlyItems)          { grid-row: 34 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSFriendlyFire)     { grid-row: 35 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSAutoaimOnAllies)  { grid-row: 36 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSGlobalAllySounds) { grid-row: 37 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSNoSpycamMapview)  { grid-row: 38 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagARevealedAutomap)           { grid-row: 39 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagANoMapExit)                 { grid-row: 40 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagANoTargetNames)             { grid-row: 41 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagAWeaponAlwaysDropsOnKill)   { grid-row: 42 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagAForceRespawn)              { grid-row: 43 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagAPVPRespawnFarthest)        { grid-row: 44 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagATEAMSMixedTeamSpawnPoints) { grid-row: 45 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagADamageNumbers)             { grid-row: 46 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSTERMOverheadInfo) { grid-row: 47 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSTERMOutlines)     { grid-row: 48 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACTFOutlineOnFlags)         { grid-row: 49 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACTFFlagReturnInstantly)    { grid-row: 50 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACTFFlagAutoDetonate)       { grid-row: 51 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagATLMSRestrictedSpycam)      { grid-row: 52 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagATLMSRestrictedChat)        { grid-row: 53 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagACOOPKeyCardsAreShared)     { grid-row: 54 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagASURVTLMSLivesAreShared)    { grid-row: 55 !important; grid-column: 1 / span 2 !important; }
+                                div#netflagsA-header { grid-row: 25; grid-column: 1 / span 2 !important; border-left: 1px solid #495057; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagAWeaponsPickableOnce)       { grid-row: 26 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagARespawnMonsters)           { grid-row: 27 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagARespawnItems)              { grid-row: 28 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagARespawnInventory)          { grid-row: 29 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagAMarkers)                   { grid-row: 30 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagADontSpawnMonsters)         { grid-row: 31 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagADontSpawnKeycards)         { grid-row: 32 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagASpawnDMOnlySwitches)       { grid-row: 33 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagASpawnMPOnlyItems)          { grid-row: 34 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSFriendlyFire)     { grid-row: 35 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSAutoaimOnAllies)  { grid-row: 36 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSGlobalAllySounds) { grid-row: 37 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSNoSpycamMapview)  { grid-row: 38 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagARevealedAutomap)           { grid-row: 39 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagANoMapExit)                 { grid-row: 40 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagANoTargetNames)             { grid-row: 41 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagAWeaponAlwaysDropsOnKill)   { grid-row: 42 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagAForceRespawn)              { grid-row: 43 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagAPVPRespawnFarthest)        { grid-row: 44 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagATEAMSMixedTeamSpawnPoints) { grid-row: 45 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagADamageNumbers)             { grid-row: 46 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSTERMOverheadInfo) { grid-row: 47 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPTEAMSTERMOutlines)     { grid-row: 48 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACTFOutlineOnFlags)         { grid-row: 49 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACTFFlagReturnInstantly)    { grid-row: 50 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagACTFFlagAutoDetonate)       { grid-row: 51 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-netFlagATLMSRestrictedSpycam)      { grid-row: 52 !important; grid-column: 1 / span 4 !important; }
+                                div:has(>div>div>input#game-param-netFlagATLMSRestrictedChat)        { grid-row: 53 !important; grid-column: 1 / span 4 !important; }
+                                div:has(>div>div>input#game-param-netFlagACOOPKeyCardsAreShared)     { grid-row: 54 !important; grid-column: 1 / span 4 !important; }
+                                div:has(>div>div>input#game-param-netFlagASURVTLMSLivesAreShared)    { grid-row: 55 !important; grid-column: 1 / span 4 !important; }
                                 
                                 /* netflags B */
                                 div#netflagsB { grid-row: 25; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagBTEAMSColoredTripbombs)   { grid-row: 26 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagBCTFNoSteroidsIfWithFlag) { grid-row: 27 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagBCTFNoJetpackIfWithFlag)  { grid-row: 28 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagBTERMNoInfiniteJetpack)   { grid-row: 29 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagBTERMNoShrinkerImmunity)  { grid-row: 30 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagBTERMNoFreezerWeakness)   { grid-row: 31 !important; grid-column: 3 / span 2 !important; }
+                                div#netflagsB-header { grid-row: 25; grid-column: 3 / span 2 !important; border-right: 1px solid #495057; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagBTEAMSColoredTripbombs)   { grid-row: 26 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagBCTFNoSteroidsIfWithFlag) { grid-row: 27 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagBCTFNoJetpackIfWithFlag)  { grid-row: 28 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagBTERMNoInfiniteJetpack)   { grid-row: 29 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagBTERMNoShrinkerImmunity)  { grid-row: 30 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagBTERMNoFreezerWeakness)   { grid-row: 31 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
 
                                 /* netflags C */
                                 div#netflagsC { grid-row: 32 / span 3; grid-column: 3 / span 2 !important; height: 41.91px; }
-                                div:has(>div>div>input#game-param-netFlagCArsenalRebalance)            { grid-row: 35 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCLaserInvisibleWONightvision) { grid-row: 36 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCFreezerCantHurtOwner)        { grid-row: 37 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDestructableCameras)         { grid-row: 38 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagC13DDoubleKick)               { grid-row: 39 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagC13DNoExpander)               { grid-row: 40 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCFixTripbombsOnSlopes)        { grid-row: 41 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSClassicMapStartBehaviors) { grid-row: 42 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSFFireExcludesSelf)        { grid-row: 43 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSCanRespawnDrowning)       { grid-row: 44 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSInvalidShrinkStates)      { grid-row: 45 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSBadShrinkerHitDetection)  { grid-row: 46 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSBadGrowExplosionOwner)    { grid-row: 47 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSWeaponSwitchingBugs)      { grid-row: 48 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSDeadPlayerSwappingBugs)   { grid-row: 49 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSUselessNightvision)       { grid-row: 50 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-netFlagCDOSAutoaimedRPGsBugs)        { grid-row: 51 !important; grid-column: 3 / span 2 !important; }
+                                div#netflagsC-header { grid-row: 32 / span 3; grid-column: 3 / span 2 !important; border-right: 1px solid #495057; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCArsenalRebalance)            { grid-row: 35 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCLaserInvisibleWONightvision) { grid-row: 36 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCFreezerCantHurtOwner)        { grid-row: 37 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDestructableCameras)         { grid-row: 38 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagC13DDoubleKick)               { grid-row: 39 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagC13DNoExpander)               { grid-row: 40 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCFixTripbombsOnSlopes)        { grid-row: 41 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSClassicMapStartBehaviors) { grid-row: 42 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSFFireExcludesSelf)        { grid-row: 43 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSCanRespawnDrowning)       { grid-row: 44 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSInvalidShrinkStates)      { grid-row: 45 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSBadShrinkerHitDetection)  { grid-row: 46 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSBadGrowExplosionOwner)    { grid-row: 47 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSWeaponSwitchingBugs)      { grid-row: 48 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSDeadPlayerSwappingBugs)   { grid-row: 49 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSUselessNightvision)       { grid-row: 50 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-netFlagCDOSAutoaimedRPGsBugs)        { grid-row: 51 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
 
                                 /* weapflags */
                                 div#weapflags { grid-row: 56; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagPistol)     { grid-row: 57 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagShotgun)    { grid-row: 58 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagChaingun)   { grid-row: 59 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagRPG)        { grid-row: 60 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagPipebomb)   { grid-row: 61 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagShrinker)   { grid-row: 62 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagDevastator) { grid-row: 63 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagTripbomb)   { grid-row: 64 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagFreezer)    { grid-row: 65 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagFullAmmo)   { grid-row: 66 !important; grid-column: 1 / span 2 !important; }
-                                div:has(>div>div>input#game-param-weapFlagExpander)   { grid-row: 67 !important; grid-column: 1 / span 2 !important; }
+                                div#weapflags-header { grid-row: 56; grid-column: 1 / span 2 !important; border-left: 1px solid #495057; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagPistol)     { grid-row: 57 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagShotgun)    { grid-row: 58 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagChaingun)   { grid-row: 59 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagRPG)        { grid-row: 60 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagPipebomb)   { grid-row: 61 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagShrinker)   { grid-row: 62 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagDevastator) { grid-row: 63 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagTripbomb)   { grid-row: 64 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagFreezer)    { grid-row: 65 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagFullAmmo)   { grid-row: 66 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
+                                div:has(>div>div>input#game-param-weapFlagExpander)   { grid-row: 67 !important; grid-column: 1 / span 2 !important; border-right: none !important; }
 
                                 /* invflags */
                                 div#invflags { grid-row: 56; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagKeyCards)      { grid-row: 57 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagMedkit)        { grid-row: 58 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagSteroids)      { grid-row: 59 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagHoloduke)      { grid-row: 60 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagJetpack)       { grid-row: 61 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagNightvision)   { grid-row: 62 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagScubaGear)     { grid-row: 63 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagBoots)         { grid-row: 64 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagArmor)         { grid-row: 65 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagAtomicHealth1) { grid-row: 66 !important; grid-column: 3 / span 2 !important; }
-                                div:has(>div>div>input#game-param-invFlagAtomicHealth2) { grid-row: 67 !important; grid-column: 3 / span 2 !important; }
+                                div#invflags-header { grid-row: 56; grid-column: 3 / span 2 !important; border-right: 1px solid #495057; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagKeyCards)      { grid-row: 57 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagMedkit)        { grid-row: 58 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagSteroids)      { grid-row: 59 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagHoloduke)      { grid-row: 60 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagJetpack)       { grid-row: 61 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagNightvision)   { grid-row: 62 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagScubaGear)     { grid-row: 63 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagBoots)         { grid-row: 64 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagArmor)         { grid-row: 65 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagAtomicHealth1) { grid-row: 66 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+                                div:has(>div>div>input#game-param-invFlagAtomicHealth2) { grid-row: 67 !important; grid-column: 3 / span 2 !important; border-left: none !important; }
+
+                                div#netflags-footer { grid-row: 68; }
+
+                                div:has(>#manual-param-controls) { grid-row: 8; }
 
                                 /* ================================================================================= */
                                 /* INPUTS                                                                            */
@@ -1493,30 +1573,86 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                 `);
 
                 // inject room settings label
-                if (!document.getElementById("room-settings")) {
+                if (!document.getElementById("room-settings-label")) {
                     root.insertAdjacentHTML("afterend", `
-                        <div id="room-settings" class="title-label">ROOM SETTINGS</div>
+                        <div id="room-settings-label" class="title-label">ROOM SETTINGS</div>
+                    `);
+                }
+
+                // inject room settings header
+                if (!document.getElementById("room-settings-header")) {
+                    root.insertAdjacentHTML("afterend", `
+                        <div id="room-settings-header" class="header"></div>
+                    `);
+                }
+
+                // inject room settings footer
+                if (!document.getElementById("room-settings-footer")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="room-settings-footer" class="footer"></div>
                     `);
                 }
 
                 // inject match settings label
-                if (!document.getElementById("match-settings")) {
+                if (!document.getElementById("match-settings-label")) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="match-settings" class="title-label">MATCH SETTINGS</div>
+                        <div id="match-settings-label" class="title-label">MATCH SETTINGS</div>
+                    `);
+                }
+
+                // inject match settings header
+                if (!document.getElementById("match-settings-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="match-settings-header" class="header"></div>
+                    `);
+                }
+
+                // inject match settings footer
+                if (!document.getElementById("match-settings-footer")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="match-settings-footer" class="footer"></div>
                     `);
                 }
 
                 // inject user settings label
-                if (!document.getElementById("user-settings")) {
+                if (!document.getElementById("user-settings-label")) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="user-settings" class="title-label">USER SETTINGS</div>
+                        <div id="user-settings-label" class="title-label">USER SETTINGS</div>
+                    `);
+                }
+
+                // inject user settings header
+                if (!document.getElementById("user-settings-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="user-settings-header" class="header"></div>
+                    `);
+                }
+
+                // inject user settings footer
+                if (!document.getElementById("user-settings-footer")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="user-settings-footer" class="footer"></div>
                     `);
                 }
 
                 // inject netflags label
-                if (!document.getElementById("netflags")) {
+                if (!document.getElementById("netflags-label")) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="netflags" class="title-label">NETFLAGS</div>
+                        <div id="netflags-label" class="title-label">NETFLAGS</div>
+                    `);
+                }
+
+                // inject netflags header
+                if (!document.getElementById("netflags-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflags-header" class="header"></div>
+                    `);
+                }
+
+                // inject netflags footer
+                if (!document.getElementById("netflags-footer")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflags-footer" class="footer"></div>
                     `);
                 }
 
@@ -1527,6 +1663,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     `);
                 }
 
+                // inject netflags A header
+                if (!document.getElementById("netflagsA-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflagsA-header" class="flag-header"></div>
+                    `);
+                }
+
                 // inject netflags B label
                 if (!document.getElementById("netflagsB")) {
                     root.insertAdjacentHTML("beforeend", `
@@ -1534,10 +1677,24 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     `);
                 }
 
+                // inject netflags B header
+                if (!document.getElementById("netflagsB-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflagsB-header" class="flag-header"></div>
+                    `);
+                }
+
                 // inject netflagsC label
                 if (!document.getElementById("netflagsC")) {
                     root.insertAdjacentHTML("beforeend", `
-                        <div id="netflagsC" class="title-label flag">NETFLAGSC</div>
+                        <div id="netflagsC" class="title-label flag">NETFLAGS C</div>
+                    `);
+                }
+
+                // inject netflags C header
+                if (!document.getElementById("netflagsC-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="netflagsC-header" class="flag-header"></div>
                     `);
                 }
 
@@ -1548,26 +1705,26 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     `);
                 }
 
+                // inject weapflags header
+                if (!document.getElementById("weapflags-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="weapflags-header" class="flag-header"></div>
+                    `);
+                }
+
                 // inject invflags label
                 if (!document.getElementById("invflags")) {
                     root.insertAdjacentHTML("beforeend", `
                         <div id="invflags" class="title-label flag">STARTING INVENTORY</div>
                     `);
                 }
-                
-                // transform some checkboxes into switches                                
-                CheckBoxToSwitch("game-param-masterSlave", "-master and /i0");
-                CheckBoxToSwitch("game-param-uploadDemos", "Upload match demos to produke.com.br");
-                CheckBoxToSwitch("game-param-lockOptions", "Prevent players from changing match settings and netflags");
-                CheckBoxToSwitch("game-param-lockPlayers", "Prevent players from changing their color, team and nicknames");
-                CheckBoxToSwitch("game-param-lockSpecs", "Prevent players from becoming spectator and vice versa in current match");
-                CheckBoxToSwitch("game-param-botsAi", "Enable BOT AI");
-                CheckBoxToSwitch("game-param-recordDmo", "Record match");
-                CheckBoxToSwitch("game-param-spec", "Join as spectator");
-                CheckBoxToSwitch("game-param-exploitMode", "Ask for tiles and visibility (requires voting)");
-                CheckBoxToSwitch("game-param-allowMods", "Ask for all external files (requires voting)");
-                CheckBoxToSwitch("game-param-disableAutoaim", "Ask for disabled autoaim (requires voting)");
-                CheckBoxToSwitch("game-param-_nn_ipv6", "Use Direct IPv6 address between peers instead of Relay/STUN tunnels");
+
+                // inject invflags header
+                if (!document.getElementById("invflags-header")) {
+                    root.insertAdjacentHTML("beforeend", `
+                        <div id="invflags-header" class="flag-header"></div>
+                    `);
+                }
 
                 // return nothing so the component doesn't show
                 return;
