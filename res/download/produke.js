@@ -814,7 +814,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
         label: "Color",
         optional: false,
         for: "private",
-        value: c => '-color ' + c.value,
+        value: ["-color", c => c.value],
         choices: [
             {label: "Auto", value: "0"},
             {label: "Blue", value: "1"},
@@ -847,7 +847,7 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
         label: "Team",
         optional: false,
         for: "private",
-        value: c => '-team ' + c.value,
+        value: ["-team", c => c.value],
         choices: [
             {label: "Blue", value: "1"},
             {label: "Red", value: "2"},
