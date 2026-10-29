@@ -229,10 +229,11 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
     const DEFAULT_NETFLAGS_PVP_SPWN      = 0 | NetFlagsA.MARKERS | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | NetFlagsA.RESPAWN_INVENTORY | NetFlagsA.RESPAWN_ITEMS | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
     const DEFAULT_NETFLAGS_PVP_NOSPWN    = NetFlagsA.GETWEAPONCE | 0 | NetFlagsA.NO_MONSTERS | NetFlagsA.NO_ACCESS | 0 | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | NetFlagsA.DMSWITCHES | NetFlagsA.MPITEMS;
     const DEFAULT_NETFLAGS_COOP          = NetFlagsA.GETWEAPONCE | 0 | 0 | 0 | NetFlagsA.RESPAWN_INVENTORY | 0 | NetFlagsA.COOPTEAM__FRIENDLY_FIRE | 0 | NetFlagsA.MPITEMS;
-    const BASE_TDM_TLMS                  = NetFlagsA.TEAM__MIXED_TEAM_SPAWNS | NetFlagsA.T_LMS__RESTRICTED_SPYCAM | NetFlagsA.T_LMS__RESTRICTED_CHAT;
+    const BASE_TDM                       = NetFlagsA.TEAM__MIXED_TEAM_SPAWNS;
     const BASE_LMS                       = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST;
+    const BASE_TLMS                      = NetFlagsA.FORCE_RESPAWN | NetFlagsA.RESPAWN_FARTHEST | NetFlagsA.T_LMS__RESTRICTED_CHAT;
     const BASE_MODERN                    = NetFlagsA.WEAPON_ALWAYS_DROP | NetFlagsA.REVEALED_AUTOMAP | NetFlagsA.NO_MAP_EXIT | NetFlagsA.DAMAGENUMS;
-    const BASE_HARDCORE                  = NetFlagsA.NO_TARGET_NAMES;
+    const BASE_HARDCORE                  = NetFlagsA.NO_TARGET_NAMES | NetFlagsA.T_LMS__RESTRICTED_SPYCAM;
     const BASE_CLASSIC_TEAMPLAY          = NetFlagsA.NO_TARGET_NAMES | 0 | 0 | 0 | 0;
     const BASE_ALT_TEAMPLAY              = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | 0 | 0 | 0;
     const BASE_MODERN_TEAMPLAY           = 0 | NetFlagsA.TRMCOOPTEAM__OVERHEAD | NetFlagsA.TRMCOOPTEAM__OUTLINES | 0 | 0;
@@ -249,10 +250,10 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
     const PRESET_NETFLAGS_ALT_FFA        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
     const PRESET_NETFLAGS_MODERN_FFA     = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN;
     const PRESET_NETFLAGS_HARDCORE_FFA   = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_HARDCORE;
-    const PRESET_NETFLAGS_CLASSIC_TEAM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_ALT_TEAM       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_MODERN_TEAM    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
-    const PRESET_NETFLAGS_HARDCORE_TEAM  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURVTLMS__SHARED_LIVES;
+    const PRESET_NETFLAGS_CLASSIC_TDM    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM | 0 | BASE_CLASSIC_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_ALT_TDM        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_MODERN_TDM     = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_HARDCORE_TDM   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TDM | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURVTLMS__SHARED_LIVES;
     const PRESET_NETFLAGS_CLASSIC_CTF    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY | 0;
     const PRESET_NETFLAGS_ALT_CTF        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | NetFlagsA.CTF__FLAG_INSTANT_RETURN;
     const PRESET_NETFLAGS_MODERN_CTF     = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY | NetFlagsA.CTF__FLAG_OUTLINE;
@@ -261,6 +262,10 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
     const PRESET_NETFLAGS_ALT_LMS        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0;
     const PRESET_NETFLAGS_MODERN_LMS     = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_MODERN;
     const PRESET_NETFLAGS_HARDCORE_LMS   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_LMS | BASE_HARDCORE;
+    const PRESET_NETFLAGS_CLASSIC_TLMS   = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TLMS | 0 | BASE_CLASSIC_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_ALT_TLMS       = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_MODERN_TLMS    = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TLMS | BASE_MODERN | BASE_MODERN_TEAMPLAY | 0;
+    const PRESET_NETFLAGS_HARDCORE_TLMS  = DEFAULT_NETFLAGS_PVP_SPWN | BASE_TLMS | BASE_HARDCORE | BASE_HARDCORE_TEAMPLAY | NetFlagsA.SURVTLMS__SHARED_LIVES;
     const PRESET_NETFLAGS_CLASSIC_TRM    = DEFAULT_NETFLAGS_PVP_SPWN | 0 | 0 | BASE_CLASSIC_TEAMPLAY;
     const PRESET_NETFLAGS_ALT_TRM        = DEFAULT_NETFLAGS_PVP_NOSPWN | 0 | 0 | BASE_ALT_TEAMPLAY;
     const PRESET_NETFLAGS_MODERN_TRM     = DEFAULT_NETFLAGS_PVP_SPWN | 0 | BASE_MODERN | BASE_MODERN_TEAMPLAY;
@@ -325,8 +330,8 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
                     }
-                    case GameType.TDM: case GameType.TLMS: {
-                        netflagsA = PRESET_NETFLAGS_CLASSIC_TEAM;
+                    case GameType.TDM: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_TDM;
                         netflagsB = PRESET_NETFLAGSB_CLASSIC;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -341,6 +346,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     }
                     case GameType.LMS: {
                         netflagsA = PRESET_NETFLAGS_CLASSIC_LMS;
+                        netflagsB = PRESET_NETFLAGSB_CLASSIC;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_CLASSIC_TLMS;
                         netflagsB = PRESET_NETFLAGSB_CLASSIC;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -379,8 +391,8 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
                     }
-                    case GameType.TDM: case GameType.TLMS: {
-                        netflagsA = PRESET_NETFLAGS_ALT_TEAM;
+                    case GameType.TDM: {
+                        netflagsA = PRESET_NETFLAGS_ALT_TDM;
                         netflagsB = PRESET_NETFLAGSB_ALT;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -395,6 +407,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     }
                     case GameType.LMS: {
                         netflagsA = PRESET_NETFLAGS_ALT_LMS;
+                        netflagsB = PRESET_NETFLAGSB_ALT;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_ALT_TLMS;
                         netflagsB = PRESET_NETFLAGSB_ALT;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -433,8 +452,8 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
                     }
-                    case GameType.TDM: case GameType.TLMS: {
-                        netflagsA = PRESET_NETFLAGS_MODERN_TEAM;
+                    case GameType.TDM: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_TDM;
                         netflagsB = PRESET_NETFLAGSB_MODERN;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -449,6 +468,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     }
                     case GameType.LMS: {
                         netflagsA = PRESET_NETFLAGS_MODERN_LMS;
+                        netflagsB = PRESET_NETFLAGSB_MODERN;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_MODERN_TLMS;
                         netflagsB = PRESET_NETFLAGSB_MODERN;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -487,8 +513,8 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                         invflags  = DEFAULT_INVFLAGS_PVP;
                         break;
                     }
-                    case GameType.TDM: case GameType.TLMS: {
-                        netflagsA = PRESET_NETFLAGS_HARDCORE_TEAM;
+                    case GameType.TDM: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_TDM
                         netflagsB = PRESET_NETFLAGSB_HARDCORE;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
@@ -503,6 +529,13 @@ module.exports = function({deepClone, utils, mainStore }, gamedefs) {
                     }
                     case GameType.LMS: {
                         netflagsA = PRESET_NETFLAGS_HARDCORE_LMS;
+                        netflagsB = PRESET_NETFLAGSB_HARDCORE;
+                        weapflags = DEFAULT_WEAPFLAGS;
+                        invflags  = DEFAULT_INVFLAGS_PVP;
+                        break;
+                    }
+                    case GameType.TLMS: {
+                        netflagsA = PRESET_NETFLAGS_HARDCORE_TLMS;
                         netflagsB = PRESET_NETFLAGSB_HARDCORE;
                         weapflags = DEFAULT_WEAPFLAGS;
                         invflags  = DEFAULT_INVFLAGS_PVP;
